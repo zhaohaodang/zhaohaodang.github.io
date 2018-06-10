@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="./assets/css/base.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/materialize/0.99.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/images/googleg_lodp.ico" rel="icon">
+    <link href="/images/gsa_ios_60dp.png" rel="apple-touch-icon" sizes="180x180">
+    <link href="/images/gsa_ios_60dp.png" rel="apple-touch-icon" sizes="120x120">
+    <link href="/images/gsa_ios_57dp.png" rel="apple-touch-icon" sizes="114x114">
+    <link href="/images/gsa_ios_57dp.png" rel="apple-touch-icon">
     <style>
         canvas {
             position: absolute;
@@ -40,7 +45,7 @@
 <body>
     <div class="row banner">
         <div class="col xl2 l2 m2 s4 offset-xl5 offset-l5 offset-m5 offset-s4">
-            <img src="./assets/images/header.jpg" alt="头像" class="circle responsive-img header z-depth-2">
+            <img src="./images/avatar.jpg" alt="头像" class="circle responsive-img header z-depth-2">
         </div>
     </div>
     <div class="row">
@@ -119,9 +124,9 @@
             var t = p + (z() * 2 - 1.1) * f
             return (t > h || t < 0) ? y(p) : t
         }
-        // document.onclick = i
-        // document.ontouchstart = i
-        // i()
+        document.onclick = i
+        document.ontouchstart = i
+        i()
     </script>
     <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
     <script>
