@@ -5,14 +5,14 @@
     <meta charset=utf-8>
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
     <title>阿荡的个人主页</title>
-    <link rel="stylesheet" href="./assets/css/base.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/materialize/0.99.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/images/googleg_lodp.ico" rel="icon">
-    <link href="/images/gsa_ios_60dp.png" rel="apple-touch-icon" sizes="180x180">
-    <link href="/images/gsa_ios_60dp.png" rel="apple-touch-icon" sizes="120x120">
-    <link href="/images/gsa_ios_57dp.png" rel="apple-touch-icon" sizes="114x114">
-    <link href="/images/gsa_ios_57dp.png" rel="apple-touch-icon">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/materialize.min.css">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link href="./images/googleg_lodp.ico" rel="icon">
+    <link href="./images/gsa_ios_60dp.png" rel="apple-touch-icon" sizes="180x180">
+    <link href="./images/gsa_ios_60dp.png" rel="apple-touch-icon" sizes="120x120">
+    <link href="./images/gsa_ios_57dp.png" rel="apple-touch-icon" sizes="114x114">
+    <link href="./images/gsa_ios_57dp.png" rel="apple-touch-icon">
     <style>
         canvas {
             position: absolute;
@@ -31,7 +31,25 @@
         .banner {
             margin-top: 100px;
         }
-        
+        .qrcode-box{
+            position: relative;
+        }
+        .qrcode{
+            visibility: hidden;
+            position: absolute;
+            top: 42px;
+            transition: 0.3s;
+            opacity: 0.0;
+            width: 100px;
+            height: 100px;
+            left: 50%;
+            margin-left: -50px;
+            box-shadow: 0px 0px 4px rgba(6, 153, 239, 0.5);
+        }
+        .qrcode-box:hover .qrcode,.qrcode-box:active .qrcode{
+            visibility:visible;
+            opacity:1.0 ;
+        }
         @media only screen and (min-width: 1200px) {
             .header {
                 width: 60%;
@@ -52,14 +70,14 @@
         <h5 class="center-align">阿荡</h5>
         <h6 class="center-align"><img src="./images/logo.png" alt="美团点评" width="48px"></h6>
 
-        <h6 class="center-align">美团点评 - Web前端开发</h6>
+        <h6 class="center-align">美团点评 - 前端开发</h6>
     </div>
     <div class="row">
         <div class="col xl8 l8 m12 s12 offset-xl2 offset-l2 offset-m0 offset-s0">
-            <div class="col xl2 l2 m2 s4 offset-xl3 offset-l3 offset-m3 offset-s0 center-align"><a href="http://zhaohaodang.com/blog" class="btn blue darken-1" target="_blank" style="text-transform: none;">博客</a></div>
-            <div class="col xl2 l2 m2 s4 center-align"><a href="https://www.zhihu.com/people/zhaohaodang/activities" class="btn blue darken-1" target="_blank" style="text-transform: none;">在知乎</a></div>
+            <div class="col xl2 l2 m2 s4 offset-xl3 offset-l3 offset-m3 offset-s0 center-align qrcode-box"><img src="./images/qrcode.jpg" class="qrcode"><a class="waves-effect waves-light btn blue darken-1 waves-effect waves-light" style="text-transform: none;">公众号</a></div>
+            <div class="col xl2 l2 m2 s4 center-align"><a href="https://zhuanlan.zhihu.com/fedthing" class="waves-effect waves-light btn blue darken-1" target="_blank" style="text-transform: none;">专栏</a></div>
             <div class="col xl2 l2 m2 s4 center-align">
-                <a href="https://github.com/zhaohaodang" class="btn blue darken-1" target="_blank" style="text-transform: none;">Github</a>
+                <a href="https://github.com/zhaohaodang" class="waves-effect waves-light btn blue darken-1" target="_blank" style="text-transform: none;">Github</a>
             </div>
         </div>
     </div>
@@ -128,7 +146,9 @@
         document.ontouchstart = i
         i()
     </script>
-    <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+    <script src="./js/fastclick.min.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/materialize.min.js"></script>
     <script>
         if ('addEventListener' in document) {
             document.addEventListener('DOMContentLoaded', function() {
