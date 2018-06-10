@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport>
+    <title>阿荡的个人主页</title>
+    <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/materialize/0.99.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .btn {
+            padding: 0 1.5rem;
+        }
+        
+        .banner {
+            margin-top: 100px;
+        }
+        
+        @media only screen and (min-width: 1200px) {
+            .header {
+                width: 60%;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row banner">
+        <div class="col xl2 l2 m2 s4 offset-xl5 offset-l5 offset-m5 offset-s4">
+            <img src="./assets/images/header.jpg" alt="头像" class="circle responsive-img header z-depth-2">
+        </div>
+    </div>
+    <div class="row">
+        <h5 class="center-align">阿荡</h5>
+        <h6 class="center-align"><img src="./assets/images/logo.png" alt="美团点评" width="48px"></h6>
+
+        <h6 class="center-align">美团点评 - Web前端开发</h6>
+    </div>
+    <div class="row">
+        <div class="col xl8 l8 m12 s12 offset-xl2 offset-l2 offset-m0 offset-s0">
+            <div class="col xl2 l2 m2 s4 offset-xl3 offset-l3 offset-m3 offset-s0 center-align"><a href="http://zhaohaodang.com/blog" class="btn blue darken-1" target="_blank" style="text-transform: none;">博客</a></div>
+            <div class="col xl2 l2 m2 s4 center-align"><a href="https://www.zhihu.com/people/zhaohaodang/activities" class="btn blue darken-1" target="_blank" style="text-transform: none;">在知乎</a></div>
+            <div class="col xl2 l2 m2 s4 center-align">
+                <a href="https://github.com/zhaohaodang" class="btn blue darken-1" target="_blank" style="text-transform: none;">Github</a>
+            </div>
+        </div>
+    </div>
+    <!--<footer style="margin-top:100px;text-align:center;width:100%;padding:10px 0;border-top:1px solid #ccc;">
+        <section>
+            @2018-2019 Zhaohaodang.com 版权所有 ICP证：<a href="http://www.miitbeian.gov.cn/" target="_blank">苏ICP备16009967号-2</a> 
+        </section>
+    </footer>-->
+    <canvas></canvas>
+    <script>
+        document.addEventListener('touchmove', function(e) {
+            e.preventDefault()
+        })
+        var c = document.getElementsByTagName('canvas')[0],
+            x = c.getContext('2d'),
+            pr = window.devicePixelRatio || 1,
+            w = window.innerWidth,
+            h = window.innerHeight,
+            f = 90,
+            q,
+            m = Math,
+            r = 0,
+            u = m.PI * 2,
+            v = m.cos,
+            z = m.random
+        c.width = w * pr
+        c.height = h * pr
+        x.scale(pr, pr)
+        x.globalAlpha = 0.6
+
+        function i() {
+            x.clearRect(0, 0, w, h)
+            q = [{
+                x: 0,
+                y: h * .7 + f
+            }, {
+                x: 0,
+                y: h * .7 - f
+            }]
+            while (q[1].x < w + f) d(q[0], q[1])
+        }
+
+        function d(i, j) {
+            x.beginPath()
+            x.moveTo(i.x, i.y)
+            x.lineTo(j.x, j.y)
+            var k = j.x + (z() * 2 - 0.25) * f,
+                n = y(j.y)
+            x.lineTo(k, n)
+            x.closePath()
+            r -= u / -50
+            x.fillStyle = '#' + (v(r) * 127 + 128 << 16 | v(r + u / 3) * 127 + 128 << 8 | v(r + u / 3 * 2) * 127 + 128).toString(16)
+            x.fill()
+            q[0] = q[1]
+            q[1] = {
+                x: k,
+                y: n
+            }
+        }
+
+        function y(p) {
+            var t = p + (z() * 2 - 1.1) * f
+            return (t > h || t < 0) ? y(p) : t
+        }
+        // document.onclick = i
+        // document.ontouchstart = i
+        // i()
+    </script>
+    <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+    <script>
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function() {
+                FastClick.attach(document.body);
+            }, false);
+        }
+    </script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?6600fe25e8c19aa21efccc5b46916d9b";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-100015685-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+
+</html>
