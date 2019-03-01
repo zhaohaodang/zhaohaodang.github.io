@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="前端, 前端开发">
+  <meta name="keywords" content="javascript,">
 
 
 
@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="踩坑，避坑">
-<meta name="keywords" content="博客,前端开发">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="https://zhaohaodang.github.io/categories/index.html">
+<meta name="description" content="substring和substr方法都可以从字符串中抽取出一些字符，无论是方法名和参数，都十分相似。在紧张的面试氛围下，老铁们可能会混淆两者传入的第二个参数。笔者遵循联想法，想出了一个区分方法。">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="联想法区分substring和substr方法">
+<meta property="og:url" content="https://zhaohaodang.github.io/2019/03/01/联想法区分substring和substr方法/index.html">
 <meta property="og:site_name" content="前端开发">
-<meta property="og:description" content="踩坑，避坑">
+<meta property="og:description" content="substring和substr方法都可以从字符串中抽取出一些字符，无论是方法名和参数，都十分相似。在紧张的面试氛围下，老铁们可能会混淆两者传入的第二个参数。笔者遵循联想法，想出了一个区分方法。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-05T08:26:14.345Z">
+<meta property="og:updated_time" content="2019-03-01T09:49:47.643Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
-<meta name="twitter:description" content="踩坑，避坑">
+<meta name="twitter:title" content="联想法区分substring和substr方法">
+<meta name="twitter:description" content="substring和substr方法都可以从字符串中抽取出一些字符，无论是方法名和参数，都十分相似。在紧张的面试氛围下，老铁们可能会混淆两者传入的第二个参数。笔者遵循联想法，想出了一个区分方法。">
 
 
 
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="https://zhaohaodang.github.io/categories/">
+  <link rel="canonical" href="https://zhaohaodang.github.io/2019/03/01/联想法区分substring和substr方法/">
 
 
 
 
 
-  <title>categories | 前端开发</title>
+  <title>联想法区分substring和substr方法 | 前端开发</title>
   
 
 
@@ -239,33 +239,145 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhaohaodang.github.io/2019/03/01/联想法区分substring和substr方法/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="阿荡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://p0.meituan.net/dpnewvc/6b77fbcfb604c2f7991ce452cd4402ad88043.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="前端开发">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">categories</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">联想法区分substring和substr方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-01T17:28:09+08:00">
+                2019-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-      </div>
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p><code>substring</code>和<code>substr</code>方法都可以从字符串中抽取出一些字符，无论是方法名和参数，都十分相似。在紧张的面试氛围下，老铁们可能会混淆两者传入的第二个参数。笔者遵循联想法，想出了一个区分方法。<br><a id="more"></a><br>先看看这两个方法各自的参数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stringObject.substr(start,length)</span><br><span class="line">stringObject.substring(start,stop)</span><br></pre></td></tr></table></figure></p>
+<p>两者区别于第二个参数。<code>substr</code>传的是长度（length），<code>substring</code>传的是结束点（stop）。<br>str和length勉勉强强能组成单词strength（强度；力量）而string和length没法组成单词。<br>所以和方法<code>substr</code>搭配的参数应该是长度length。<br>以后面试官问你<code>substr</code>或者开发中使用<code>substr</code>时，脑海里就能准确地想出第二个参数为长度length。</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/25/轻量实现代码高亮/" rel="next" title="轻量实现JSON数据高亮美化">
+                <i class="fa fa-chevron-left"></i> 轻量实现JSON数据高亮美化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
