@@ -77,18 +77,20 @@
 
 
 
-<meta name="description" content="踩坑，避坑">
+<meta name="description" content="audio组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护audio组件，建议使用能力更强的 wx.createInnerAudioContext 接口。以前列表渲染出来的audio需要技术改造。">
 <meta name="keywords" content="博客,前端开发">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="https://zhaohaodang.github.io/categories/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信小程序音频audio API如何结合列表渲染">
+<meta property="og:url" content="https://zhaohaodang.github.io/2019/03/10/微信小程序音频audio API如何结合列表渲染/index.html">
 <meta property="og:site_name" content="前端开发">
-<meta property="og:description" content="踩坑，避坑">
+<meta property="og:description" content="audio组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护audio组件，建议使用能力更强的 wx.createInnerAudioContext 接口。以前列表渲染出来的audio需要技术改造。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-05T08:26:14.345Z">
+<meta property="og:image" content="https://p0.meituan.net/dpnewvc/23d736a41dd5c8149ef1f986d3311e9541938.jpg">
+<meta property="og:updated_time" content="2019-03-10T13:27:54.305Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
-<meta name="twitter:description" content="踩坑，避坑">
+<meta name="twitter:title" content="微信小程序音频audio API如何结合列表渲染">
+<meta name="twitter:description" content="audio组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护audio组件，建议使用能力更强的 wx.createInnerAudioContext 接口。以前列表渲染出来的audio需要技术改造。">
+<meta name="twitter:image" content="https://p0.meituan.net/dpnewvc/23d736a41dd5c8149ef1f986d3311e9541938.jpg">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://zhaohaodang.github.io/categories/">
+  <link rel="canonical" href="https://zhaohaodang.github.io/2019/03/10/微信小程序音频audio API如何结合列表渲染/">
 
 
 
 
 
-  <title>categories | 前端开发</title>
+  <title>微信小程序音频audio API如何结合列表渲染 | 前端开发</title>
   
 
 
@@ -239,33 +241,156 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhaohaodang.github.io/2019/03/10/微信小程序音频audio API如何结合列表渲染/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="阿荡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://p0.meituan.net/dpnewvc/6b77fbcfb604c2f7991ce452cd4402ad88043.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="前端开发">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">categories</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">微信小程序音频audio API如何结合列表渲染</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-10T12:33:52+08:00">
+                2019-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-      </div>
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p><code>audio</code>组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护<code>audio</code>组件，建议使用能力更强的 <code>wx.createInnerAudioContext</code> 接口。以前列表渲染出来的<code>audio</code>需要技术改造。</p>
+<a id="more"></a>
+<p>比如我们有一段音频数据：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [&#123;</span><br><span class="line">  id:<span class="number">1</span>,</span><br><span class="line">  title:<span class="string">'爱过的人我已不再拥有'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0904/57cb989b04d4c.png'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0904/57cb989b1e3b4.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">2</span>,</span><br><span class="line">  title:<span class="string">'已过了耳濡目染的年'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0517/573b1240af3da.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0517/573b1240d0118.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">3</span>,</span><br><span class="line">  title:<span class="string">'感觉很放松'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/1108/5821463c3fad8.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/1104/581b63392f6cb.mp3'</span></span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure></p>
+<p>现在我们想要达到这种目的：</p>
+<ol>
+<li>音频以列表的形式展现在小程序上。</li>
+<li>每个音频旁边都会有个按钮，初始情况按钮上文字为‘播放’；点击‘播放’，小程序播放该音频，按钮文字变成‘暂停’。</li>
+<li>点击‘暂停’按钮，停止播放音频，按钮文字变成‘播放’。</li>
+<li>不能同时播放多个音频：如果音频A正处于播放状态，点击播放音频B时，音频A停止播放。</li>
+</ol>
+<p>扫码体验</p>
+<p><img src="https://p0.meituan.net/dpnewvc/23d736a41dd5c8149ef1f986d3311e9541938.jpg" alt="https://p0.meituan.net/dpnewvc/23d736a41dd5c8149ef1f986d3311e9541938.jpg"></p>
+<p>思路：</p>
+<ol>
+<li>使用<code>wx:for</code></li>
+<li>将列表中每一个音频做为组件</li>
+<li>在父组件设置一个<code>id</code>，用于控制应该播放哪个音频</li>
+</ol>
+<p>示例代码<br><a href="https://github.com/zhaohaodang/wechat-app-audio-list" target="_blank" rel="noopener">https://github.com/zhaohaodang/wechat-app-audio-list</a></p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/04/H5实现上传图片预览/" rel="next" title="H5实现上传图片预览">
+                <i class="fa fa-chevron-left"></i> H5实现上传图片预览
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
