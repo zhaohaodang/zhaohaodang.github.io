@@ -85,12 +85,10 @@
 <meta property="og:site_name" content="前端开发">
 <meta property="og:description" content="audio组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护audio组件，建议使用能力更强的 wx.createInnerAudioContext 接口。以前列表渲染出来的audio需要技术改造。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://p0.meituan.net/dpnewvc/23d736a41dd5c8149ef1f986d3311e9541938.jpg">
-<meta property="og:updated_time" content="2019-03-10T13:27:54.305Z">
+<meta property="og:updated_time" content="2019-10-11T02:14:46.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信小程序音频audio API如何结合列表渲染">
 <meta name="twitter:description" content="audio组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护audio组件，建议使用能力更强的 wx.createInnerAudioContext 接口。以前列表渲染出来的audio需要技术改造。">
-<meta name="twitter:image" content="https://p0.meituan.net/dpnewvc/23d736a41dd5c8149ef1f986d3311e9541938.jpg">
 
 
 
@@ -171,7 +169,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">前端踩坑记录</p>
+        <h1 class="site-subtitle" itemprop="description">前端踩坑记录</h1>
       
   </div>
 
@@ -270,7 +268,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">微信小程序音频audio API如何结合列表渲染</h1>
+          <h2 class="post-title" itemprop="name headline">微信小程序音频audio API如何结合列表渲染</h2>
         
 
         <div class="post-meta">
@@ -295,6 +293,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/10/微信小程序音频audio API如何结合列表渲染/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/10/微信小程序音频audio API如何结合列表渲染/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -330,8 +338,6 @@
 <li>点击‘暂停’按钮，停止播放音频，按钮文字变成‘播放’。</li>
 <li>不能同时播放多个音频：如果音频A正处于播放状态，点击播放音频B时，音频A停止播放。</li>
 </ol>
-<p>扫码体验</p>
-<p><img src="https://p0.meituan.net/dpnewvc/23d736a41dd5c8149ef1f986d3311e9541938.jpg" alt="https://p0.meituan.net/dpnewvc/23d736a41dd5c8149ef1f986d3311e9541938.jpg"></p>
 <p>思路：</p>
 <ol>
 <li>使用<code>wx:for</code></li>
@@ -405,6 +411,16 @@
           
 
   
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
 
 
 
@@ -435,7 +451,7 @@
               <img class="site-author-image" itemprop="image" src="https://p0.meituan.net/dpnewvc/6b77fbcfb604c2f7991ce452cd4402ad88043.jpg" alt="阿荡">
             
               <p class="site-author-name" itemprop="name">阿荡</p>
-              <p class="site-description motion-element" itemprop="description">踩坑，避坑</p>
+              <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
           <nav class="site-state motion-element">
@@ -445,7 +461,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -643,6 +659,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://zhaohd.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://zhaohaodang.github.io/2019/03/10/微信小程序音频audio API如何结合列表渲染/';
+          this.page.identifier = '2019/03/10/微信小程序音频audio API如何结合列表渲染/';
+          this.page.title = '微信小程序音频audio API如何结合列表渲染';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://zhaohd.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -655,10 +691,6 @@
   
 
 
-
-
-
-  
 
 
 
