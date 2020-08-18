@@ -86,7 +86,7 @@
 <meta property="og:description" content="date显示当前日期和时间 who显示当前登录系统的所有用户标识（同时显示终端名称、登陆时间等） passwd改变口令 last查看所有用户登录记录 last [用户标识]查看某个用户的登录记录">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s1.ax1x.com/2020/05/21/Ybz061.png">
-<meta property="og:updated_time" content="2020-05-21T09:19:59.545Z">
+<meta property="og:updated_time" content="2020-06-01T10:15:25.992Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Linux大学教程》命令大全">
 <meta name="twitter:description" content="date显示当前日期和时间 who显示当前登录系统的所有用户标识（同时显示终端名称、登陆时间等） passwd改变口令 last查看所有用户登录记录 last [用户标识]查看某个用户的登录记录">
@@ -406,6 +406,26 @@
 <p><code>sort 2&gt; /dev/null</code><br>不想看标准错误，将标准错误抛弃</p>
 <p><code>sort 2&gt; /dev/null</code><br>不想看标准错误，将标准错误抛弃</p>
 <p><img src="https://s1.ax1x.com/2020/05/21/Ybz061.png" alt="Ybz061.png"></p>
+<p><code>cat name1 name2 | tee backup | sort</code><br>将cat的输出保存在backup文件，同事cat的输出经过管道线传送给sort命令。如果backup文件不存在则创建。如果backup内已经有内容，内容会被覆盖，使用tee -a可以避免覆盖，而是追加。</p>
+<p><code>command1 &amp;&amp; command2</code><br>命令1成功执行才去执行命令2</p>
+<p><code>command1 || command2</code><br>命令1执行失败才去执行命令2</p>
+<p><code>cat &gt; file</code><br>快速地创建一个小文件，然后从键盘写入内容。</p>
+<p>cat常用命令选项<br>-n(number，数字)在每行前面加一个行号<br>-b(blank，空白)和-n选项一起使用，不要对空白行编号<br>-s(squeeze，挤压)将连续多个空白行替换为一个空白行</p>
+<p><code>split file</code><br>将文件file分割成xaa、xab、xac等文件，每个文件的最大行数为1000。</p>
+<p><code>rev file</code><br>将文件file中各行中字符的顺序反转</p>
+<p><code>head -n 15 file</code><br>显示文件file前15行（如果没有-n 15参数，默认显示10行）</p>
+<p><code>tail -n 15 file</code><br>显示文件file最后15行（如果没有-n 15参数，默认显示10行）</p>
+<p><code>colrm 1 5 file</code><br>删除file中指定的数据列（1到5列）</p>
+<p><code>colrm 5 file</code><br>删除file中第5列（包括）到最后一列的所有数据列</p>
+<p>假设文件a内容为<br>1<br>a<br>文件b内容为<br>1<br>b<br><code>comm a b</code>输出为<br>        1<br>a   b</p>
+<p>第一列表示a为第一个文件独有的数据，第二列表示b为第二个文件独有的数据，第三列表示两个文件共有的数据。<br>comm命令比较的文本必须是有序文本。参数-n（n为1、2、3）表示屏蔽第n列的输出。</p>
+<p><code>cut -c 1,5 file</code><br>截取文件第1列和第5列数据</p>
+<p><code>cut -c 1-5 file</code><br>截取文件第1到5列数据</p>
+<p><code>cut -f 1 -d &#39;,&#39; file</code><br>使用指定的分隔字符’,’，将文件file的每一行切割成字符串数组，取数组中的第一项。</p>
+<p><code>paste -d &#39;,&#39; a b</code><br>使用指定的分隔字符’,’，将文件a和b的每一行连接起来。</p>
+<p><code>nl -v 5 -i 10 file</code><br>为文件file临时插入（不改变源文件file）行号，起始号码为5，增量为10。</p>
+<p><code>wc file</code><br>对file进行单词统计，通常输出三个数字。从第一个数开始分别代表行数line、单词数word以及字符数char。</p>
+<p><code>wc -l file</code><br>只统计行数</p>
 <blockquote>
 <p>未完待续</p>
 </blockquote>
@@ -525,7 +545,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
