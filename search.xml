@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Mac显示已连接蓝牙耳机但没声音</title>
-    <url>/2019/10/21/Mac%E6%98%BE%E7%A4%BA%E5%B7%B2%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA%E4%BD%86%E6%B2%A1%E5%A3%B0%E9%9F%B3/</url>
-    <content><![CDATA[<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>更新了Mac系统后（Catalina），系统偏好设置中，蓝牙设置显示已连接到耳机，但是耳机没有声音。声音输出设置中也没有已连接的蓝牙耳机。多次断开重连蓝牙、重启Mac、重启蓝牙耳机都没用。<br><a id="more"></a><br><img src="https://s2.ax1x.com/2019/10/21/KQXr8g.png" alt="KQXr8g.png"><br><img src="https://s2.ax1x.com/2019/10/21/KQjiqI.png" alt="KQjiqI.png"></p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>1.先关机。<br>2.接着开机，并<strong>立即同时</strong>按住以下四个按键：Option、Command、P 和 R。您可以在大约 20 秒后松开这些按键，或者在听到两次开机声音（就是Mac那种噔！的开机声）后松开这些按键。<br>3.重新连接蓝牙耳机，检查声音是否正常。<br>4.若还是不行，重复上面步骤。</p>
-<blockquote>
-<p>参考链接：<a href="https://support.apple.com/zh-cn/HT204063" target="_blank" rel="noopener">https://support.apple.com/zh-cn/HT204063</a></p>
-</blockquote>
-]]></content>
-  </entry>
-  <entry>
-    <title>JSON.parse实现深拷贝的局限性</title>
-    <url>/2019/01/05/JSON.parse%E5%AE%9E%E7%8E%B0%E6%B7%B1%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7/</url>
-    <content><![CDATA[<ol>
-<li>可以用这个技巧进行数据对象的拷贝</li>
-<li>如果被拷贝的对象中有function，则拷贝之后的对象就会丢失这个function</li>
-<li>如果被拷贝的对象中有正则表达式，则拷贝之后的对象正则表达式会变成Object</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>javascript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>H5实现上传图片预览</title>
     <url>/2019/03/04/H5%E5%AE%9E%E7%8E%B0%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E9%A2%84%E8%A7%88/</url>
     <content><![CDATA[<p>H5新增了FileReader对象，该对象允许Web应用程序异步读取存储在用户计算机上的文件内容，构造函数为FileReader()，它返回一个新构造的FileReader实例。</p>
@@ -39,6 +16,29 @@
       <tags>
         <tag>javascript</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>JSON.parse实现深拷贝的局限性</title>
+    <url>/2019/01/05/JSON.parse%E5%AE%9E%E7%8E%B0%E6%B7%B1%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7/</url>
+    <content><![CDATA[<ol>
+<li>可以用这个技巧进行数据对象的拷贝</li>
+<li>如果被拷贝的对象中有function，则拷贝之后的对象就会丢失这个function</li>
+<li>如果被拷贝的对象中有正则表达式，则拷贝之后的对象正则表达式会变成Object</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mac显示已连接蓝牙耳机但没声音</title>
+    <url>/2019/10/21/Mac%E6%98%BE%E7%A4%BA%E5%B7%B2%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA%E4%BD%86%E6%B2%A1%E5%A3%B0%E9%9F%B3/</url>
+    <content><![CDATA[<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>更新了Mac系统后（Catalina），系统偏好设置中，蓝牙设置显示已连接到耳机，但是耳机没有声音。声音输出设置中也没有已连接的蓝牙耳机。多次断开重连蓝牙、重启Mac、重启蓝牙耳机都没用。<br><a id="more"></a><br><img src="https://s2.ax1x.com/2019/10/21/KQXr8g.png" alt="KQXr8g.png"><br><img src="https://s2.ax1x.com/2019/10/21/KQjiqI.png" alt="KQjiqI.png"></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>1.先关机。<br>2.接着开机，并<strong>立即同时</strong>按住以下四个按键：Option、Command、P 和 R。您可以在大约 20 秒后松开这些按键，或者在听到两次开机声音（就是Mac那种噔！的开机声）后松开这些按键。<br>3.重新连接蓝牙耳机，检查声音是否正常。<br>4.若还是不行，重复上面步骤。</p>
+<blockquote>
+<p>参考链接：<a href="https://support.apple.com/zh-cn/HT204063" target="_blank" rel="noopener">https://support.apple.com/zh-cn/HT204063</a></p>
+</blockquote>
+]]></content>
   </entry>
   <entry>
     <title>javascript 常用算法</title>
@@ -177,15 +177,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>微信小程序如何隐藏canvas</title>
-    <url>/2019/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E9%9A%90%E8%97%8Fcanvas/</url>
-    <content><![CDATA[<p>问题：选中图片后，把图片画到<code>canvas</code>上，但是并不想让用户看到这个<code>canvas</code>，请问如何在小程序页面中隐藏<code>canvas</code>呢？<br><a id="more"></a><br>解决方案（已验证有效）：为canvas设置如下样式<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attribute">postion</span>: fixed;</span><br><span class="line">    <span class="attribute">left</span>: -<span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">bottom</span>: -<span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-]]></content>
-      <tags>
-        <tag>微信小程序</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>微信小程序音频audio API如何结合列表渲染</title>
     <url>/2019/03/10/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%9F%B3%E9%A2%91audio%20API%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/</url>
     <content><![CDATA[<p><code>audio</code>组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护<code>audio</code>组件，建议使用能力更强的 <code>wx.createInnerAudioContext</code> 接口。以前列表渲染出来的<code>audio</code>需要技术改造。</p>
@@ -208,13 +199,12 @@
 ]]></content>
   </entry>
   <entry>
-    <title>联想法区分substring和substr方法</title>
-    <url>/2019/03/01/%E8%81%94%E6%83%B3%E6%B3%95%E5%8C%BA%E5%88%86substring%E5%92%8Csubstr%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p><code>substring</code>和<code>substr</code>方法都可以从字符串中抽取出一些字符，无论是方法名和参数，都十分相似。在紧张的面试氛围下，老铁们可能会混淆两者传入的第二个参数。笔者遵循联想法，想出了一个区分方法。<br><a id="more"></a><br>先看看这两个方法各自的参数：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">stringObject.substr(start,length)</span><br><span class="line">stringObject.substring(start,stop)</span><br></pre></td></tr></table></figure></p>
-<p>两者区别于第二个参数。<code>substr</code>传的是长度（length），<code>substring</code>传的是结束点（stop）。<br>str和length勉勉强强能组成单词strength（强度；力量）而string和length没法组成单词。<br>所以和方法<code>substr</code>搭配的参数应该是长度length。<br>以后面试官问你<code>substr</code>或者开发中使用<code>substr</code>时，脑海里就能准确地想出第二个参数为长度length。</p>
+    <title>微信小程序如何隐藏canvas</title>
+    <url>/2019/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E9%9A%90%E8%97%8Fcanvas/</url>
+    <content><![CDATA[<p>问题：选中图片后，把图片画到<code>canvas</code>上，但是并不想让用户看到这个<code>canvas</code>，请问如何在小程序页面中隐藏<code>canvas</code>呢？<br><a id="more"></a><br>解决方案（已验证有效）：为canvas设置如下样式<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attribute">postion</span>: fixed;</span><br><span class="line">    <span class="attribute">left</span>: -<span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">bottom</span>: -<span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <tags>
-        <tag>javascript</tag>
+        <tag>微信小程序</tag>
       </tags>
   </entry>
   <entry>
@@ -234,6 +224,16 @@
 <h4 id="jquery-cookie-插件-实现"><a href="#jquery-cookie-插件-实现" class="headerlink" title="jquery-cookie 插件 实现"></a>jquery-cookie 插件 实现</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建名为name值为value，有效期为7天，路径为`/`的cookie</span></span><br><span class="line">$.cookie(<span class="string">'name'</span>, <span class="string">'value'</span>, &#123; <span class="attr">expires</span>: <span class="number">7</span>, <span class="attr">path</span>: <span class="string">'/'</span> &#125;);</span><br><span class="line"><span class="comment">//获取指定name的cookie，若找不到，返回 undefined</span></span><br><span class="line">$.cookie(<span class="string">'name'</span>); <span class="comment">// =&gt; "value"</span></span><br><span class="line">$.cookie(<span class="string">'nothing'</span>); <span class="comment">// =&gt; undefined</span></span><br><span class="line"><span class="comment">//获取所有有效cookie</span></span><br><span class="line">$.cookie();</span><br><span class="line"><span class="comment">//删除指定cookie，删除失败返回false</span></span><br><span class="line">$.removeCookie(<span class="string">'name'</span>); <span class="comment">// =&gt; true</span></span><br><span class="line">$.removeCookie(<span class="string">'nothing'</span>); <span class="comment">// =&gt; false</span></span><br><span class="line"><span class="comment">//若创建某一cookie时设置了额外信息，删除时需要传入对应的额外参数</span></span><br><span class="line">$.cookie(<span class="string">'name'</span>, <span class="string">'value'</span>, &#123; <span class="attr">path</span>: <span class="string">'/'</span> &#125;);</span><br><span class="line"><span class="comment">// 删除失败</span></span><br><span class="line">$.removeCookie(<span class="string">'name'</span>); <span class="comment">// =&gt; false</span></span><br><span class="line"><span class="comment">// 删除成功</span></span><br><span class="line">$.removeCookie(<span class="string">'name'</span>, &#123; <span class="attr">path</span>: <span class="string">'/'</span> &#125;); <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
 <h3 id="cookie-如何读写json数据"><a href="#cookie-如何读写json数据" class="headerlink" title="cookie 如何读写json数据"></a>cookie 如何读写json数据</h3><p>写入json数据：调用<code>JSON.stringify()</code>方法，将json数据转换为字符串，利用上面的cookie操作创建cookie。</p>
 <p>读取json数据：读取该cookie时，返回json字符串，调用<code>JSON.parse()</code>方法，解析为原json数据。</p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>联想法区分substring和substr方法</title>
+    <url>/2019/03/01/%E8%81%94%E6%83%B3%E6%B3%95%E5%8C%BA%E5%88%86substring%E5%92%8Csubstr%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><code>substring</code>和<code>substr</code>方法都可以从字符串中抽取出一些字符，无论是方法名和参数，都十分相似。在紧张的面试氛围下，老铁们可能会混淆两者传入的第二个参数。笔者遵循联想法，想出了一个区分方法。<br><a id="more"></a><br>先看看这两个方法各自的参数：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">stringObject.substr(start,length)</span><br><span class="line">stringObject.substring(start,stop)</span><br></pre></td></tr></table></figure></p>
+<p>两者区别于第二个参数。<code>substr</code>传的是长度（length），<code>substring</code>传的是结束点（stop）。<br>str和length勉勉强强能组成单词strength（强度；力量）而string和length没法组成单词。<br>所以和方法<code>substr</code>搭配的参数应该是长度length。<br>以后面试官问你<code>substr</code>或者开发中使用<code>substr</code>时，脑海里就能准确地想出第二个参数为长度length。</p>
 ]]></content>
       <tags>
         <tag>javascript</tag>
