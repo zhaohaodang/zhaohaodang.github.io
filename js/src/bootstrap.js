@@ -6,7 +6,7 @@ $(document).ready(function () {
 
   NexT.utils.isMobile() && window.FastClick.attach(document.body);
 
-  NexT.utils.lazyLoadPostsImages();
+  // NexT.utils.lazyLoadPostsImages();
 
   NexT.utils.registerESCKeyEvent();
 
@@ -31,19 +31,19 @@ $(document).ready(function () {
    */
   CONFIG.fancybox && NexT.utils.wrapImageWithFancyBox();
   CONFIG.tabs && NexT.utils.registerTabsTag();
-
+  
   NexT.utils.embeddedVideoTransformer();
   NexT.utils.addActiveClassToMenuItem();
 
 
   // Define Motion Sequence.
-  NexT.motion.integrator
-    .add(NexT.motion.middleWares.logo)
-    .add(NexT.motion.middleWares.menu)
-    .add(NexT.motion.middleWares.postList)
-    .add(NexT.motion.middleWares.sidebar);
+  // NexT.motion.integrator
+  //   .add(NexT.motion.middleWares.logo)
+  //   .add(NexT.motion.middleWares.menu)
+  //   .add(NexT.motion.middleWares.postList)
+  //   .add(NexT.motion.middleWares.sidebar);
 
-  $(document).trigger('motion:before');
+  // $(document).trigger('motion:before');
 
   // Bootstrap Motion.
   CONFIG.motion.enable && NexT.motion.integrator.bootstrap();

@@ -693,16 +693,16 @@
 
   
   
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="/lib/fastclick/fastclick.min.js?v=1.0.6"></script>
   
 
 
   
+
+
 
 
   <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
 
 
 
@@ -1076,12 +1076,10 @@
 
 
 
-
-
   
 
   
-  <script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.6.1/dist/av-min.js"></script>
+  <script src="/js/src/av-min.js?v=4.6.1"></script>
   <script>
     AV.init({
       appId: "iQPLQMHFC9NunCoTbyhMy6B7-gzGzoHsz",
@@ -1140,9 +1138,8 @@
       query.find().then(function(results){
           if (results.length > 0) {
             var counter = results[0];
-            counter.fetchWhenSave(true);
             counter.increment("time");
-            counter.save().then(function(counter){
+            counter.save({fetchWhenSave:true}).then(function(counter){
                 var $element = $(document.getElementById(url));
                 $element.find('.leancloud-visitors-count').text(counter.get('time'));
             }).catch(function(counter, error){

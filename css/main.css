@@ -186,7 +186,7 @@ th {
 body {
   position: relative;
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 2;
   color: #555;
   background: #f5f7f9;
@@ -203,7 +203,7 @@ body {
 }
 @media (min-width: 1600px) {
   body {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 h1,
@@ -1238,7 +1238,7 @@ pre .javascript .function {
 .post-body .figure .caption {
   margin: -20px auto 15px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   color: #999;
   font-weight: bold;
   line-height: 1;
@@ -1284,11 +1284,6 @@ pre .javascript .function {
   }
   .post-body .highlight .gutter pre {
     padding-right: 10px;
-  }
-}
-@media (min-width: 992px) {
-  .posts-expand .post-body {
-    text-align: justify;
   }
 }
 .posts-expand .post-body h2,
@@ -1678,7 +1673,7 @@ pre .javascript .function {
   border: 0;
 }
 #QR img {
-  width: 220px;
+  width: 200px;
   max-width: 100%;
   display: inline-block;
   margin: 0.8em 2em 0 2em;
@@ -1980,7 +1975,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #0effff;
+  background: #bfff63;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3164,9 +3159,4 @@ pre .javascript .function {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-@media (max-width: 767px) {
-  .post-body {
-    text-align: justify;
-  }
 }
