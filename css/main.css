@@ -1268,11 +1268,11 @@ pre .javascript .function {
   opacity: 0;
 }
 .posts-expand {
-  padding-top: 40px;
+  padding-top: 0px;
 }
 @media (max-width: 767px) {
   .posts-expand {
-    margin: 0 20px;
+    margin: 0 0px;
   }
   .post-body pre .gutter pre {
     padding-right: 10px;
@@ -1975,7 +1975,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #6bff73;
+  background: #71774a;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2859,14 +2859,14 @@ pre .javascript .function {
 @media (min-width: 768px) and (max-width: 991px) {
   .content-wrap {
     width: 100%;
-    padding: 20px;
+    padding: 10px;
     border-radius: initial;
   }
 }
 @media (max-width: 767px) {
   .content-wrap {
     width: 100%;
-    padding: 20px;
+    padding: 10px;
     min-height: auto;
     border-radius: initial;
   }
