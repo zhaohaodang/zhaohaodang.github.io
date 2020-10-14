@@ -370,26 +370,18 @@
 
       
         
-          
-            <p>JSON对象中的parse和stringify结合使用，常常被用来实现深拷贝一个对象，下面的代码实现了对对象obj的深拷贝：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">name</span>:<span class="string">"obj"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  &#123;name: "obj"&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>深拷贝的一个作用就是，修改obj的name属性，不会影响objCopy的name属性。<br>但是这个方法不是万能的，它仍然有一定的局限性</p>
-<ol>
-<li><p>如果被拷贝的对象中有function，则拷贝之后的对象就会丢失这个function，比如</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">      func:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  最终得到 &#123;&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果被拷贝的对象中某个属性的值为undefined，则拷贝之后该属性会丢失，比如</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">      name:<span class="literal">undefined</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  最终得到 &#123;&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果被拷贝的对象中有正则表达式，则拷贝之后的对象正则表达式会变成Object，比如</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">      reg:<span class="regexp">/abc/</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  最终得到 &#123;reg:&#123;&#125;&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>为了让代码更加稳健，建议使用第三方库lodash中的<a href="https://lodash.com/docs/4.17.15#cloneDeep" target="_blank" rel="noopener">cloneDeep</a>方法</p>
-
-          
+          <p>JSON对象中的parse和stringify结合使用，常常被用来实现深拷贝一个对象，下面的代码实现了对对象obj的深拷贝：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">name</span>:<span class="string">"obj"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  &#123;name: "obj"&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>深拷贝的一个作用就是，修改obj的name属性，不会影响objCopy的name属性。<br>但是这个方法不是万能的，它仍然有一定的局限性<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/01/05/JSON.parse实现深拷贝的局限性/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
-    </div>
+    </p></div>
     
     
     

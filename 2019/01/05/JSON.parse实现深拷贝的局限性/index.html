@@ -81,7 +81,7 @@
 <meta property="og:site_name" content="开发日志">
 <meta property="og:description" content="JSON对象中的parse和stringify结合使用，常常被用来实现深拷贝一个对象，下面的代码实现了对对象obj的深拷贝：12var obj = &amp;#123;name:&quot;obj&quot;&amp;#125;;var objCopy = JSON.parse(JSON.stringify(obj)); //  &amp;#123;name: &quot;obj&quot;&amp;#125; 深拷贝的一个作用就是，修改obj的name属性，不会影响">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-14T03:49:23.296Z">
+<meta property="og:updated_time" content="2020-10-14T03:50:56.047Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JSON.stringify&#x2F;parse 实现深拷贝的缺点">
 <meta name="twitter:description" content="JSON对象中的parse和stringify结合使用，常常被用来实现深拷贝一个对象，下面的代码实现了对对象obj的深拷贝：12var obj = &amp;#123;name:&quot;obj&quot;&amp;#125;;var objCopy = JSON.parse(JSON.stringify(obj)); //  &amp;#123;name: &quot;obj&quot;&amp;#125; 深拷贝的一个作用就是，修改obj的name属性，不会影响">
@@ -368,7 +368,7 @@
 
       
         <p>JSON对象中的parse和stringify结合使用，常常被用来实现深拷贝一个对象，下面的代码实现了对对象obj的深拷贝：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">name</span>:<span class="string">"obj"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  &#123;name: "obj"&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>深拷贝的一个作用就是，修改obj的name属性，不会影响objCopy的name属性。<br>但是这个方法不是万能的，它仍然有一定的局限性</p>
+<p>深拷贝的一个作用就是，修改obj的name属性，不会影响objCopy的name属性。<br>但是这个方法不是万能的，它仍然有一定的局限性<br><a id="more"></a></p>
 <ol>
 <li><p>如果被拷贝的对象中有function，则拷贝之后的对象就会丢失这个function，比如</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">      func:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  最终得到 &#123;&#125;</span></span><br></pre></td></tr></table></figure>
