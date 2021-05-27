@@ -279,6 +279,284 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhaohaodang.github.io/2019/03/04/H5实现上传图片预览/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://pic4.zhimg.com/80/v2-fbb4dbd2a52753133162c5b1620f0435_1440w.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="开发日志">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/04/H5实现上传图片预览/" itemprop="url">H5实现上传图片预览</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T11:15:40+08:00">
+                2019-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/04/H5实现上传图片预览/" class="leancloud_visitors" data-flag-title="H5实现上传图片预览">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>H5新增了FileReader对象，该对象允许Web应用程序异步读取存储在用户计算机上的文件内容，构造函数为FileReader()，它返回一个新构造的FileReader实例。</p>
+<p>实例拥有一个名为readAsDataURL 的方法，该方法会读取指定的 Blob或 File对象。</p>
+<p>一旦读取完成，会触发onload事件。该事件的result属性将包含一个data:URL格式的字符串（base64编码） ，进而实现图片预览。</p>
+<p>HTML</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"choose"</span> <span class="attr">value</span>=<span class="string">"选择文件"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"show"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>JS</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'choose'</span>),</span><br><span class="line">  show = <span class="built_in">document</span>.getElementById(<span class="string">'show'</span>)</span><br><span class="line">btn.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader()</span><br><span class="line">  reader.readAsDataURL(<span class="keyword">this</span>.files[<span class="number">0</span>])<span class="comment">//以File对象作为参数</span></span><br><span class="line">  reader.onload = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    show.src = e.target.result <span class="comment">//这里获取到图片base64编码</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://link.zhihu.com/?target=https%3A//jsfiddle.net/zhaohd/n6yn0d3f/" target="_blank" rel="noopener">在JSFiddle上运行</a></p>
+<p><a href="http://link.zhihu.com/?target=http%3A//jsrun.net/TkgKp/edit" target="_blank" rel="noopener">在JSRun上运行</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhaohaodang.github.io/2019/03/04/梳理cookie/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://pic4.zhimg.com/80/v2-fbb4dbd2a52753133162c5b1620f0435_1440w.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="开发日志">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/04/梳理cookie/" itemprop="url">梳理cookie</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T10:03:32+08:00">
+                2019-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/04/梳理cookie/" class="leancloud_visitors" data-flag-title="梳理cookie">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="cookie-概述"><a href="#cookie-概述" class="headerlink" title="cookie 概述"></a>cookie 概述</h3><p>cookie 是JavaScript提供的一种本地存储机制，是存于硬盘某一位置的文本文件。以win7 Chrome 为例，其cookie的存储位置为<code>C:\Users\yourUserName\AppData\Local\Google\Chrome\UserData\Default\Cookies</code><br>打开开发者工具，在Application-&gt;Storage-&gt;Cookies标签下，可以查看与网站相关的cookie。<br>当cookie读/写时，会被对应地解码/编码。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/04/梳理cookie/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhaohaodang.github.io/2019/03/01/联想法区分substring和substr方法/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -867,7 +1145,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -933,7 +1211,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1030,10 +1308,6 @@
 
 
   <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
 
 
 
@@ -1514,6 +1788,15 @@
   
 
   
+
+  
+
+
+    
+
+
+
+
 
   
 <script data-ad-client="ca-pub-8172099008529477" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

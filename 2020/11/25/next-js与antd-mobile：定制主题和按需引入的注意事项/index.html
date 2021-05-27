@@ -81,7 +81,7 @@
 <meta property="og:site_name" content="开发日志">
 <meta property="og:description" content="关于定制主题和按需引入，antd-mobile官方文档给出了明确的方案，在实际使用过程中遇到一些报错。这个文章记录了这些报错，以及一些解决方案。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-11-25T06:07:13.539Z">
+<meta property="og:updated_time" content="2021-01-21T03:17:51.695Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="next.js与antd-mobile：定制主题和按需引入的报错和解决">
 <meta name="twitter:description" content="关于定制主题和按需引入，antd-mobile官方文档给出了明确的方案，在实际使用过程中遇到一些报错。这个文章记录了这些报错，以及一些解决方案。">
@@ -357,7 +357,7 @@
       
 
       
-        <p>关于定制主题和按需引入，antd-mobile官方文档给出了明确的方案，<br>在实际使用过程中遇到一些报错。这个文章记录了这些报错，以及一些解决方案。<br><a id="more"></a><br>关于按需加载，官方文档是 <a href="https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD，" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD，</a><br>根据官方的建议新建.babelrc文件，添加如下代码</p>
+        <p>关于定制主题和按需引入，antd-mobile官方文档给出了明确的方案，<br>在实际使用过程中遇到一些报错。这个文章记录了这些报错，以及一些解决方案。<br><a id="more"></a><br>关于按需加载，官方文档是 <a href="https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD</a><br>根据官方的建议新建.babelrc文件，添加如下代码</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"presets"</span>: [</span><br><span class="line">        <span class="string">"next/babel"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"plugins"</span>: [</span><br><span class="line">        [</span><br><span class="line">            <span class="string">"import"</span>,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"libraryName"</span>: <span class="string">"antd-mobile"</span>,</span><br><span class="line">                <span class="string">"style"</span>: <span class="string">"css"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ] <span class="comment">// `style: true` 会加载 less 文件</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>重启项目，报错：</p>
 <blockquote>
@@ -368,7 +368,7 @@
 <p>解决方案：在服务端，针对antd-mobile相关的样式文件，用<code>null-loader</code>进行处理。</p>
 <p>在next.config.js的webpack配置中添加如下代码，记得先手动安装<code>null-loader</code></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">webpack(config, &#123;isServer&#125;) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isServer) &#123;</span><br><span class="line">        <span class="keyword">const</span> antStyles = <span class="regexp">/antd-mobile\/.*?\/style.*?/</span><span class="keyword">const</span> origExternals = [...config.externals] config.externals = [(context, request, callback) = &gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (request.match(antStyles)) <span class="keyword">return</span> callback() <span class="keyword">if</span> (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span>) &#123;</span><br><span class="line">                origExternals[<span class="number">0</span>](context, request, callback)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                callback()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        ... (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span> ? [] : origExternals), ]</span><br><span class="line"></span><br><span class="line">        config.module.rules.unshift(&#123;</span><br><span class="line">            test: antStyles,</span><br><span class="line">            use: <span class="string">'null-loader'</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> config</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>关于定制主题，官方文档为 <a href="https://antd-mobile.gitee.io/docs/react/customize-theme-cn，需要把上面的`&quot;style&quot;" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/customize-theme-cn，需要把上面的`&quot;style&quot;</a>: “css”<code>改为</code>“style”: true`。<br>此外，官方提供的webpack修改方式不适合next.js，应该在next.config.js中的webpack新增以下配置：</p>
+<p>关于定制主题，官方文档为 <a href="https://antd-mobile.gitee.io/docs/react/customize-theme-cn" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/customize-theme-cn</a><br>需要把上面的<code>&quot;style&quot;: &quot;css&quot;</code>改为 <code>&quot;style&quot;: true</code>。<br>此外，官方提供的webpack修改方式不适合next.js，应该在next.config.js中的webpack新增以下配置：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">config.module.rules.push(&#123;</span><br><span class="line">    test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">    use: [</span><br><span class="line">        <span class="string">'postcss-loader'</span>,</span><br><span class="line">        &#123; <span class="attr">loader</span>: <span class="string">'less-loader'</span>, <span class="attr">options</span>: &#123; <span class="attr">modifyVars</span>: theme, <span class="attr">javascriptEnabled</span>: <span class="literal">true</span> &#125; &#125;</span><br><span class="line">    ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
       
@@ -383,8 +383,8 @@
       <div>
         <div>
     <p style="font-size:80%;text-align:center;margin:6px 0;color:#999">优惠福利</p>
-    <a href="https://s.click.taobao.com/YinYZtu" target="_blank">
-        <img width="70%" src="https://gw.alicdn.com/tfs/TB1wP0n37T2gK0jSZFkXXcIQFXa-800-450.jpg">
+    <a href="https://s.click.taobao.com/Wu4yEtu" target="_blank">
+        <img width="70%" src="https://gw.alicdn.com/tfs/TB1iwoaSBr0gK0jSZFnXXbRRXXa-800-450.png">
     </a>
 </div>
       </div>
@@ -468,6 +468,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2021/01/05/jest单元测试如何模拟接口请求/" rel="prev" title="在jest单元测试中模拟接口请求">
+                在jest单元测试中模拟接口请求 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -495,6 +499,10 @@
 
           
 
+  
+    <div class="comments" id="comments">
+      <div id="gitalk-container"></div>
+    </div>
   
 
 
@@ -536,7 +544,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -602,7 +610,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -703,12 +711,6 @@
 
 
   <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-  
-
 
 
 
@@ -1189,6 +1191,32 @@
   
 
   
+
+  
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <script type="text/javascript">
+        (function renderGitalk(){
+            var gitalk = new Gitalk({
+                id: document.title,
+                admin: ['zhaohaodang'],
+                owner: 'zhaohaodang',
+                repo: 'zhaohaodang.github.io',
+                clientSecret: '0decf3af2c804394017927a6963137aef04937fb',
+                clientID: 'e2ff1ed057de0e7d7cdc',
+                distractionFreeMode: 'true'
+                });
+            gitalk.render('gitalk-container');
+        }())
+        </script>
+    
+
+
+
+
 
   
 <script data-ad-client="ca-pub-8172099008529477" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
