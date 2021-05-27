@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>H5实现上传图片预览</title>
+    <url>/2019/03/04/H5%E5%AE%9E%E7%8E%B0%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E9%A2%84%E8%A7%88/</url>
+    <content><![CDATA[<p>H5新增了FileReader对象，该对象允许Web应用程序异步读取存储在用户计算机上的文件内容，构造函数为FileReader()，它返回一个新构造的FileReader实例。</p>
+<p>实例拥有一个名为readAsDataURL 的方法，该方法会读取指定的 Blob或 File对象。</p>
+<p>一旦读取完成，会触发onload事件。该事件的result属性将包含一个data:URL格式的字符串（base64编码） ，进而实现图片预览。</p>
+<p>HTML</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"choose"</span> <span class="attr">value</span>=<span class="string">"选择文件"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"show"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>JS</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'choose'</span>),</span><br><span class="line">  show = <span class="built_in">document</span>.getElementById(<span class="string">'show'</span>)</span><br><span class="line">btn.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader()</span><br><span class="line">  reader.readAsDataURL(<span class="keyword">this</span>.files[<span class="number">0</span>])<span class="comment">//以File对象作为参数</span></span><br><span class="line">  reader.onload = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    show.src = e.target.result <span class="comment">//这里获取到图片base64编码</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://link.zhihu.com/?target=https%3A//jsfiddle.net/zhaohd/n6yn0d3f/" target="_blank" rel="noopener">在JSFiddle上运行</a></p>
+<p><a href="http://link.zhihu.com/?target=http%3A//jsrun.net/TkgKp/edit" target="_blank" rel="noopener">在JSRun上运行</a></p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JSON.stringify/parse 实现深拷贝的缺点</title>
     <url>/2019/01/05/JSON.parse%E5%AE%9E%E7%8E%B0%E6%B7%B1%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7/</url>
     <content><![CDATA[<p>JSON对象中的parse和stringify结合使用，常常被用来实现深拷贝一个对象，下面的代码实现了对对象obj的深拷贝：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">name</span>:<span class="string">"obj"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  &#123;name: "obj"&#125;</span></span><br></pre></td></tr></table></figure></p>
@@ -23,20 +40,16 @@
       </tags>
   </entry>
   <entry>
-    <title>H5实现上传图片预览</title>
-    <url>/2019/03/04/H5%E5%AE%9E%E7%8E%B0%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E9%A2%84%E8%A7%88/</url>
-    <content><![CDATA[<p>H5新增了FileReader对象，该对象允许Web应用程序异步读取存储在用户计算机上的文件内容，构造函数为FileReader()，它返回一个新构造的FileReader实例。</p>
-<p>实例拥有一个名为readAsDataURL 的方法，该方法会读取指定的 Blob或 File对象。</p>
-<p>一旦读取完成，会触发onload事件。该事件的result属性将包含一个data:URL格式的字符串（base64编码） ，进而实现图片预览。</p>
-<p>HTML</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"choose"</span> <span class="attr">value</span>=<span class="string">"选择文件"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"show"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>JS</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'choose'</span>),</span><br><span class="line">  show = <span class="built_in">document</span>.getElementById(<span class="string">'show'</span>)</span><br><span class="line">btn.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader()</span><br><span class="line">  reader.readAsDataURL(<span class="keyword">this</span>.files[<span class="number">0</span>])<span class="comment">//以File对象作为参数</span></span><br><span class="line">  reader.onload = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    show.src = e.target.result <span class="comment">//这里获取到图片base64编码</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><a href="http://link.zhihu.com/?target=https%3A//jsfiddle.net/zhaohd/n6yn0d3f/" target="_blank" rel="noopener">在JSFiddle上运行</a></p>
-<p><a href="http://link.zhihu.com/?target=http%3A//jsrun.net/TkgKp/edit" target="_blank" rel="noopener">在JSRun上运行</a></p>
+    <title>Mac显示已连接蓝牙耳机但没声音</title>
+    <url>/2019/10/21/Mac%E6%98%BE%E7%A4%BA%E5%B7%B2%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA%E4%BD%86%E6%B2%A1%E5%A3%B0%E9%9F%B3/</url>
+    <content><![CDATA[<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>更新了Mac系统后（Catalina），系统偏好设置中，蓝牙设置显示已连接到耳机，但是耳机没有声音。声音输出设置中也没有已连接的蓝牙耳机。多次断开重连蓝牙、重启Mac、重启蓝牙耳机都没用。<br><a id="more"></a><br><img src="https://s2.ax1x.com/2019/10/21/KQXr8g.png" alt="KQXr8g.png"><br><img src="https://s2.ax1x.com/2019/10/21/KQjiqI.png" alt="KQjiqI.png"></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>1.先关机。<br>2.接着开机，并<strong>立即同时</strong>按住以下四个按键：Option、Command、P 和 R。您可以在大约 20 秒后松开这些按键，或者在听到两次开机声音（就是Mac那种噔！的开机声）后松开这些按键。<br>3.重新连接蓝牙耳机，检查声音是否正常。<br>4.若还是不行，重复上面步骤。</p>
+<blockquote>
+<p>参考链接：<a href="https://support.apple.com/zh-cn/HT204063" target="_blank" rel="noopener">https://support.apple.com/zh-cn/HT204063</a></p>
+</blockquote>
 ]]></content>
       <tags>
-        <tag>javascript</tag>
+        <tag>互联网</tag>
       </tags>
   </entry>
   <entry>
@@ -71,41 +84,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Mac显示已连接蓝牙耳机但没声音</title>
-    <url>/2019/10/21/Mac%E6%98%BE%E7%A4%BA%E5%B7%B2%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA%E4%BD%86%E6%B2%A1%E5%A3%B0%E9%9F%B3/</url>
-    <content><![CDATA[<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>更新了Mac系统后（Catalina），系统偏好设置中，蓝牙设置显示已连接到耳机，但是耳机没有声音。声音输出设置中也没有已连接的蓝牙耳机。多次断开重连蓝牙、重启Mac、重启蓝牙耳机都没用。<br><a id="more"></a><br><img src="https://s2.ax1x.com/2019/10/21/KQXr8g.png" alt="KQXr8g.png"><br><img src="https://s2.ax1x.com/2019/10/21/KQjiqI.png" alt="KQjiqI.png"></p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>1.先关机。<br>2.接着开机，并<strong>立即同时</strong>按住以下四个按键：Option、Command、P 和 R。您可以在大约 20 秒后松开这些按键，或者在听到两次开机声音（就是Mac那种噔！的开机声）后松开这些按键。<br>3.重新连接蓝牙耳机，检查声音是否正常。<br>4.若还是不行，重复上面步骤。</p>
-<blockquote>
-<p>参考链接：<a href="https://support.apple.com/zh-cn/HT204063" target="_blank" rel="noopener">https://support.apple.com/zh-cn/HT204063</a></p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>互联网</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>next.js与antd-mobile：定制主题和按需引入的报错和解决</title>
-    <url>/2020/11/25/next-js%E4%B8%8Eantd-mobile%EF%BC%9A%E5%AE%9A%E5%88%B6%E4%B8%BB%E9%A2%98%E5%92%8C%E6%8C%89%E9%9C%80%E5%BC%95%E5%85%A5%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
-    <content><![CDATA[<p>关于定制主题和按需引入，antd-mobile官方文档给出了明确的方案，<br>在实际使用过程中遇到一些报错。这个文章记录了这些报错，以及一些解决方案。<br><a id="more"></a><br>关于按需加载，官方文档是 <a href="https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD</a><br>根据官方的建议新建.babelrc文件，添加如下代码</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"presets"</span>: [</span><br><span class="line">        <span class="string">"next/babel"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"plugins"</span>: [</span><br><span class="line">        [</span><br><span class="line">            <span class="string">"import"</span>,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"libraryName"</span>: <span class="string">"antd-mobile"</span>,</span><br><span class="line">                <span class="string">"style"</span>: <span class="string">"css"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ] <span class="comment">// `style: true` 会加载 less 文件</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>重启项目，报错：</p>
-<blockquote>
-<p><a href="mailto:/Users/**/node_modules/_normalize.css@7.0.0" target="_blank" rel="noopener">/Users/**/node_modules/_normalize.css@7.0.0</a>@normalize.css/normalize.css:12<br>html {<br>     ^</p>
-<p>SyntaxError: Unexpected token {</p>
-</blockquote>
-<p>原因分析：在服务端，@zeit/next-css插件不会正确处理node_modules目录下的css文件。</p>
-<p>解决方案：在服务端，针对antd-mobile相关的样式文件，用<code>null-loader</code>进行处理。</p>
-<p>在next.config.js的webpack配置中添加如下代码，记得先手动安装<code>null-loader</code></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">webpack(config, &#123;isServer&#125;) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isServer) &#123;</span><br><span class="line">        <span class="keyword">const</span> antStyles = <span class="regexp">/antd-mobile\/.*?\/style.*?/</span><span class="keyword">const</span> origExternals = [...config.externals] config.externals = [(context, request, callback) = &gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (request.match(antStyles)) <span class="keyword">return</span> callback() <span class="keyword">if</span> (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span>) &#123;</span><br><span class="line">                origExternals[<span class="number">0</span>](context, request, callback)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                callback()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        ... (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span> ? [] : origExternals), ]</span><br><span class="line"></span><br><span class="line">        config.module.rules.unshift(&#123;</span><br><span class="line">            test: antStyles,</span><br><span class="line">            use: <span class="string">'null-loader'</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> config</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>关于定制主题，官方文档为 <a href="https://antd-mobile.gitee.io/docs/react/customize-theme-cn" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/customize-theme-cn</a><br>需要把上面的<code>&quot;style&quot;: &quot;css&quot;</code>改为 <code>&quot;style&quot;: true</code>。<br>此外，官方提供的webpack修改方式不适合next.js，应该在next.config.js中的webpack新增以下配置：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">config.module.rules.push(&#123;</span><br><span class="line">    test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">    use: [</span><br><span class="line">        <span class="string">'postcss-loader'</span>,</span><br><span class="line">        &#123; <span class="attr">loader</span>: <span class="string">'less-loader'</span>, <span class="attr">options</span>: &#123; <span class="attr">modifyVars</span>: theme, <span class="attr">javascriptEnabled</span>: <span class="literal">true</span> &#125; &#125;</span><br><span class="line">    ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>javascript</tag>
-        <tag>next.js</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>在jest单元测试中模拟接口请求</title>
     <url>/2021/01/05/jest%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%A6%82%E4%BD%95%E6%A8%A1%E6%8B%9F%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82/</url>
     <content><![CDATA[<p>本文先用三个步骤，简单实现一下jest模拟接口请求。然后循序渐进，给出另一个更好的可选的方案。在阅读本文之前，你应当知晓如何使用jest。</p>
@@ -128,6 +106,28 @@
 <p>而不是下面这种写法：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'./moduls/request.js'</span>);</span><br><span class="line">jest.mock(<span class="string">'request'</span>); <span class="comment">// 这样会让jest误以为模拟的是第三方模块 request</span></span><br></pre></td></tr></table></figure></p>
 <p>全文完。</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>next.js与antd-mobile：定制主题和按需引入的报错和解决</title>
+    <url>/2020/11/25/next-js%E4%B8%8Eantd-mobile%EF%BC%9A%E5%AE%9A%E5%88%B6%E4%B8%BB%E9%A2%98%E5%92%8C%E6%8C%89%E9%9C%80%E5%BC%95%E5%85%A5%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
+    <content><![CDATA[<p>关于定制主题和按需引入，antd-mobile官方文档给出了明确的方案，<br>在实际使用过程中遇到一些报错。这个文章记录了这些报错，以及一些解决方案。<br><a id="more"></a><br>关于按需加载，官方文档是 <a href="https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD</a><br>根据官方的建议新建.babelrc文件，添加如下代码</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"presets"</span>: [</span><br><span class="line">        <span class="string">"next/babel"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"plugins"</span>: [</span><br><span class="line">        [</span><br><span class="line">            <span class="string">"import"</span>,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"libraryName"</span>: <span class="string">"antd-mobile"</span>,</span><br><span class="line">                <span class="string">"style"</span>: <span class="string">"css"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ] <span class="comment">// `style: true` 会加载 less 文件</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重启项目，报错：</p>
+<blockquote>
+<p><a href="mailto:/Users/**/node_modules/_normalize.css@7.0.0" target="_blank" rel="noopener">/Users/**/node_modules/_normalize.css@7.0.0</a>@normalize.css/normalize.css:12<br>html {<br>     ^</p>
+<p>SyntaxError: Unexpected token {</p>
+</blockquote>
+<p>原因分析：在服务端，@zeit/next-css插件不会正确处理node_modules目录下的css文件。</p>
+<p>解决方案：在服务端，针对antd-mobile相关的样式文件，用<code>null-loader</code>进行处理。</p>
+<p>在next.config.js的webpack配置中添加如下代码，记得先手动安装<code>null-loader</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">webpack(config, &#123;isServer&#125;) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isServer) &#123;</span><br><span class="line">        <span class="keyword">const</span> antStyles = <span class="regexp">/antd-mobile\/.*?\/style.*?/</span><span class="keyword">const</span> origExternals = [...config.externals] config.externals = [(context, request, callback) = &gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (request.match(antStyles)) <span class="keyword">return</span> callback() <span class="keyword">if</span> (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span>) &#123;</span><br><span class="line">                origExternals[<span class="number">0</span>](context, request, callback)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                callback()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        ... (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span> ? [] : origExternals), ]</span><br><span class="line"></span><br><span class="line">        config.module.rules.unshift(&#123;</span><br><span class="line">            test: antStyles,</span><br><span class="line">            use: <span class="string">'null-loader'</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> config</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于定制主题，官方文档为 <a href="https://antd-mobile.gitee.io/docs/react/customize-theme-cn" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/customize-theme-cn</a><br>需要把上面的<code>&quot;style&quot;: &quot;css&quot;</code>改为 <code>&quot;style&quot;: true</code>。<br>此外，官方提供的webpack修改方式不适合next.js，应该在next.config.js中的webpack新增以下配置：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">config.module.rules.push(&#123;</span><br><span class="line">    test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">    use: [</span><br><span class="line">        <span class="string">'postcss-loader'</span>,</span><br><span class="line">        &#123; <span class="attr">loader</span>: <span class="string">'less-loader'</span>, <span class="attr">options</span>: &#123; <span class="attr">modifyVars</span>: theme, <span class="attr">javascriptEnabled</span>: <span class="literal">true</span> &#125; &#125;</span><br><span class="line">    ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+        <tag>next.js</tag>
+      </tags>
   </entry>
   <entry>
     <title>next.js如何同时支持导入css和less</title>
@@ -258,26 +258,6 @@
       </tags>
   </entry>
   <entry>
-    <title>微信小程序如何隐藏canvas</title>
-    <url>/2019/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E9%9A%90%E8%97%8Fcanvas/</url>
-    <content><![CDATA[<p>问题：选中图片后，把图片画到<code>canvas</code>上，但是并不想让用户看到这个<code>canvas</code>，请问如何在小程序页面中隐藏<code>canvas</code>呢？<br><a id="more"></a><br>解决方案（已验证有效）：为canvas设置如下样式<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attribute">postion</span>: fixed;</span><br><span class="line">    <span class="attribute">left</span>: -<span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">bottom</span>: -<span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-]]></content>
-      <tags>
-        <tag>微信小程序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>轻量实现JSON数据高亮美化</title>
-    <url>/2019/02/25/%E8%BD%BB%E9%87%8F%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/</url>
-    <content><![CDATA[<p>现在市面上存在一些优秀的代码高亮工具，例如<code>highlight.js</code>、<code>prettify.js</code>，在某些情况下，项目需要将后端接口返回的数据进行高亮美化，然后显示在web端。为了达到这种效果而引入整个插件，会显得臃肿。因此，我们需要一种更轻量的代码高亮的实现方式。<br><a id="more"></a><br>下面的方法接受一段需要美化的代码，方法为一些基本类型加上了类名，这样，我们就可以为代码添加样式。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">syntaxHighlight</span>(<span class="params">json</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> json !== <span class="string">'string'</span>) &#123;</span><br><span class="line">    json = <span class="built_in">JSON</span>.stringify(json, <span class="literal">undefined</span>, <span class="number">2</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  json = json.replace(<span class="regexp">/&amp;/g</span>, <span class="string">'&amp;'</span>).replace(<span class="regexp">/&lt;/g</span>, <span class="string">'&lt;'</span>).replace(<span class="regexp">/&gt;/g</span>, <span class="string">'&gt;'</span>);</span><br><span class="line">  <span class="keyword">return</span> json.replace(<span class="regexp">/("(\\u[a-zA-Z0-9]&#123;4&#125;|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">match</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> cls = <span class="string">'number'</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/^"/</span>.test(match)) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="regexp">/:$/</span>.test(match)) &#123;</span><br><span class="line">        cls = <span class="string">'key'</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        cls = <span class="string">'string'</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="regexp">/true|false/</span>.test(match)) &#123;</span><br><span class="line">      cls = <span class="string">'boolean'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="regexp">/null/</span>.test(match)) &#123;</span><br><span class="line">      cls = <span class="string">'null'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&lt;span class="'</span> + cls + <span class="string">'"&gt;'</span> + match + <span class="string">'&lt;/span&gt;'</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>例如后端返回的数据为<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  name: &apos;Jons&apos;,</span><br><span class="line">  age: 14,</span><br><span class="line">  id: 001,</span><br><span class="line">  sex: &apos;male&apos;,</span><br><span class="line">  address: null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>经过我们高亮后的代码<br><img src="https://p1.meituan.net/dpnewvc/affbd2bff7c2efce15c862c220db2ebc14675.jpg" alt="https://p1.meituan.net/dpnewvc/affbd2bff7c2efce15c862c220db2ebc14675.jpg"><br>效果查看<br><a href="https://jsfiddle.net/zhaohd/v4q8zp0k/" target="_blank" rel="noopener">https://jsfiddle.net/zhaohd/v4q8zp0k/</a></p>
-]]></content>
-      <tags>
-        <tag>javascript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>微信小程序音频audio API如何结合列表渲染</title>
     <url>/2019/03/10/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%9F%B3%E9%A2%91audio%20API%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/</url>
     <content><![CDATA[<p><code>audio</code>组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护<code>audio</code>组件，建议使用能力更强的 <code>wx.createInnerAudioContext</code> 接口。以前列表渲染出来的<code>audio</code>需要技术改造。</p>
@@ -303,13 +283,12 @@
       </tags>
   </entry>
   <entry>
-    <title>联想法区分substring和substr方法</title>
-    <url>/2019/03/01/%E8%81%94%E6%83%B3%E6%B3%95%E5%8C%BA%E5%88%86substring%E5%92%8Csubstr%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p><code>substring</code>和<code>substr</code>方法都可以从字符串中抽取出一些字符，无论是方法名和参数，都十分相似。在紧张的面试氛围下，老铁们可能会混淆两者传入的第二个参数。笔者遵循联想法，想出了一个区分方法。<br><a id="more"></a><br>先看看这两个方法各自的参数：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">stringObject.substr(start,length)</span><br><span class="line">stringObject.substring(start,stop)</span><br></pre></td></tr></table></figure></p>
-<p>两者区别于第二个参数。<code>substr</code>传的是长度（length），<code>substring</code>传的是结束点（stop）。<br>str和length勉勉强强能组成单词strength（强度；力量）而string和length没法组成单词。<br>所以和方法<code>substr</code>搭配的参数应该是长度length。<br>以后面试官问你<code>substr</code>或者开发中使用<code>substr</code>时，脑海里就能准确地想出第二个参数为长度length。</p>
+    <title>微信小程序如何隐藏canvas</title>
+    <url>/2019/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E9%9A%90%E8%97%8Fcanvas/</url>
+    <content><![CDATA[<p>问题：选中图片后，把图片画到<code>canvas</code>上，但是并不想让用户看到这个<code>canvas</code>，请问如何在小程序页面中隐藏<code>canvas</code>呢？<br><a id="more"></a><br>解决方案（已验证有效）：为canvas设置如下样式<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attribute">postion</span>: fixed;</span><br><span class="line">    <span class="attribute">left</span>: -<span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">bottom</span>: -<span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <tags>
-        <tag>javascript</tag>
+        <tag>微信小程序</tag>
       </tags>
   </entry>
   <entry>
@@ -329,6 +308,27 @@
 <h4 id="jquery-cookie-插件-实现"><a href="#jquery-cookie-插件-实现" class="headerlink" title="jquery-cookie 插件 实现"></a>jquery-cookie 插件 实现</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建名为name值为value，有效期为7天，路径为`/`的cookie</span></span><br><span class="line">$.cookie(<span class="string">'name'</span>, <span class="string">'value'</span>, &#123; <span class="attr">expires</span>: <span class="number">7</span>, <span class="attr">path</span>: <span class="string">'/'</span> &#125;);</span><br><span class="line"><span class="comment">//获取指定name的cookie，若找不到，返回 undefined</span></span><br><span class="line">$.cookie(<span class="string">'name'</span>); <span class="comment">// =&gt; "value"</span></span><br><span class="line">$.cookie(<span class="string">'nothing'</span>); <span class="comment">// =&gt; undefined</span></span><br><span class="line"><span class="comment">//获取所有有效cookie</span></span><br><span class="line">$.cookie();</span><br><span class="line"><span class="comment">//删除指定cookie，删除失败返回false</span></span><br><span class="line">$.removeCookie(<span class="string">'name'</span>); <span class="comment">// =&gt; true</span></span><br><span class="line">$.removeCookie(<span class="string">'nothing'</span>); <span class="comment">// =&gt; false</span></span><br><span class="line"><span class="comment">//若创建某一cookie时设置了额外信息，删除时需要传入对应的额外参数</span></span><br><span class="line">$.cookie(<span class="string">'name'</span>, <span class="string">'value'</span>, &#123; <span class="attr">path</span>: <span class="string">'/'</span> &#125;);</span><br><span class="line"><span class="comment">// 删除失败</span></span><br><span class="line">$.removeCookie(<span class="string">'name'</span>); <span class="comment">// =&gt; false</span></span><br><span class="line"><span class="comment">// 删除成功</span></span><br><span class="line">$.removeCookie(<span class="string">'name'</span>, &#123; <span class="attr">path</span>: <span class="string">'/'</span> &#125;); <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
 <h3 id="cookie-如何读写json数据"><a href="#cookie-如何读写json数据" class="headerlink" title="cookie 如何读写json数据"></a>cookie 如何读写json数据</h3><p>写入json数据：调用<code>JSON.stringify()</code>方法，将json数据转换为字符串，利用上面的cookie操作创建cookie。</p>
 <p>读取json数据：读取该cookie时，返回json字符串，调用<code>JSON.parse()</code>方法，解析为原json数据。</p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>联想法区分substring和substr方法</title>
+    <url>/2019/03/01/%E8%81%94%E6%83%B3%E6%B3%95%E5%8C%BA%E5%88%86substring%E5%92%8Csubstr%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><code>substring</code>和<code>substr</code>方法都可以从字符串中抽取出一些字符，无论是方法名和参数，都十分相似。在紧张的面试氛围下，老铁们可能会混淆两者传入的第二个参数。笔者遵循联想法，想出了一个区分方法。<br><a id="more"></a><br>先看看这两个方法各自的参数：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">stringObject.substr(start,length)</span><br><span class="line">stringObject.substring(start,stop)</span><br></pre></td></tr></table></figure></p>
+<p>两者区别于第二个参数。<code>substr</code>传的是长度（length），<code>substring</code>传的是结束点（stop）。<br>str和length勉勉强强能组成单词strength（强度；力量）而string和length没法组成单词。<br>所以和方法<code>substr</code>搭配的参数应该是长度length。<br>以后面试官问你<code>substr</code>或者开发中使用<code>substr</code>时，脑海里就能准确地想出第二个参数为长度length。</p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>轻量实现JSON数据高亮美化</title>
+    <url>/2019/02/25/%E8%BD%BB%E9%87%8F%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/</url>
+    <content><![CDATA[<p>现在市面上存在一些优秀的代码高亮工具，例如<code>highlight.js</code>、<code>prettify.js</code>，在某些情况下，项目需要将后端接口返回的数据进行高亮美化，然后显示在web端。为了达到这种效果而引入整个插件，会显得臃肿。因此，我们需要一种更轻量的代码高亮的实现方式。<br><a id="more"></a><br>下面的方法接受一段需要美化的代码，方法为一些基本类型加上了类名，这样，我们就可以为代码添加样式。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">syntaxHighlight</span>(<span class="params">json</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> json !== <span class="string">'string'</span>) &#123;</span><br><span class="line">    json = <span class="built_in">JSON</span>.stringify(json, <span class="literal">undefined</span>, <span class="number">2</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  json = json.replace(<span class="regexp">/&amp;/g</span>, <span class="string">'&amp;'</span>).replace(<span class="regexp">/&lt;/g</span>, <span class="string">'&lt;'</span>).replace(<span class="regexp">/&gt;/g</span>, <span class="string">'&gt;'</span>);</span><br><span class="line">  <span class="keyword">return</span> json.replace(<span class="regexp">/("(\\u[a-zA-Z0-9]&#123;4&#125;|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">match</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> cls = <span class="string">'number'</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/^"/</span>.test(match)) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="regexp">/:$/</span>.test(match)) &#123;</span><br><span class="line">        cls = <span class="string">'key'</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        cls = <span class="string">'string'</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="regexp">/true|false/</span>.test(match)) &#123;</span><br><span class="line">      cls = <span class="string">'boolean'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="regexp">/null/</span>.test(match)) &#123;</span><br><span class="line">      cls = <span class="string">'null'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&lt;span class="'</span> + cls + <span class="string">'"&gt;'</span> + match + <span class="string">'&lt;/span&gt;'</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>例如后端返回的数据为<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  name: &apos;Jons&apos;,</span><br><span class="line">  age: 14,</span><br><span class="line">  id: 001,</span><br><span class="line">  sex: &apos;male&apos;,</span><br><span class="line">  address: null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>经过我们高亮后的代码<br><img src="https://p1.meituan.net/dpnewvc/affbd2bff7c2efce15c862c220db2ebc14675.jpg" alt="https://p1.meituan.net/dpnewvc/affbd2bff7c2efce15c862c220db2ebc14675.jpg"><br>效果查看<br><a href="https://jsfiddle.net/zhaohd/v4q8zp0k/" target="_blank" rel="noopener">https://jsfiddle.net/zhaohd/v4q8zp0k/</a></p>
 ]]></content>
       <tags>
         <tag>javascript</tag>
