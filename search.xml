@@ -68,6 +68,18 @@
       </tags>
   </entry>
   <entry>
+    <title>javascript 常用算法</title>
+    <url>/2019/01/05/javascript%20%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h3 id="简单选择排序"><a href="#简单选择排序" class="headerlink" title="简单选择排序"></a>简单选择排序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">selectSort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> len = arr.length</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> x = <span class="number">0</span>; x &lt; len - <span class="number">1</span>; x++) &#123;</span><br><span class="line">        <span class="keyword">var</span> min = x;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> y = x + <span class="number">1</span>; y &lt; len; y++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[min] &gt; arr[y]) &#123;</span><br><span class="line">                min = y</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (min !== x) &#123;</span><br><span class="line">            <span class="keyword">var</span> temp = arr[x];</span><br><span class="line">            arr[x] = arr[min];</span><br><span class="line">            arr[min] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;arr.length;i++)&#123;</span><br><span class="line">         <span class="keyword">for</span>(<span class="keyword">var</span> j=<span class="number">0</span>;j&lt;arr.length-i;j++)&#123;</span><br><span class="line">             <span class="keyword">var</span> temp;</span><br><span class="line">             <span class="keyword">if</span>(arr[j]&gt;arr[j+<span class="number">1</span>])&#123;</span><br><span class="line">                 temp=arr[j];</span><br><span class="line">                 arr[j]=arr[j+<span class="number">1</span>];</span><br><span class="line">                 arr[j+<span class="number">1</span>]=temp;</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertionSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> j = i;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;</span><br><span class="line">            <span class="keyword">var</span> temp = arr[j];</span><br><span class="line">            arr[j] = arr[j - <span class="number">1</span>];</span><br><span class="line">            arr[j - <span class="number">1</span>] = temp;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="随机指定长度字符串"><a href="#随机指定长度字符串" class="headerlink" title="随机指定长度字符串"></a>随机指定长度字符串</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">randomString</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">'abcdefghijklmnopqrstuvwxyz9876543210'</span>;</span><br><span class="line">    <span class="keyword">var</span> tmp = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">var</span> l = str.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        tmp += str.charAt(<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * l));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>constructor方法返回什么?</title>
     <url>/2021/05/27/constructor%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9E%E4%BB%80%E4%B9%88/</url>
     <content><![CDATA[<p>ES6标准引入了类<code>class</code>的概念，常常被用于创建一个对象。类中有个特殊的方法<code>constructor</code>，它的返回值有一些让人迷惑的地方。<br><a id="more"></a><br>先简单梳理一下使用关键词new创建一个对象时发生了什么：</p>
@@ -84,18 +96,6 @@
 ]]></content>
       <tags>
         <tag>javascript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>javascript 常用算法</title>
-    <url>/2019/01/05/javascript%20%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h3 id="简单选择排序"><a href="#简单选择排序" class="headerlink" title="简单选择排序"></a>简单选择排序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">selectSort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> len = arr.length</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> x = <span class="number">0</span>; x &lt; len - <span class="number">1</span>; x++) &#123;</span><br><span class="line">        <span class="keyword">var</span> min = x;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> y = x + <span class="number">1</span>; y &lt; len; y++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[min] &gt; arr[y]) &#123;</span><br><span class="line">                min = y</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (min !== x) &#123;</span><br><span class="line">            <span class="keyword">var</span> temp = arr[x];</span><br><span class="line">            arr[x] = arr[min];</span><br><span class="line">            arr[min] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;arr.length;i++)&#123;</span><br><span class="line">         <span class="keyword">for</span>(<span class="keyword">var</span> j=<span class="number">0</span>;j&lt;arr.length-i;j++)&#123;</span><br><span class="line">             <span class="keyword">var</span> temp;</span><br><span class="line">             <span class="keyword">if</span>(arr[j]&gt;arr[j+<span class="number">1</span>])&#123;</span><br><span class="line">                 temp=arr[j];</span><br><span class="line">                 arr[j]=arr[j+<span class="number">1</span>];</span><br><span class="line">                 arr[j+<span class="number">1</span>]=temp;</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertionSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> j = i;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;</span><br><span class="line">            <span class="keyword">var</span> temp = arr[j];</span><br><span class="line">            arr[j] = arr[j - <span class="number">1</span>];</span><br><span class="line">            arr[j - <span class="number">1</span>] = temp;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="随机指定长度字符串"><a href="#随机指定长度字符串" class="headerlink" title="随机指定长度字符串"></a>随机指定长度字符串</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">randomString</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">'abcdefghijklmnopqrstuvwxyz9876543210'</span>;</span><br><span class="line">    <span class="keyword">var</span> tmp = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">var</span> l = str.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        tmp += str.charAt(<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * l));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -282,31 +282,6 @@
       </tags>
   </entry>
   <entry>
-    <title>微信小程序音频audio API如何结合列表渲染</title>
-    <url>/2019/03/10/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%9F%B3%E9%A2%91audio%20API%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/</url>
-    <content><![CDATA[<p><code>audio</code>组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护<code>audio</code>组件，建议使用能力更强的 <code>wx.createInnerAudioContext</code> 接口。以前列表渲染出来的<code>audio</code>需要技术改造。</p>
-<a id="more"></a>
-<p>比如我们有一段音频数据：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [&#123;</span><br><span class="line">  id:<span class="number">1</span>,</span><br><span class="line">  title:<span class="string">'爱过的人我已不再拥有'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0904/57cb989b04d4c.png'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0904/57cb989b1e3b4.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">2</span>,</span><br><span class="line">  title:<span class="string">'已过了耳濡目染的年'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0517/573b1240af3da.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0517/573b1240d0118.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">3</span>,</span><br><span class="line">  title:<span class="string">'感觉很放松'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/1108/5821463c3fad8.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/1104/581b63392f6cb.mp3'</span></span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure></p>
-<p>现在我们想要达到这种目的：</p>
-<ol>
-<li>音频以列表的形式展现在小程序上。</li>
-<li>每个音频旁边都会有个按钮，初始情况按钮上文字为‘播放’；点击‘播放’，小程序播放该音频，按钮文字变成‘暂停’。</li>
-<li>点击‘暂停’按钮，停止播放音频，按钮文字变成‘播放’。</li>
-<li>不能同时播放多个音频：如果音频A正处于播放状态，点击播放音频B时，音频A停止播放。</li>
-</ol>
-<p>思路：</p>
-<ol>
-<li>使用<code>wx:for</code></li>
-<li>将列表中每一个音频做为组件</li>
-<li>在父组件设置一个<code>id</code>，用于控制应该播放哪个音频</li>
-</ol>
-<p>示例代码<br><a href="https://github.com/zhaohaodang/wechat-app-audio-list" target="_blank" rel="noopener">https://github.com/zhaohaodang/wechat-app-audio-list</a></p>
-]]></content>
-      <tags>
-        <tag>微信小程序</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>梳理cookie</title>
     <url>/2019/03/04/%E6%A2%B3%E7%90%86cookie/</url>
     <content><![CDATA[<h3 id="cookie-概述"><a href="#cookie-概述" class="headerlink" title="cookie 概述"></a>cookie 概述</h3><p>cookie 是JavaScript提供的一种本地存储机制，是存于硬盘某一位置的文本文件。以win7 Chrome 为例，其cookie的存储位置为<code>C:\Users\yourUserName\AppData\Local\Google\Chrome\UserData\Default\Cookies</code><br>打开开发者工具，在Application-&gt;Storage-&gt;Cookies标签下，可以查看与网站相关的cookie。<br>当cookie读/写时，会被对应地解码/编码。<br><a id="more"></a></p>
@@ -347,6 +322,31 @@
 ]]></content>
       <tags>
         <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微信小程序音频audio API如何结合列表渲染</title>
+    <url>/2019/03/10/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%9F%B3%E9%A2%91audio%20API%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/</url>
+    <content><![CDATA[<p><code>audio</code>组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护<code>audio</code>组件，建议使用能力更强的 <code>wx.createInnerAudioContext</code> 接口。以前列表渲染出来的<code>audio</code>需要技术改造。</p>
+<a id="more"></a>
+<p>比如我们有一段音频数据：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [&#123;</span><br><span class="line">  id:<span class="number">1</span>,</span><br><span class="line">  title:<span class="string">'爱过的人我已不再拥有'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0904/57cb989b04d4c.png'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0904/57cb989b1e3b4.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">2</span>,</span><br><span class="line">  title:<span class="string">'已过了耳濡目染的年'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0517/573b1240af3da.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0517/573b1240d0118.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">3</span>,</span><br><span class="line">  title:<span class="string">'感觉很放松'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/1108/5821463c3fad8.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/1104/581b63392f6cb.mp3'</span></span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure></p>
+<p>现在我们想要达到这种目的：</p>
+<ol>
+<li>音频以列表的形式展现在小程序上。</li>
+<li>每个音频旁边都会有个按钮，初始情况按钮上文字为‘播放’；点击‘播放’，小程序播放该音频，按钮文字变成‘暂停’。</li>
+<li>点击‘暂停’按钮，停止播放音频，按钮文字变成‘播放’。</li>
+<li>不能同时播放多个音频：如果音频A正处于播放状态，点击播放音频B时，音频A停止播放。</li>
+</ol>
+<p>思路：</p>
+<ol>
+<li>使用<code>wx:for</code></li>
+<li>将列表中每一个音频做为组件</li>
+<li>在父组件设置一个<code>id</code>，用于控制应该播放哪个音频</li>
+</ol>
+<p>示例代码<br><a href="https://github.com/zhaohaodang/wechat-app-audio-list" target="_blank" rel="noopener">https://github.com/zhaohaodang/wechat-app-audio-list</a></p>
+]]></content>
+      <tags>
+        <tag>微信小程序</tag>
       </tags>
   </entry>
   <entry>
