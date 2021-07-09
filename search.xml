@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>H5实现上传图片预览</title>
+    <url>/2019/03/04/H5%E5%AE%9E%E7%8E%B0%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E9%A2%84%E8%A7%88/</url>
+    <content><![CDATA[<p>H5新增了FileReader对象，该对象允许Web应用程序异步读取存储在用户计算机上的文件内容，构造函数为FileReader()，它返回一个新构造的FileReader实例。</p>
+<p>实例拥有一个名为readAsDataURL 的方法，该方法会读取指定的 Blob或 File对象。</p>
+<p>一旦读取完成，会触发onload事件。该事件的result属性将包含一个data:URL格式的字符串（base64编码） ，进而实现图片预览。</p>
+<p>HTML</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"choose"</span> <span class="attr">value</span>=<span class="string">"选择文件"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"show"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>JS</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'choose'</span>),</span><br><span class="line">  show = <span class="built_in">document</span>.getElementById(<span class="string">'show'</span>)</span><br><span class="line">btn.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader()</span><br><span class="line">  reader.readAsDataURL(<span class="keyword">this</span>.files[<span class="number">0</span>])<span class="comment">//以File对象作为参数</span></span><br><span class="line">  reader.onload = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    show.src = e.target.result <span class="comment">//这里获取到图片base64编码</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://link.zhihu.com/?target=https%3A//jsfiddle.net/zhaohd/n6yn0d3f/" target="_blank" rel="noopener">在JSFiddle上运行</a></p>
+<p><a href="http://link.zhihu.com/?target=http%3A//jsrun.net/TkgKp/edit" target="_blank" rel="noopener">在JSRun上运行</a></p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTML事件处理程序中的扩展作用域</title>
+    <url>/2021/07/09/HTML%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E6%89%A9%E5%B1%95%E4%BD%9C%E7%94%A8%E5%9F%9F/</url>
+    <content><![CDATA[<p>在HTML事件处理程序中，可以直接使用<code>event</code>对象访问事件对象，我们不用手动定义它，也不用从函数的参数列表中读取。另一个有意思的地方是它扩展了函数中的作用域。<br><a id="more"></a><br>先看下面两个示例，展示了如何用<code>event</code>访问元素的<code>value</code>属性。<br><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 输出 "Click Me" --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"Click Me"</span> <span class="attr">onclick</span>=<span class="string">"alert(event.value)"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><code>alert(event.value)</code>这段代码之所以会执行，是因为浏览器把它包装成了一个函数:<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(event.value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在这个函数中可以直接访问<code>document</code>对象，以及用<code>this</code>访问元素本身。感觉像是利用<code>with</code>关键词扩展了函数内部的作用域。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">with</span>(<span class="built_in">document</span>)&#123;</span><br><span class="line">        <span class="keyword">with</span>(<span class="keyword">this</span>)&#123;</span><br><span class="line">            alert(event.value);</span><br><span class="line">         &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>所以下面的写法都是有效的：<br><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 输出 "Click Me" --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"Click Me"</span> <span class="attr">onclick</span>=<span class="string">"alert(this.value)"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"Click Me"</span> <span class="attr">onclick</span>=<span class="string">"alert(value)"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 假设id为demo的元素已存在 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"Click Me"</span> <span class="attr">onclick</span>=<span class="string">'getElementById("demo").innerHTML = Date()'</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>还有一种情况，如果元素是表单里的一个输入元素（<code>div</code>标签是不行的），则函数中就会有访问表单元素的入口。上面的函数就会变成这样：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">with</span>(<span class="built_in">document</span>)&#123;</span><br><span class="line">        <span class="keyword">with</span>(<span class="keyword">this</span>.form)&#123;</span><br><span class="line">            <span class="keyword">with</span>(<span class="keyword">this</span>)&#123;</span><br><span class="line">               </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这也是下面的<code>input</code>标签能够提交表单的原因，<code>submit()</code>方法真正执行的是<code>form</code>对象的<code>submit</code>方法：<br><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"Click Me"</span> <span class="attr">onclick</span>=<span class="string">"submit()"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>也可以利用表单中其他元素的<code>name</code>值，获取该元素：<br><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"Echo Username"</span> <span class="attr">onclick</span>=<span class="string">"alert(username.value)"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JSON.stringify/parse 实现深拷贝的缺点</title>
+    <url>/2019/01/05/JSON.parse%E5%AE%9E%E7%8E%B0%E6%B7%B1%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7/</url>
+    <content><![CDATA[<p>JSON对象中的parse和stringify结合使用，常常被用来实现深拷贝一个对象，下面的代码实现了对对象obj的深拷贝：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">name</span>:<span class="string">"obj"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  &#123;name: "obj"&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>深拷贝的一个作用就是，修改obj的name属性，不会影响objCopy的name属性。<br>但是这个方法不是万能的，它仍然有一定的局限性<br><a id="more"></a></p>
+<ol>
+<li><p>如果被拷贝的对象中有function，则拷贝之后的对象就会丢失这个function，比如</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">      func:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  最终得到 &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果被拷贝的对象中某个属性的值为undefined，则拷贝之后该属性会丢失，比如</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">      name:<span class="literal">undefined</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  最终得到 &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果被拷贝的对象中有正则表达式，则拷贝之后的对象正则表达式会变成Object，比如</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">      reg:<span class="regexp">/abc/</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> objCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj)); <span class="comment">//  最终得到 &#123;reg:&#123;&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>为了让代码更加稳健，建议使用第三方库lodash中的<a href="https://lodash.com/docs/4.17.15#cloneDeep" target="_blank" rel="noopener">cloneDeep</a>方法</p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mac显示已连接蓝牙耳机但没声音</title>
+    <url>/2019/10/21/Mac%E6%98%BE%E7%A4%BA%E5%B7%B2%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA%E4%BD%86%E6%B2%A1%E5%A3%B0%E9%9F%B3/</url>
+    <content><![CDATA[<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>更新了Mac系统后（Catalina），系统偏好设置中，蓝牙设置显示已连接到耳机，但是耳机没有声音。声音输出设置中也没有已连接的蓝牙耳机。多次断开重连蓝牙、重启Mac、重启蓝牙耳机都没用。<br><a id="more"></a><br><img src="https://s2.ax1x.com/2019/10/21/KQXr8g.png" alt="KQXr8g.png"><br><img src="https://s2.ax1x.com/2019/10/21/KQjiqI.png" alt="KQjiqI.png"></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>1.先关机。<br>2.接着开机，并<strong>立即同时</strong>按住以下四个按键：Option、Command、P 和 R。您可以在大约 20 秒后松开这些按键，或者在听到两次开机声音（就是Mac那种噔！的开机声）后松开这些按键。<br>3.重新连接蓝牙耳机，检查声音是否正常。<br>4.若还是不行，重复上面步骤。</p>
+<blockquote>
+<p>参考链接：<a href="https://support.apple.com/zh-cn/HT204063" target="_blank" rel="noopener">https://support.apple.com/zh-cn/HT204063</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>互联网</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>constructor方法返回什么?</title>
+    <url>/2021/05/27/constructor%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9E%E4%BB%80%E4%B9%88/</url>
+    <content><![CDATA[<p>ES6标准引入了类<code>class</code>的概念，常常被用于创建一个对象。类中有个特殊的方法<code>constructor</code>，它的返回值有一些让人迷惑的地方。<br><a id="more"></a><br>先简单梳理一下使用关键词new创建一个对象时发生了什么：</p>
+<ol>
+<li>创建一个空对象</li>
+<li>将this指向该对象，然后执行<code>constructor</code>函数中的代码，将一些数据通过this赋值给对象</li>
+<li>返回this</li>
+</ol>
+<p>默认情况下，<code>constructor</code>方法返回<code>this</code>，所以说下面某行代码<code>return this</code>是没必要写上去的。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> MyClass(); <span class="comment">// &#123;val: 10&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>但是，如果手动地在<code>constructor</code>方法中返回一个合理的值，比如一个对象<code>{name:&quot;js&quot;}</code>，那么<code>constructor</code>方法将返回<code>{name:&quot;js&quot;}</code>:<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="attr">name</span>: <span class="string">"js"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> MyClass(); <span class="comment">// &#123;name: "js"&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果手动地返回一个看似不合理的值，例如2，那么<code>constructor</code>方法仍然返回this:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> MyClass(); <span class="comment">// &#123;val: 10&#125;</span></span><br></pre></td></tr></table></figure>
+<p>合理的值包括：<code>null</code>、数组、对象<br>不合理的值包括：字符串、数字、<code>undefined</code></p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>javascript 常用算法</title>
+    <url>/2019/01/05/javascript%20%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h3 id="简单选择排序"><a href="#简单选择排序" class="headerlink" title="简单选择排序"></a>简单选择排序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">selectSort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> len = arr.length</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> x = <span class="number">0</span>; x &lt; len - <span class="number">1</span>; x++) &#123;</span><br><span class="line">        <span class="keyword">var</span> min = x;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> y = x + <span class="number">1</span>; y &lt; len; y++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[min] &gt; arr[y]) &#123;</span><br><span class="line">                min = y</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (min !== x) &#123;</span><br><span class="line">            <span class="keyword">var</span> temp = arr[x];</span><br><span class="line">            arr[x] = arr[min];</span><br><span class="line">            arr[min] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;arr.length;i++)&#123;</span><br><span class="line">         <span class="keyword">for</span>(<span class="keyword">var</span> j=<span class="number">0</span>;j&lt;arr.length-i;j++)&#123;</span><br><span class="line">             <span class="keyword">var</span> temp;</span><br><span class="line">             <span class="keyword">if</span>(arr[j]&gt;arr[j+<span class="number">1</span>])&#123;</span><br><span class="line">                 temp=arr[j];</span><br><span class="line">                 arr[j]=arr[j+<span class="number">1</span>];</span><br><span class="line">                 arr[j+<span class="number">1</span>]=temp;</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertionSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> j = i;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;</span><br><span class="line">            <span class="keyword">var</span> temp = arr[j];</span><br><span class="line">            arr[j] = arr[j - <span class="number">1</span>];</span><br><span class="line">            arr[j - <span class="number">1</span>] = temp;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="随机指定长度字符串"><a href="#随机指定长度字符串" class="headerlink" title="随机指定长度字符串"></a>随机指定长度字符串</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">randomString</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">'abcdefghijklmnopqrstuvwxyz9876543210'</span>;</span><br><span class="line">    <span class="keyword">var</span> tmp = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">var</span> l = str.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        tmp += str.charAt(<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * l));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在jest单元测试中模拟接口请求</title>
+    <url>/2021/01/05/jest%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%A6%82%E4%BD%95%E6%A8%A1%E6%8B%9F%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82/</url>
+    <content><![CDATA[<p>本文先用三个步骤，简单实现一下jest模拟接口请求。然后循序渐进，给出另一个更好的可选的方案。在阅读本文之前，你应当知晓如何使用jest。</p>
+<a id="more"></a>
+<p>先从一个例子开始，有个<code>index.js</code>文件，使用<code>axios</code>请求后端接口，代码如下：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">'axios'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">getFirstAlbumTitle</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> axios.get(<span class="string">'https://jsonplaceholder.typicode.com/albums'</span>);</span><br><span class="line">  <span class="keyword">return</span> response.data[<span class="number">0</span>].title;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = getFirstAlbumTitle;</span><br></pre></td></tr></table></figure></p>
+<p>然后，我们要对它进行测试，<code>index.test.js</code>代码如下：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// index.test.js</span></span><br><span class="line"><span class="keyword">const</span> getFirstAlbumTitle = <span class="built_in">require</span>(<span class="string">'./index'</span>);</span><br><span class="line"></span><br><span class="line">it(<span class="string">'returns the title of the first album'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> title = <span class="keyword">await</span> getFirstAlbumTitle();</span><br><span class="line">  expect(title).toEqual(<span class="string">'quidem molestiae enim'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>如果不模拟接口请求，每次跑测试用例，都会真实地请求<code>albums</code>接口，严重拖慢测试的速度。并且接口的响应值常常是不固定的，title并不一定会返回’quidem molestiae enim’，导致测试失败。<br>现在按照下列3个步骤：</p>
+<ol>
+<li>在测试文件中导入需要模拟的模块</li>
+<li>使用<code>jest.mock()</code>方法mock一下模块</li>
+<li>使用.mockResolvedValue()模拟数据返回</li>
+</ol>
+<p>将<code>index.test.js</code>进行修改：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// index.test.js</span></span><br><span class="line"><span class="keyword">const</span> getFirstAlbumTitle = <span class="built_in">require</span>(<span class="string">'./index'</span>);</span><br><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">'axios'</span>);</span><br><span class="line"></span><br><span class="line">jest.mock(<span class="string">'axios'</span>);</span><br><span class="line"></span><br><span class="line">it(<span class="string">'returns the title of the first album'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  axios.get.mockResolvedValue(&#123;</span><br><span class="line">    data: [</span><br><span class="line">      &#123;</span><br><span class="line">        userId: <span class="number">1</span>,</span><br><span class="line">        id: <span class="number">1</span>,</span><br><span class="line">        title: <span class="string">'My First Album'</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        userId: <span class="number">1</span>,</span><br><span class="line">        id: <span class="number">2</span>,</span><br><span class="line">        title: <span class="string">'Album: The Sequel'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> title = <span class="keyword">await</span> getFirstAlbumTitle();</span><br><span class="line">  expect(title).toEqual(<span class="string">'My First Album'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>发生了什么？这里面最核心的一句是<code>jest.mock(&#39;axios&#39;)</code>，这让<code>jest</code>用一个空的函数，接管了<code>axios</code>的所有行为，在没有使用<code>mockResolvedValue</code>方法前，<strong>本文件中</strong>的<code>axios</code>的所有方法都将返回<code>undefined</code>：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">'axios'</span>);</span><br><span class="line">jest.mock(<span class="string">'axios'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Does nothing, then returns undefined:</span></span><br><span class="line">axios.get(<span class="string">'https://www.google.com'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Does nothing, then returns undefined:</span></span><br><span class="line">axios.post(<span class="string">'https://jsonplaceholder.typicode.com/albums'</span>, &#123;</span><br><span class="line">    id: <span class="number">3</span>,</span><br><span class="line">    title: <span class="string">'Album with a Vengeance'</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>注意，<code>jest.mock()</code>应该在外层调用，而不是在<code>it</code>中调用。<br>一旦调用了<code>jest.mock(&#39;axios&#39;)</code>，在测试文件<code>index.test.js</code>中的所有<code>axio</code>请求都会被接管，包括在该文件中导入的<code>getFirstAlbumTitle</code>中的<code>axios</code>，<strong>其他测试文件不受影响</strong>。</p>
+<p>至此，我们已经知道了如何模拟<code>axios</code>请求，这种方案暂且命名为方案1。<br>方案1有个缺点，就是模拟的数据和测试用例杂糅在一起，如果模拟的数据过于庞大，远超过测试用例的代码量，这就有点混乱了，测试用例应该注重逻辑的书写，而不是人为模拟的数据。<br>接下来说的是方案2，讲的是如何把模拟的数据和测试用例分开。<br>在项目根目录下新建<code>__mocks__</code>目录，大小写不能错，在<code>__mocks__</code>目录下，新建一个和<code>axios</code>齐名的<code>js</code>文件<code>axios.js</code>，代码如下：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// axios.js</span></span><br><span class="line"><span class="built_in">module</span>.exports=&#123;</span><br><span class="line">    get:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>)</span>&#123;</span><br><span class="line">                resolve(&#123;</span><br><span class="line">                    data: [</span><br><span class="line">                        &#123;</span><br><span class="line">                            userId: <span class="number">1</span>,</span><br><span class="line">                            id: <span class="number">1</span>,</span><br><span class="line">                            title: <span class="string">'My First Album'</span></span><br><span class="line">                        &#125;,</span><br><span class="line">                        &#123;</span><br><span class="line">                            userId: <span class="number">1</span>,</span><br><span class="line">                            id: <span class="number">2</span>,</span><br><span class="line">                            title: <span class="string">'Album: The Sequel'</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    ]</span><br><span class="line">                &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>index.test.js</code>修改如下<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// index.test.js</span></span><br><span class="line"><span class="keyword">const</span> getFirstAlbumTitle = <span class="built_in">require</span>(<span class="string">'./index'</span>);</span><br><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">'axios'</span>);</span><br><span class="line"></span><br><span class="line">jest.mock(<span class="string">'axios'</span>);</span><br><span class="line"></span><br><span class="line">it(<span class="string">'returns the title of the first album'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> title = <span class="keyword">await</span> getFirstAlbumTitle();</span><br><span class="line">  expect(title).toEqual(<span class="string">'My First Album'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>主要的变化是把<code>axios.get.mockResolvedValue</code>替换成另外一种种实现形式，就是<code>__mocks__</code>目录下的文件<code>axios.js</code>。注意，方案2不适合模拟项目里自定义的接口请求模块。<br>为了模拟我们自己手写的封装好的自定义模块，只需要在和自定义模块的同一目录下，新建一个目录<code>__mocks__</code>，然后在<code>__mocks__</code>目录下新建一个和自定义模块齐名的<code>js</code>文件就可以了，本质上和方案2相同，只是目录<code>__mocks__</code>存放的位置不同。</p>
+<p>举例，存在一个封装好接口请求的自定义模块，目录为<code>moduls/request.js</code>，要对它的请求进行模拟，需要新建一个文件<code>moduls/__mocks__/request.js</code>。<br>注意在调用<code>jest.mock</code>模拟<code>request.js</code>的时候，应当这样写：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">jest.mock(<span class="string">'./moduls/request.js'</span>); <span class="comment">// 将文件目录作为参数传递给 jest.mock</span></span><br></pre></td></tr></table></figure></p>
+<p>而不是下面这种写法：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'./moduls/request.js'</span>);</span><br><span class="line">jest.mock(<span class="string">'request'</span>); <span class="comment">// 这样会让jest误以为模拟的是第三方模块 request</span></span><br></pre></td></tr></table></figure></p>
+<p>全文完。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>next.js与antd-mobile：定制主题和按需引入的报错和解决</title>
+    <url>/2020/11/25/next-js%E4%B8%8Eantd-mobile%EF%BC%9A%E5%AE%9A%E5%88%B6%E4%B8%BB%E9%A2%98%E5%92%8C%E6%8C%89%E9%9C%80%E5%BC%95%E5%85%A5%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
+    <content><![CDATA[<p>关于定制主题和按需引入，antd-mobile官方文档给出了明确的方案，<br>在实际使用过程中遇到一些报错。这个文章记录了这些报错，以及一些解决方案。<br><a id="more"></a><br>关于按需加载，官方文档是 <a href="https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD</a><br>根据官方的建议新建.babelrc文件，添加如下代码</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"presets"</span>: [</span><br><span class="line">        <span class="string">"next/babel"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"plugins"</span>: [</span><br><span class="line">        [</span><br><span class="line">            <span class="string">"import"</span>,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"libraryName"</span>: <span class="string">"antd-mobile"</span>,</span><br><span class="line">                <span class="string">"style"</span>: <span class="string">"css"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ] <span class="comment">// `style: true` 会加载 less 文件</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重启项目，报错：</p>
+<blockquote>
+<p><a href="mailto:/Users/**/node_modules/_normalize.css@7.0.0" target="_blank" rel="noopener">/Users/**/node_modules/_normalize.css@7.0.0</a>@normalize.css/normalize.css:12<br>html {<br>     ^</p>
+<p>SyntaxError: Unexpected token {</p>
+</blockquote>
+<p>原因分析：在服务端，@zeit/next-css插件不会正确处理node_modules目录下的css文件。</p>
+<p>解决方案：在服务端，针对antd-mobile相关的样式文件，用<code>null-loader</code>进行处理。</p>
+<p>在next.config.js的webpack配置中添加如下代码，记得先手动安装<code>null-loader</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">webpack(config, &#123;isServer&#125;) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isServer) &#123;</span><br><span class="line">        <span class="keyword">const</span> antStyles = <span class="regexp">/antd-mobile\/.*?\/style.*?/</span><span class="keyword">const</span> origExternals = [...config.externals] config.externals = [(context, request, callback) = &gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (request.match(antStyles)) <span class="keyword">return</span> callback() <span class="keyword">if</span> (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span>) &#123;</span><br><span class="line">                origExternals[<span class="number">0</span>](context, request, callback)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                callback()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        ... (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span> ? [] : origExternals), ]</span><br><span class="line"></span><br><span class="line">        config.module.rules.unshift(&#123;</span><br><span class="line">            test: antStyles,</span><br><span class="line">            use: <span class="string">'null-loader'</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> config</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于定制主题，官方文档为 <a href="https://antd-mobile.gitee.io/docs/react/customize-theme-cn" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/customize-theme-cn</a><br>需要把上面的<code>&quot;style&quot;: &quot;css&quot;</code>改为 <code>&quot;style&quot;: true</code>。<br>此外，官方提供的webpack修改方式不适合next.js，应该在next.config.js中的webpack新增以下配置：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">config.module.rules.push(&#123;</span><br><span class="line">    test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">    use: [</span><br><span class="line">        <span class="string">'postcss-loader'</span>,</span><br><span class="line">        &#123; <span class="attr">loader</span>: <span class="string">'less-loader'</span>, <span class="attr">options</span>: &#123; <span class="attr">modifyVars</span>: theme, <span class="attr">javascriptEnabled</span>: <span class="literal">true</span> &#125; &#125;</span><br><span class="line">    ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+        <tag>next.js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>next.js如何同时支持导入css和less</title>
+    <url>/2020/11/25/next-js%E5%A6%82%E4%BD%95%E5%85%BC%E5%AE%B9css%E5%92%8Cless/</url>
+    <content><![CDATA[<p>next.js 从9.2版本开始内置支持css，项目中可以直接导入css文件。想要同时支持导入less，需要手动安装<code>@zeit/next-less</code>，在项目根目录新建文件next.config.js，添加如下代码<br><a id="more"></a><br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> withLess = <span class="built_in">require</span>(<span class="string">'@zeit/next-less'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = withLess()</span><br></pre></td></tr></table></figure></p>
+<p>这样做虽然支持导入less文件，但禁用了默认的css支持。重启应用，你就会看到一个警告</p>
+<blockquote>
+<p>Built-in CSS support is being disabled due to custom CSS configuration being detected.</p>
+</blockquote>
+<p>当你再导入css文件时，会收到如下报错</p>
+<blockquote>
+<p>Module parse failed: Unexpected token<br>You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See <a href="https://webpack.js.org/concepts#loaders" target="_blank" rel="noopener">https://webpack.js.org/concepts#loaders</a></p>
+</blockquote>
+<p>错误提示的意思很明确，需要一个处理器对css文件进行处理。<br>解决这个问题并不困难，手动安装<code>@zeit/next-css</code>，然后修改next.config.js为以下内容</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> withLess = <span class="built_in">require</span>(<span class="string">'@zeit/next-less'</span>)</span><br><span class="line"><span class="keyword">const</span> withCss = <span class="built_in">require</span>(<span class="string">'@zeit/next-css'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = withCss(withLess())</span><br></pre></td></tr></table></figure>
+<p>重启应用，这时候就同时支持导入css和less。</p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+        <tag>next.js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Linux大学教程》命令大全</title>
+    <url>/2019/12/03/%E3%80%8ALinux%E5%A4%A7%E5%AD%A6%E6%95%99%E7%A8%8B%E3%80%8B%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/</url>
+    <content><![CDATA[<p><code>date</code><br>显示当前日期和时间</p>
+<p><code>who</code><br>显示当前登录系统的所有用户标识（同时显示终端名称、登陆时间等）</p>
+<p><code>passwd</code><br>改变口令</p>
+<p><code>last</code><br>查看所有用户登录记录</p>
+<p><code>last [用户标识]</code><br>查看某个用户的登录记录</p>
+<p><em><a id="more"></a></em></p>
+<p><code>exit</code><br>退出当前登录的身份，返回上一个登录身份</p>
+<p><code>su [用户标识]</code><br>临时以另一个用户身份（用户标识默认为root）登录（不改变环境）</p>
+<p><code>su - [用户标识]</code><br>临时以另一个用户身份登录（同时改变环境）</p>
+<p><code>sudo</code><br>临时以超级用户身份登录</p>
+<p><code>less</code><br>每次一屏地显示内容</p>
+<p><code>sudo init</code><br>修改运行级别</p>
+<p><code>sudo reboot</code><br>重启</p>
+<p><code>sudo shutdown now</code><br>立即关机</p>
+<p><code>dmesg</code><br>显示系统启动信息</p>
+<p><code>infocmp</code><br>显示当前正在使用的终端信息</p>
+<p><code>echo $TERM</code><br>显示当前正在使用的终端类型</p>
+<p><code>printenv</code><br>显示当前shell所有环境变量</p>
+<p><code>stty -a</code><br>显示系统键盘的映射</p>
+<p><code>stty</code><br>只显示默认值已经被改变的键盘映射</p>
+<p><code>stty kill ^U</code><br>将kill信号映射到&lt;ctrl+u&gt;键盘组合键</p>
+<p><code>which</code><br>查看某个命令是否可用</p>
+<p><code>date -u</code><br>显示UTC时间</p>
+<p><code>cal</code><br>显示当前月份日历</p>
+<p><code>cal 2019</code><br>显示2019年全部月份日历</p>
+<p><code>cal 1 2019</code><br>显示2019年1月份的日历</p>
+<p><code>cal -j 12 2019</code><br>显示2019年12月份的日历（不显示日期，而是显示这一天是这一年的第几天。技巧：如果12月的最后一天为改年该第366天，则可判断该年为闰年，否则为平年）</p>
+<p><code>calendar foo.txt</code><br>根据文件foo.txt创建提醒任务</p>
+<p><code>uptime</code><br>显示系统连续运行多长时间的相关信息</p>
+<p><code>hostname</code><br>查看计算机名称</p>
+<p><code>uname</code><br>查看操作系统的名称</p>
+<p><code>uname -a</code><br>查看操作系统的详细信息</p>
+<p><code>whoami</code><br>显示当前用户的标识</p>
+<p><code>users</code><br>仅仅显示当前登陆系统的所有用户标识</p>
+<p><code>w</code><br>查看系统上用户更多信息</p>
+<p><code>w [用户标识]</code><br>查看该用户正在做什么</p>
+<p><code>lock</code><br>临时锁住终端（默认15分钟）</p>
+<p><code>lock -5</code><br>临时锁住终端5分钟</p>
+<p><code>leave 1015</code><br>在10点15分提醒我离开</p>
+<p><code>leave +15</code><br>15分钟后提醒我离开</p>
+<p><code>bc</code><br>启动计算器</p>
+<p><code>man [命令名称]</code><br>查看命令的文档资料</p>
+<p><code>whatis [命令名称]</code><br>查看命令简介</p>
+<p><code>apropos manual</code><br>查找某些命令，它们的文档资料包括关键词manual（不区分大小写）</p>
+<p><code>info [命令名称]</code><br>显示命令的info文件</p>
+<p><code>date;cal</code><br>同时执行date和cal两个命令</p>
+<p><code>env或printenv</code><br>显示所有环境变量</p>
+<p><code>set</code><br>显示所有shell变量（局部变量）</p>
+<p><code>set -o [shell变量]</code><br>关闭shell变量</p>
+<p><code>set +o [shell变量]</code><br>打开shell变量</p>
+<p><code>export DEMO=value</code><br>将变量DEMO导出到环境变量</p>
+<p><code>type [命令名称]</code><br>查看命令是不是shell内置命令</p>
+<p><code>export PATH=&quot;$PATH:$HOME/bin&quot;</code><br>将搜索路径的值修改为旧值加上$HOME/bin</p>
+<p><code>echo &quot;my name is ${USER}&quot;</code><br>在字符串中使用变量</p>
+<p>echo “The time and date are `date`.<br>在字符串中嵌入date命令</p>
+<p><code>export PS1=&quot;\A:\$&quot;</code><br>修改shell提示，$符号前面新增时间</p>
+<p><code>fc -l</code><br>查看使用过的命令列表</p>
+<p><code>fc -s 20</code><br>重新执行编号为20的命令（如果不指定编号，默认为上一个命令）</p>
+<p><code>fc -s stringA=stringB 20</code><br>重新执行编号为20的命令，并且把之前的字符串stringA改为字符串stringB</p>
+<p><code>export HISTORY=50</code><br>指定历史列表最多存放50条命令</p>
+<p><code>alias</code><br>显示所有的别名</p>
+<p><code>alias dt=date</code><br>将date命令映射到到别名dt</p>
+<p><code>alias dt</code><br>显示别名dt代表的含义</p>
+<p><code>unalias dt</code><br>删除别名dt</p>
+<p><code>unalias -a</code><br>删除所有别名</p>
+<p><code>\ls</code><br>运行实际命令ls本身，而不是别名</p>
+<p><code>more data.txt</code><br>每次8一屏地显示data.txt中的数据，按空格键会显示下一屏数据。</p>
+<p><code>&gt; out.txt</code><br>将数据写入到文件out.txt中，如果文件不存在则创建，如果文件中有内容则覆盖内容。</p>
+<p><code>&gt;&gt; out.txt</code><br>将数据追加到文件out.txt的尾部。</p>
+<p><code>set -o noclobber</code><br>防止文件内容被意外地覆盖。执行此命令后，如果标准输出所指定的文件已存在，屏幕会提示错误。如果你确实希望覆盖，用<code>&gt;|</code>代替<code>&gt;</code></p>
+<p><code>sort 1&gt; output.txt 2&gt; error.txt</code><br>将标准输出写入output.txt文件，标准错误写入error.txt文件。</p>
+<p><code>sort &amp;&gt; output.txt</code> 或 <code>sort &gt;&amp; output.txt</code><br>将标准输出和标准错误都写入output.txt文件</p>
+<p><code>sort &gt; /dev/null</code><br>不想看标准输出，将标准输出抛弃</p>
+<p><code>sort 2&gt; /dev/null</code><br>不想看标准错误，将标准错误抛弃</p>
+<p><code>sort 2&gt; /dev/null</code><br>不想看标准错误，将标准错误抛弃</p>
+<p><img src="https://s1.ax1x.com/2020/05/21/Ybz061.png" alt="Ybz061.png"></p>
+<p><code>cat name1 name2 | tee backup | sort</code><br>将cat的输出保存在backup文件，同事cat的输出经过管道线传送给sort命令。如果backup文件不存在则创建。如果backup内已经有内容，内容会被覆盖，使用tee -a可以避免覆盖，而是追加。</p>
+<p><code>command1 &amp;&amp; command2</code><br>命令1成功执行才去执行命令2</p>
+<p><code>command1 || command2</code><br>命令1执行失败才去执行命令2</p>
+<p><code>cat &gt; file</code><br>快速地创建一个小文件，然后从键盘写入内容。</p>
+<p>cat常用命令选项<br>-n(number，数字)在每行前面加一个行号<br>-b(blank，空白)和-n选项一起使用，不要对空白行编号<br>-s(squeeze，挤压)将连续多个空白行替换为一个空白行</p>
+<p><code>split file</code><br>将文件file分割成xaa、xab、xac等文件，每个文件的最大行数为1000。</p>
+<p><code>rev file</code><br>将文件file中各行中字符的顺序反转</p>
+<p><code>head -n 15 file</code><br>显示文件file前15行（如果没有-n 15参数，默认显示10行）</p>
+<p><code>tail -n 15 file</code><br>显示文件file最后15行（如果没有-n 15参数，默认显示10行）</p>
+<p><code>colrm 1 5 file</code><br>删除file中指定的数据列（1到5列）</p>
+<p><code>colrm 5 file</code><br>删除file中第5列（包括）到最后一列的所有数据列</p>
+<p>假设文件a内容为<br>1<br>a<br>文件b内容为<br>1<br>b<br><code>comm a b</code>输出为<br>        1<br>a   b</p>
+<p>第一列表示a为第一个文件独有的数据，第二列表示b为第二个文件独有的数据，第三列表示两个文件共有的数据。<br>comm命令比较的文本必须是有序文本。参数-n（n为1、2、3）表示屏蔽第n列的输出。</p>
+<p><code>cut -c 1,5 file</code><br>截取文件第1列和第5列数据</p>
+<p><code>cut -c 1-5 file</code><br>截取文件第1到5列数据</p>
+<p><code>cut -f 1 -d &#39;,&#39; file</code><br>使用指定的分隔字符’,’，将文件file的每一行切割成字符串数组，取数组中的第一项。</p>
+<p><code>paste -d &#39;,&#39; a b</code><br>使用指定的分隔字符’,’，将文件a和b的每一行连接起来。</p>
+<p><code>nl -v 5 -i 10 file</code><br>为文件file临时插入（不改变源文件file）行号，起始号码为5，增量为10。</p>
+<p><code>wc file</code><br>对file进行单词统计，通常输出三个数字。从第一个数开始分别代表行数line、单词数word以及字符数char。</p>
+<p><code>wc -l file</code><br>只统计行数</p>
+<blockquote>
+<p>未完待续</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微信小程序如何隐藏canvas</title>
+    <url>/2019/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E9%9A%90%E8%97%8Fcanvas/</url>
+    <content><![CDATA[<p>问题：选中图片后，把图片画到<code>canvas</code>上，但是并不想让用户看到这个<code>canvas</code>，请问如何在小程序页面中隐藏<code>canvas</code>呢？<br><a id="more"></a><br>解决方案（已验证有效）：为canvas设置如下样式<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attribute">postion</span>: fixed;</span><br><span class="line">    <span class="attribute">left</span>: -<span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">bottom</span>: -<span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <tags>
+        <tag>微信小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微信小程序音频audio API如何结合列表渲染</title>
+    <url>/2019/03/10/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%9F%B3%E9%A2%91audio%20API%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/</url>
+    <content><![CDATA[<p><code>audio</code>组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护<code>audio</code>组件，建议使用能力更强的 <code>wx.createInnerAudioContext</code> 接口。以前列表渲染出来的<code>audio</code>需要技术改造。</p>
+<a id="more"></a>
+<p>比如我们有一段音频数据：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [&#123;</span><br><span class="line">  id:<span class="number">1</span>,</span><br><span class="line">  title:<span class="string">'爱过的人我已不再拥有'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0904/57cb989b04d4c.png'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0904/57cb989b1e3b4.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">2</span>,</span><br><span class="line">  title:<span class="string">'已过了耳濡目染的年'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0517/573b1240af3da.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0517/573b1240d0118.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">3</span>,</span><br><span class="line">  title:<span class="string">'感觉很放松'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/1108/5821463c3fad8.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/1104/581b63392f6cb.mp3'</span></span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure></p>
+<p>现在我们想要达到这种目的：</p>
+<ol>
+<li>音频以列表的形式展现在小程序上。</li>
+<li>每个音频旁边都会有个按钮，初始情况按钮上文字为‘播放’；点击‘播放’，小程序播放该音频，按钮文字变成‘暂停’。</li>
+<li>点击‘暂停’按钮，停止播放音频，按钮文字变成‘播放’。</li>
+<li>不能同时播放多个音频：如果音频A正处于播放状态，点击播放音频B时，音频A停止播放。</li>
+</ol>
+<p>思路：</p>
+<ol>
+<li>使用<code>wx:for</code></li>
+<li>将列表中每一个音频做为组件</li>
+<li>在父组件设置一个<code>id</code>，用于控制应该播放哪个音频</li>
+</ol>
+<p>示例代码<br><a href="https://github.com/zhaohaodang/wechat-app-audio-list" target="_blank" rel="noopener">https://github.com/zhaohaodang/wechat-app-audio-list</a></p>
+]]></content>
+      <tags>
+        <tag>微信小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>梳理cookie</title>
+    <url>/2019/03/04/%E6%A2%B3%E7%90%86cookie/</url>
+    <content><![CDATA[<h3 id="cookie-概述"><a href="#cookie-概述" class="headerlink" title="cookie 概述"></a>cookie 概述</h3><p>cookie 是JavaScript提供的一种本地存储机制，是存于硬盘某一位置的文本文件。以win7 Chrome 为例，其cookie的存储位置为<code>C:\Users\yourUserName\AppData\Local\Google\Chrome\UserData\Default\Cookies</code><br>打开开发者工具，在Application-&gt;Storage-&gt;Cookies标签下，可以查看与网站相关的cookie。<br>当cookie读/写时，会被对应地解码/编码。<br><a id="more"></a></p>
+<h3 id="cookie-属性"><a href="#cookie-属性" class="headerlink" title="cookie 属性"></a>cookie 属性</h3><p><strong>名称</strong>：cookie的唯一标识符，不区分大小写（例如demo与Demo指向相同的cookie）。<br><strong>值</strong>：储存在cookie 中的字符串值。<br><strong>域</strong>：是指cookie 对于哪个域是有效的，默认为设置cookie 的那个网站的域。比如将某一cookie的域设置为<code>.demo.com</code>，那么，对所有该域（例如域名为<code>api.demo.com</code>的后端接口）发送的请求，都会携带这个cookie信息。<br><strong>路径</strong>：对于指定域中的路径发送cookie信息，例如，指定路径为 <code>http://www.demo.com/login</code>，那么请求 <code>http://www.demo.com/</code> 的页面就不会发送cookie信息，即使请求都是来自同一个域的。<br><strong>失效时间</strong>：表示cookie何时被删除的时间戳，默认浏览器会话结束时即将所有cookie 删除。可以自己设置删除时间。这个值是个GMT 格式的日期（Wdy, DD-Mon-YYYY HH:MM:SS GMT），用于指定应该删除cookie 的准确时间。如果设置的失效日期是个以前的时间，则cookie 会被立刻删除。<br><strong>安全标志</strong>：指定后，cookie 只有在使用SSL 连接的时候才发送到服务器。例如，cookie 信息只能发送给 <code>https://www.demo.com</code>，而 <code>http://www.demo.com</code> 的请求则不能发送 cookie。</p>
+<h3 id="cookie-优点"><a href="#cookie-优点" class="headerlink" title="cookie 优点"></a>cookie 优点</h3><p><strong>数据持久</strong>：刷新页面，仍然存在有效的cookie。<br><strong>多页面共享数据</strong>：将不同页面需要共享的数据写入cookie，是种不错的选择。<br><strong>信息验证</strong>：请求服务端会携带对应的有效cookie，可核查信息。<br><strong>保持登陆状态</strong>：像论坛这类具有登陆功能的网站，会在用户登陆成功后写入相关cookie以维持用户的登陆状态，直到cookie被销毁。</p>
+<h3 id="cookie-限制"><a href="#cookie-限制" class="headerlink" title="cookie 限制"></a>cookie 限制</h3><p><strong>禁用cookie</strong>：将浏览器设置为禁用cookie会禁止cookie相关操作。<br><strong>数量限制</strong>：每个域的cookie总量是有限的，cookie超出限制会导致浏览器删除陈旧的cookie，腾出空间给新设置的cookie。<br><strong>cookie可被篡改</strong>：cookie可以被脚本修改，这就需要某些加密手段对cookie进行加密处理。</p>
+<h3 id="cookie-操作"><a href="#cookie-操作" class="headerlink" title="cookie 操作"></a>cookie 操作</h3><h4 id="原生js实现"><a href="#原生js实现" class="headerlink" title="原生js实现"></a>原生js实现</h4><p>创建cookie</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setCookie</span>(<span class="params">name,value,expiredate,domain,path,secure</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> cookieText=<span class="built_in">escape</span>(name)+<span class="string">"="</span>+<span class="built_in">escape</span>(value);</span><br><span class="line">    <span class="keyword">if</span>(expiredate)&#123;</span><br><span class="line">        <span class="keyword">var</span> exdate=<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">        exdate.setDate(exdate.getDate()+expiredate);</span><br><span class="line">        cookieText+=<span class="string">";expires="</span>+exdate.toGMTString();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(domain)&#123;</span><br><span class="line">        cookieText+=<span class="string">";domain="</span>+domain;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(path)&#123;</span><br><span class="line">        cookieText+=<span class="string">";path="</span>+path;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(secure)&#123;</span><br><span class="line">        cookieText+=<span class="string">";secure"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">document</span>.cookie=cookieText;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>必须传入参数name和value</p>
+</blockquote>
+<p>根据name获取对应cookie<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params">c_name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">document</span>.cookie.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> c_start = <span class="built_in">document</span>.cookie.indexOf(c_name + <span class="string">"="</span>)</span><br><span class="line">        <span class="keyword">if</span> (c_start != <span class="number">-1</span>) &#123;</span><br><span class="line">            c_start = c_start + c_name.length + <span class="number">1</span></span><br><span class="line">            <span class="keyword">var</span> c_end = <span class="built_in">document</span>.cookie.indexOf(<span class="string">";"</span>, c_start)</span><br><span class="line">            <span class="keyword">if</span> (c_end == <span class="number">-1</span>) c_end = <span class="built_in">document</span>.cookie.length</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">unescape</span>(<span class="built_in">document</span>.cookie.substring(c_start, c_end))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>删除cookie<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deCookie</span>(<span class="params">name,value,expiredate,domain,path,secure</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setCookie(name,<span class="string">""</span>,<span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">0</span>),domain,path,secure);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="jquery-cookie-插件-实现"><a href="#jquery-cookie-插件-实现" class="headerlink" title="jquery-cookie 插件 实现"></a>jquery-cookie 插件 实现</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建名为name值为value，有效期为7天，路径为`/`的cookie</span></span><br><span class="line">$.cookie(<span class="string">'name'</span>, <span class="string">'value'</span>, &#123; <span class="attr">expires</span>: <span class="number">7</span>, <span class="attr">path</span>: <span class="string">'/'</span> &#125;);</span><br><span class="line"><span class="comment">//获取指定name的cookie，若找不到，返回 undefined</span></span><br><span class="line">$.cookie(<span class="string">'name'</span>); <span class="comment">// =&gt; "value"</span></span><br><span class="line">$.cookie(<span class="string">'nothing'</span>); <span class="comment">// =&gt; undefined</span></span><br><span class="line"><span class="comment">//获取所有有效cookie</span></span><br><span class="line">$.cookie();</span><br><span class="line"><span class="comment">//删除指定cookie，删除失败返回false</span></span><br><span class="line">$.removeCookie(<span class="string">'name'</span>); <span class="comment">// =&gt; true</span></span><br><span class="line">$.removeCookie(<span class="string">'nothing'</span>); <span class="comment">// =&gt; false</span></span><br><span class="line"><span class="comment">//若创建某一cookie时设置了额外信息，删除时需要传入对应的额外参数</span></span><br><span class="line">$.cookie(<span class="string">'name'</span>, <span class="string">'value'</span>, &#123; <span class="attr">path</span>: <span class="string">'/'</span> &#125;);</span><br><span class="line"><span class="comment">// 删除失败</span></span><br><span class="line">$.removeCookie(<span class="string">'name'</span>); <span class="comment">// =&gt; false</span></span><br><span class="line"><span class="comment">// 删除成功</span></span><br><span class="line">$.removeCookie(<span class="string">'name'</span>, &#123; <span class="attr">path</span>: <span class="string">'/'</span> &#125;); <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+<h3 id="cookie-如何读写json数据"><a href="#cookie-如何读写json数据" class="headerlink" title="cookie 如何读写json数据"></a>cookie 如何读写json数据</h3><p>写入json数据：调用<code>JSON.stringify()</code>方法，将json数据转换为字符串，利用上面的cookie操作创建cookie。</p>
+<p>读取json数据：读取该cookie时，返回json字符串，调用<code>JSON.parse()</code>方法，解析为原json数据。</p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>联想法区分substring和substr方法</title>
+    <url>/2019/03/01/%E8%81%94%E6%83%B3%E6%B3%95%E5%8C%BA%E5%88%86substring%E5%92%8Csubstr%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><code>substring</code>和<code>substr</code>方法都可以从字符串中抽取出一些字符，无论是方法名和参数，都十分相似。在紧张的面试氛围下，老铁们可能会混淆两者传入的第二个参数。笔者遵循联想法，想出了一个区分方法。<br><a id="more"></a><br>先看看这两个方法各自的参数：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">stringObject.substr(start,length)</span><br><span class="line">stringObject.substring(start,stop)</span><br></pre></td></tr></table></figure></p>
+<p>两者区别于第二个参数。<code>substr</code>传的是长度（length），<code>substring</code>传的是结束点（stop）。<br>str和length勉勉强强能组成单词strength（强度；力量）而string和length没法组成单词。<br>所以和方法<code>substr</code>搭配的参数应该是长度length。<br>以后面试官问你<code>substr</code>或者开发中使用<code>substr</code>时，脑海里就能准确地想出第二个参数为长度length。</p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>轻量实现JSON数据高亮美化</title>
+    <url>/2019/02/25/%E8%BD%BB%E9%87%8F%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/</url>
+    <content><![CDATA[<p>现在市面上存在一些优秀的代码高亮工具，例如<code>highlight.js</code>、<code>prettify.js</code>，在某些情况下，项目需要将后端接口返回的数据进行高亮美化，然后显示在web端。为了达到这种效果而引入整个插件，会显得臃肿。因此，我们需要一种更轻量的代码高亮的实现方式。<br><a id="more"></a><br>下面的方法接受一段需要美化的代码，方法为一些基本类型加上了类名，这样，我们就可以为代码添加样式。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">syntaxHighlight</span>(<span class="params">json</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> json !== <span class="string">'string'</span>) &#123;</span><br><span class="line">    json = <span class="built_in">JSON</span>.stringify(json, <span class="literal">undefined</span>, <span class="number">2</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  json = json.replace(<span class="regexp">/&amp;/g</span>, <span class="string">'&amp;'</span>).replace(<span class="regexp">/&lt;/g</span>, <span class="string">'&lt;'</span>).replace(<span class="regexp">/&gt;/g</span>, <span class="string">'&gt;'</span>);</span><br><span class="line">  <span class="keyword">return</span> json.replace(<span class="regexp">/("(\\u[a-zA-Z0-9]&#123;4&#125;|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">match</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> cls = <span class="string">'number'</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/^"/</span>.test(match)) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="regexp">/:$/</span>.test(match)) &#123;</span><br><span class="line">        cls = <span class="string">'key'</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        cls = <span class="string">'string'</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="regexp">/true|false/</span>.test(match)) &#123;</span><br><span class="line">      cls = <span class="string">'boolean'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="regexp">/null/</span>.test(match)) &#123;</span><br><span class="line">      cls = <span class="string">'null'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&lt;span class="'</span> + cls + <span class="string">'"&gt;'</span> + match + <span class="string">'&lt;/span&gt;'</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>例如后端返回的数据为<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  name: &apos;Jons&apos;,</span><br><span class="line">  age: 14,</span><br><span class="line">  id: 001,</span><br><span class="line">  sex: &apos;male&apos;,</span><br><span class="line">  address: null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>经过我们高亮后的代码<br><img src="https://p1.meituan.net/dpnewvc/affbd2bff7c2efce15c862c220db2ebc14675.jpg" alt="https://p1.meituan.net/dpnewvc/affbd2bff7c2efce15c862c220db2ebc14675.jpg"><br>效果查看<br><a href="https://jsfiddle.net/zhaohd/v4q8zp0k/" target="_blank" rel="noopener">https://jsfiddle.net/zhaohd/v4q8zp0k/</a></p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>javascript经典实例笔记</title>
+    <url>/2019/12/20/javascript%E7%BB%8F%E5%85%B8%E5%AE%9E%E4%BE%8B%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>使用内置对象创建的变量（不带关键词new），严格等于字面量</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str1 = <span class="string">'abc'</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="built_in">String</span>(<span class="string">'abc'</span>);</span><br><span class="line">str1 === str2; <span class="comment">// true</span></span><br><span class="line"><span class="keyword">typeof</span> str1; <span class="comment">// string</span></span><br><span class="line"><span class="keyword">typeof</span> str2; <span class="comment">// string</span></span><br></pre></td></tr></table></figure>
+<p>使用new创建的变量，松散等于字面量，不严格等于字面量</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str1 = <span class="string">'abc'</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'abc'</span>);</span><br><span class="line">str1 == str2; <span class="comment">// true</span></span><br><span class="line">str1 === str2; <span class="comment">// false</span></span><br><span class="line"><span class="keyword">typeof</span> str1; <span class="comment">// string</span></span><br><span class="line"><span class="keyword">typeof</span> str2; <span class="comment">// object</span></span><br></pre></td></tr></table></figure>
+<p>访问基本类型的属性时，javascript引擎会模拟创建一个临时对象来包围基本类型，属性访问之后引擎会立马丢弃这个临时对象。这正是“基本类型不是对象，但仍可以放问它的一些属性”的原因。</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'abc'</span>;</span><br><span class="line">str.length; <span class="comment">// 3</span></span><br><span class="line">str.length = <span class="number">4</span>; <span class="comment">// 为基本类型添加属性，其实是加在了临时对象上。该赋值没有意义，这行代码执行后，临时对象立刻被丢弃。</span></span><br><span class="line">str.length; <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<p><code>indexOf</code> 使用方式为 <code>str.indexOf(searchValue, fromIndex)</code> ， <code>searchValue</code> 为要查询的字符串， <code>fromIndex</code>第 二个参数为起始查询点。<br>特殊情况：</p>
+<ol>
+<li>如果 searchValue为空白，即 <code>indexOf()</code> ，searchValue 会被当做<strong>字符串</strong> undefined 。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="string">"0123undefined"</span>.indexOf(); <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>如果 searchValue 为空字符串，结果取决于 fromIndex：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="string">"abc"</span>.indexOf(<span class="string">''</span>); <span class="comment">// 0 如果fromIndex为空白，或者小于等于0 ,返回 0</span></span><br><span class="line"><span class="string">"abc"</span>.indexOf(<span class="string">''</span>, <span class="number">1</span>); <span class="comment">// 1 如果fromIndex 大于 0 且小于等于 str.length，返回 fromIndex</span></span><br><span class="line"><span class="string">"abc"</span>.indexOf(<span class="string">''</span>, <span class="number">10</span>); <span class="comment">// 3 如果fromIndex 大于 str.length ，返回 str.length</span></span><br></pre></td></tr></table></figure>
+<p>可以从一个Date减去另一个Date，两者的差值以毫秒返回。然而如果把两个日期相加，结果是第二个日期附加到第一个日期后面的一个字符串。</p>
+<p>如果把两个Date对象相除，需要把Date转换为毫秒值，返回相除的结果。将两个日期相乘，会返回一个非常大的毫秒值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> firstDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> secondDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  <span class="built_in">console</span>.log(secondDate + firstDate); <span class="comment">// Thu Nov 21 2019 16:40:16 GMT+0800 (中国标准时间)Thu Nov 21 2019 16:40:13 GMT+0800 (中国标准时间)</span></span><br><span class="line">  <span class="built_in">console</span>.log(secondDate - firstDate); <span class="comment">// 近似等于2500</span></span><br><span class="line">  <span class="built_in">console</span>.log(secondDate * firstDate); <span class="comment">// 2.4785011416546957e+24</span></span><br><span class="line">  <span class="built_in">console</span>.log(secondDate / firstDate); <span class="comment">// 1.0000000015879815</span></span><br><span class="line">&#125;,<span class="number">2500</span>)</span><br></pre></td></tr></table></figure>
+<p><code>lastIndexOf</code>是从尾部到头部进行搜索，如果给定搜索的起始位置（即第二个参数），则从起始位置向头部进行搜索，返回找到的第一个元素的索引。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'a'</span>];</span><br><span class="line">arr.lastIndexOf(<span class="string">'a'</span>); <span class="comment">// 3 从尾到头进行搜索字母a，首先搜到索引为3的a</span></span><br><span class="line">arr.lastIndexOf(<span class="string">'a'</span>, <span class="number">2</span>); <span class="comment">// 0 从索引2位置向头部进行搜索字母a，首先搜到索引为0的a</span></span><br></pre></td></tr></table></figure>
+<p><code>splice</code>方法接受到的索引如果为负数，则从末尾开始对数组/字符串操作，<code>-n</code>相当于从倒数第n个位置进行操作。如果没有接受到第二个参数，则一直删除到底。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>];</span><br><span class="line">arr.splice(<span class="number">-2</span>, <span class="number">1</span>); <span class="comment">// ["b"] 从倒数第二个位置即字母b，删除一个元素，一共删除了字母b</span></span><br><span class="line">arr.splice(<span class="number">-2</span>); <span class="comment">// ["b", "c"] 从倒数第二个位置即字母b，一直删除到底，一共删除了b和c</span></span><br></pre></td></tr></table></figure>
+<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>dict模式：创建拥有一个空的原型的对象，以避免已有的属性可能会搞乱程序。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> newObj = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line"><span class="keyword">var</span> key = <span class="string">'toString'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(key <span class="keyword">in</span> obj); <span class="comment">// true 解答：toString是一个标准的Object方法</span></span><br><span class="line"><span class="built_in">console</span>.log(key <span class="keyword">in</span> newObj); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h2 id="第三章"><a href="#第三章" class="headerlink" title="第三章"></a>第三章</h2><p>可以通过字面值函数为函数提供一个名称，但这个名称只能在函数内部用</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> <span class="title">name</span>(<span class="params"></span>)</span>&#123;type <span class="keyword">of</span> name&#125;;</span><br><span class="line">fn(); <span class="comment">// "function"</span></span><br><span class="line">name(); <span class="comment">// Uncaught SyntaxError 解读：函数名name只能在函数内部访问到</span></span><br></pre></td></tr></table></figure>
+<p>使用<code>slice</code>和<code>call</code>可以将类数组或NodeList转换为数组。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[].slice.call(arguments);</span><br><span class="line">[].slice.call(NodeList);</span><br></pre></td></tr></table></figure>
+<h2 id="第四章"><a href="#第四章" class="headerlink" title="第四章"></a>第四章</h2><p>继承一个对象的方式: <code>Object.create()</code>、<code>apply</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'js'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">Parent.prototype.age = <span class="number">24</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"><span class="comment">//方式一</span></span><br><span class="line">Child.prototype = <span class="built_in">Object</span>.create(Parent.prototype);</span><br><span class="line">Child.prototype.constructor = Child;</span><br><span class="line"><span class="comment">//方式二</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  Parent.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>让方法链化的关键一步是，在方法尾部返回对象（使用该方法的对象）的引用。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Book</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.setTitle = <span class="function"><span class="keyword">function</span>(<span class="params">title</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.title = title;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">this</span>.setAuthor = <span class="function"><span class="keyword">function</span>(<span class="params">author</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.author = author;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> book = <span class="keyword">new</span> Book();</span><br><span class="line">book.setTitle(<span class="string">'js'</span>).setAuthor(<span class="string">'Jorn'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(book.author); <span class="comment">// Jorn</span></span><br></pre></td></tr></table></figure>
+<h2 id="第五章"><a href="#第五章" class="headerlink" title="第五章"></a>第五章</h2><p><code>NodeList</code>唯一可使用的属性为length，唯一方法为item。不能直接对<code>NodeList</code>使用Array方法，比如push。</p>
+<p>DOM的<code>style</code>属性只能获取到内联样式，style标签以及样式表中的样式，无法通过<code>.style</code>方式获取。可以使用getComputedStyle去获取元素所有当前生效的样式。</p>
+<p><code>display:none</code>会从页面布局中完全删除元素，而<code>visibility:hidden</code>只是视觉上隐藏了元素，仍然会影响其他元素的布局。</p>
+<h2 id="第八章"><a href="#第八章" class="headerlink" title="第八章"></a>第八章</h2><p>在JSON中，如果对象包含其他对象，其他对象会被转换为JSON的等价形式。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">name</span>:<span class="string">"obj"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> newObj = &#123;<span class="attr">name</span>:<span class="string">"newObj"</span>,<span class="attr">other</span>:obj&#125;;</span><br><span class="line"><span class="built_in">JSON</span>.stringify(newObj); <span class="comment">// "&#123;"name":"newObj","other":&#123;"name":"obj"&#125;&#125;"</span></span><br></pre></td></tr></table></figure>
+<h2 id="第九章"><a href="#第九章" class="headerlink" title="第九章"></a>第九章</h2><p>向SVG添加JavaScript，必须提供style属性。并且要把脚本包含在CDATA块中，否则XML会把&lt;当做XML而不是脚本对待。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">'text/ecmascript'</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">  &lt;![CDATA[</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> name = <span class="string">'js'</span>;</span></span><br><span class="line"><span class="undefined">  ]]&gt;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>访问svg元素</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">id</span>=<span class="string">'object'</span> <span class="attr">data</span>=<span class="string">'demo.svg'</span>&gt;</span><span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">	<span class="keyword">var</span> object = <span class="built_in">document</span>.getElementById(<span class="string">'object'</span>);</span></span><br><span class="line"><span class="javascript">  object.onload=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> svgdoc;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">try</span>&#123;</span></span><br><span class="line"><span class="undefined">      svgdoc = object.contentDocument;</span></span><br><span class="line"><span class="javascript">    &#125;<span class="keyword">catch</span>(error)&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">try</span>&#123;</span></span><br><span class="line"><span class="undefined">        svgdoc = object.getSVGDocument();</span></span><br><span class="line"><span class="javascript">      &#125;<span class="keyword">catch</span>(error)&#123;</span></span><br><span class="line"><span class="javascript">        alert(<span class="string">'SVG Not Support'</span>);</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>Math.round</code>中间值(0.5)向较大数取值，所以<code>Math.round(-1.5)</code>为-1，而不是-2</p>
+<p>在获取画布的imageData时常常会发生如下错误：<code>Failed to execute &#39;getImageData&#39; on &#39;CanvasRenderingContext2D&#39;: The canvas has been tainted by cross-origin data</code> 增加一个<code>img.crossOrigin = &#39;&#39;</code>即可解决这个问题。</p>
+<p><code>video</code>元素有个<code>timeupdate</code>事件，每200毫秒触发一次。</p>
+<p>虽然<code>NaN</code>不等于自身，但是对于使用<code>NaN</code>作为键的Map对象，<code>NaN</code>是和自身相等的：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> myMap= <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">myMap.set(<span class="literal">NaN</span>,<span class="string">'nan'</span>);</span><br><span class="line"><span class="keyword">var</span> key = <span class="built_in">Number</span>(<span class="string">'not a number'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(myMap.get(key)); <span class="comment">// 'nan'</span></span><br></pre></td></tr></table></figure>
+<p>使用数组作为键的Map对象，必须使用完全相同的键才能获取到响应的键值：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = arr;</span><br><span class="line"><span class="keyword">var</span> myMap = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">myMap.set(arr,<span class="string">'12'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(myMap.get([<span class="number">1</span>,<span class="number">2</span>])); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(myMap.get(arr2)); <span class="comment">// '12'</span></span><br></pre></td></tr></table></figure>
+<h2 id="第十二章"><a href="#第十二章" class="headerlink" title="第十二章"></a>第十二章</h2><p>通用模块定义UMD</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">global, factory</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">typeof</span> exports === <span class="string">'object'</span> &amp;&amp; <span class="keyword">typeof</span> <span class="built_in">module</span> !== <span class="string">'undefined'</span> ? <span class="built_in">module</span>.exports = factory() :</span><br><span class="line">  <span class="keyword">typeof</span> define === <span class="string">'function'</span> &amp;&amp; define.amd ? define(factory) :</span><br><span class="line">  (global.moduleName = factory());</span><br><span class="line">&#125;(<span class="keyword">this</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="meta">  'use strict'</span>;</span><br><span class="line">  <span class="comment">// TODO</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>某个package.json文件中，用<code>npm remove</code>命令移出dependencies（或devDependencies）中的最后一项，属性dependencies并不会被一并删除，只是将其设为一个空值。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">"dependencies":&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="第十三章"><a href="#第十三章" class="headerlink" title="第十三章"></a>第十三章</h2><p>Worker 线程的一个缺点，就是并不是所有的内建对象或功能都能在所有的浏览器中可用。比如在旧版本的Firefox中，异步的FileReader不会在Worker线程中工作。</p>
+<h2 id="第十四章"><a href="#第十四章" class="headerlink" title="第十四章"></a>第十四章</h2><p>Shadow DOM，即这部分 DOM 默认与外部 DOM 隔离，内部任何代码都无法影响外部。</p>
+<p>Web Component <a href="https://jsfiddle.net/zhaohd/vfbnLeaz/" target="_blank" rel="noopener">https://jsfiddle.net/zhaohd/vfbnLeaz/</a></p>
+<h2 id="第十五章"><a href="#第十五章" class="headerlink" title="第十五章"></a>第十五章</h2><p>要使用GET、POST 或HEAD之外的一个方法，必须对你的请求预检（preflight）。</p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>正则表达式的解读和实现</title>
+    <url>/2020/09/17/JSON.stringify/parse%20%E5%AE%9E%E7%8E%B0%E6%B7%B1%E6%8B%B7%E8%B4%9D%E7%9A%84%E7%BC%BA%E7%82%B9/</url>
+    <content><![CDATA[<p>正则表达式是一项伟大的发明，读懂它的人觉得优雅、精致，读不懂的人觉得晦涩、复杂。阅读本文的前提是你已经知晓正表达式的基础知识，比如修饰符、字符匹配、位置匹配、捕获组等。<br><a id="more"></a></p>
+<h3 id="如何解读"><a href="#如何解读" class="headerlink" title="如何解读"></a>如何解读</h3><p>阅读顺序</p>
+<ol>
+<li>修饰符</li>
+<li>转义符</li>
+<li>圆括号和方括号里的内容</li>
+<li>限定符</li>
+<li>定位符</li>
+</ol>
+<p>举个例子，比如一个匹配腾讯qq的正则表达式<code>[1-9]\d{4,}</code></p>
+<ol>
+<li>先看修饰符，没有</li>
+<li>再看转义符<code>\d</code>，代表数字0到9</li>
+<li>再看方框里的内容<code>[1-9]</code>，代表数字1到9</li>
+<li>再看限定符<code>{4,}</code>，表示至少4个</li>
+</ol>
+<p>整个正则表达式想表达的意思就通透了：全是数字，至少5位，第一位数字不能为0，其他位上的数字随意。</p>
+<h3 id="如何写"><a href="#如何写" class="headerlink" title="如何写"></a>如何写</h3><ol>
+<li>先理解匹配规则</li>
+<li>按照预定的规则，从左到右依次书写</li>
+<li>收集测试用例，进行功能测试</li>
+<li>兼容未来版本</li>
+</ol>
+<p>例如写一个匹配手机号码的正则表达式</p>
+<ol>
+<li>规则：手机号由11位纯数字组成，第一位只能为1，第二位目前虽然只开放了号码3456789，但未来有可能开放新的数字，建议不做限制</li>
+<li>这样，一个非常简单的匹配手机号码的正则表达式就诞生了：/^1\d{10}$/</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+</search>
