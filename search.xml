@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>H5实现上传图片预览</title>
-    <url>/2019/03/04/H5%E5%AE%9E%E7%8E%B0%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E9%A2%84%E8%A7%88/</url>
-    <content><![CDATA[<p>H5新增了FileReader对象，该对象允许Web应用程序异步读取存储在用户计算机上的文件内容，构造函数为FileReader()，它返回一个新构造的FileReader实例。</p>
-<p>实例拥有一个名为readAsDataURL 的方法，该方法会读取指定的 Blob或 File对象。</p>
-<p>一旦读取完成，会触发onload事件。该事件的result属性将包含一个data:URL格式的字符串（base64编码） ，进而实现图片预览。</p>
-<p>HTML</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"choose"</span> <span class="attr">value</span>=<span class="string">"选择文件"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"show"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>JS</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'choose'</span>),</span><br><span class="line">  show = <span class="built_in">document</span>.getElementById(<span class="string">'show'</span>)</span><br><span class="line">btn.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader()</span><br><span class="line">  reader.readAsDataURL(<span class="keyword">this</span>.files[<span class="number">0</span>])<span class="comment">//以File对象作为参数</span></span><br><span class="line">  reader.onload = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    show.src = e.target.result <span class="comment">//这里获取到图片base64编码</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><a href="http://link.zhihu.com/?target=https%3A//jsfiddle.net/zhaohd/n6yn0d3f/" target="_blank" rel="noopener">在JSFiddle上运行</a></p>
-<p><a href="http://link.zhihu.com/?target=http%3A//jsrun.net/TkgKp/edit" target="_blank" rel="noopener">在JSRun上运行</a></p>
+    <title>constructor方法返回什么?</title>
+    <url>/2021/05/27/constructor%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9E%E4%BB%80%E4%B9%88/</url>
+    <content><![CDATA[<p>ES6标准引入了类<code>class</code>的概念，常常被用于创建一个对象。类中有个特殊的方法<code>constructor</code>，它的返回值有一些让人迷惑的地方。<br><a id="more"></a><br>先简单梳理一下使用关键词new创建一个对象时发生了什么：</p>
+<ol>
+<li>创建一个空对象</li>
+<li>将this指向该对象，然后执行<code>constructor</code>函数中的代码，将一些数据通过this赋值给对象</li>
+<li>返回this</li>
+</ol>
+<p>默认情况下，<code>constructor</code>方法返回<code>this</code>，所以说下面某行代码<code>return this</code>是没必要写上去的。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> MyClass(); <span class="comment">// &#123;val: 10&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>但是，如果手动地在<code>constructor</code>方法中返回一个合理的值，比如一个对象<code>{name:&quot;js&quot;}</code>，那么<code>constructor</code>方法将返回<code>{name:&quot;js&quot;}</code>:<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="attr">name</span>: <span class="string">"js"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> MyClass(); <span class="comment">// &#123;name: "js"&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果手动地返回一个看似不合理的值，例如2，那么<code>constructor</code>方法仍然返回this:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> MyClass(); <span class="comment">// &#123;val: 10&#125;</span></span><br></pre></td></tr></table></figure>
+<p>合理的值包括：<code>null</code>、数组、对象<br>不合理的值包括：字符串、数字、<code>undefined</code></p>
 ]]></content>
       <tags>
         <tag>javascript</tag>
@@ -55,16 +57,20 @@
       </tags>
   </entry>
   <entry>
-    <title>Mac显示已连接蓝牙耳机但没声音</title>
-    <url>/2019/10/21/Mac%E6%98%BE%E7%A4%BA%E5%B7%B2%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA%E4%BD%86%E6%B2%A1%E5%A3%B0%E9%9F%B3/</url>
-    <content><![CDATA[<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>更新了Mac系统后（Catalina），系统偏好设置中，蓝牙设置显示已连接到耳机，但是耳机没有声音。声音输出设置中也没有已连接的蓝牙耳机。多次断开重连蓝牙、重启Mac、重启蓝牙耳机都没用。<br><a id="more"></a><br><img src="https://s2.ax1x.com/2019/10/21/KQXr8g.png" alt="KQXr8g.png"><br><img src="https://s2.ax1x.com/2019/10/21/KQjiqI.png" alt="KQjiqI.png"></p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>1.先关机。<br>2.接着开机，并<strong>立即同时</strong>按住以下四个按键：Option、Command、P 和 R。您可以在大约 20 秒后松开这些按键，或者在听到两次开机声音（就是Mac那种噔！的开机声）后松开这些按键。<br>3.重新连接蓝牙耳机，检查声音是否正常。<br>4.若还是不行，重复上面步骤。</p>
-<blockquote>
-<p>参考链接：<a href="https://support.apple.com/zh-cn/HT204063" target="_blank" rel="noopener">https://support.apple.com/zh-cn/HT204063</a></p>
-</blockquote>
+    <title>H5实现上传图片预览</title>
+    <url>/2019/03/04/H5%E5%AE%9E%E7%8E%B0%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E9%A2%84%E8%A7%88/</url>
+    <content><![CDATA[<p>H5新增了FileReader对象，该对象允许Web应用程序异步读取存储在用户计算机上的文件内容，构造函数为FileReader()，它返回一个新构造的FileReader实例。</p>
+<p>实例拥有一个名为readAsDataURL 的方法，该方法会读取指定的 Blob或 File对象。</p>
+<p>一旦读取完成，会触发onload事件。该事件的result属性将包含一个data:URL格式的字符串（base64编码） ，进而实现图片预览。</p>
+<p>HTML</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"choose"</span> <span class="attr">value</span>=<span class="string">"选择文件"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"show"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>JS</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'choose'</span>),</span><br><span class="line">  show = <span class="built_in">document</span>.getElementById(<span class="string">'show'</span>)</span><br><span class="line">btn.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader()</span><br><span class="line">  reader.readAsDataURL(<span class="keyword">this</span>.files[<span class="number">0</span>])<span class="comment">//以File对象作为参数</span></span><br><span class="line">  reader.onload = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    show.src = e.target.result <span class="comment">//这里获取到图片base64编码</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://link.zhihu.com/?target=https%3A//jsfiddle.net/zhaohd/n6yn0d3f/" target="_blank" rel="noopener">在JSFiddle上运行</a></p>
+<p><a href="http://link.zhihu.com/?target=http%3A//jsrun.net/TkgKp/edit" target="_blank" rel="noopener">在JSRun上运行</a></p>
 ]]></content>
       <tags>
-        <tag>互联网</tag>
+        <tag>javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -77,25 +83,6 @@
 <h3 id="随机指定长度字符串"><a href="#随机指定长度字符串" class="headerlink" title="随机指定长度字符串"></a>随机指定长度字符串</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">randomString</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">'abcdefghijklmnopqrstuvwxyz9876543210'</span>;</span><br><span class="line">    <span class="keyword">var</span> tmp = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">var</span> l = str.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        tmp += str.charAt(<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * l));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>constructor方法返回什么?</title>
-    <url>/2021/05/27/constructor%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9E%E4%BB%80%E4%B9%88/</url>
-    <content><![CDATA[<p>ES6标准引入了类<code>class</code>的概念，常常被用于创建一个对象。类中有个特殊的方法<code>constructor</code>，它的返回值有一些让人迷惑的地方。<br><a id="more"></a><br>先简单梳理一下使用关键词new创建一个对象时发生了什么：</p>
-<ol>
-<li>创建一个空对象</li>
-<li>将this指向该对象，然后执行<code>constructor</code>函数中的代码，将一些数据通过this赋值给对象</li>
-<li>返回this</li>
-</ol>
-<p>默认情况下，<code>constructor</code>方法返回<code>this</code>，所以说下面某行代码<code>return this</code>是没必要写上去的。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> MyClass(); <span class="comment">// &#123;val: 10&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>但是，如果手动地在<code>constructor</code>方法中返回一个合理的值，比如一个对象<code>{name:&quot;js&quot;}</code>，那么<code>constructor</code>方法将返回<code>{name:&quot;js&quot;}</code>:<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="attr">name</span>: <span class="string">"js"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> MyClass(); <span class="comment">// &#123;name: "js"&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>如果手动地返回一个看似不合理的值，例如2，那么<code>constructor</code>方法仍然返回this:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> MyClass(); <span class="comment">// &#123;val: 10&#125;</span></span><br></pre></td></tr></table></figure>
-<p>合理的值包括：<code>null</code>、数组、对象<br>不合理的值包括：字符串、数字、<code>undefined</code></p>
-]]></content>
-      <tags>
-        <tag>javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -123,46 +110,16 @@
 ]]></content>
   </entry>
   <entry>
-    <title>next.js与antd-mobile：定制主题和按需引入的报错和解决</title>
-    <url>/2020/11/25/next-js%E4%B8%8Eantd-mobile%EF%BC%9A%E5%AE%9A%E5%88%B6%E4%B8%BB%E9%A2%98%E5%92%8C%E6%8C%89%E9%9C%80%E5%BC%95%E5%85%A5%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
-    <content><![CDATA[<p>关于定制主题和按需引入，antd-mobile官方文档给出了明确的方案，<br>在实际使用过程中遇到一些报错。这个文章记录了这些报错，以及一些解决方案。<br><a id="more"></a><br>关于按需加载，官方文档是 <a href="https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD</a><br>根据官方的建议新建.babelrc文件，添加如下代码</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"presets"</span>: [</span><br><span class="line">        <span class="string">"next/babel"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"plugins"</span>: [</span><br><span class="line">        [</span><br><span class="line">            <span class="string">"import"</span>,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"libraryName"</span>: <span class="string">"antd-mobile"</span>,</span><br><span class="line">                <span class="string">"style"</span>: <span class="string">"css"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ] <span class="comment">// `style: true` 会加载 less 文件</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>重启项目，报错：</p>
+    <title>Mac显示已连接蓝牙耳机但没声音</title>
+    <url>/2019/10/21/Mac%E6%98%BE%E7%A4%BA%E5%B7%B2%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA%E4%BD%86%E6%B2%A1%E5%A3%B0%E9%9F%B3/</url>
+    <content><![CDATA[<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>更新了Mac系统后（Catalina），系统偏好设置中，蓝牙设置显示已连接到耳机，但是耳机没有声音。声音输出设置中也没有已连接的蓝牙耳机。多次断开重连蓝牙、重启Mac、重启蓝牙耳机都没用。<br><a id="more"></a><br><img src="https://s2.ax1x.com/2019/10/21/KQXr8g.png" alt="KQXr8g.png"><br><img src="https://s2.ax1x.com/2019/10/21/KQjiqI.png" alt="KQjiqI.png"></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>1.先关机。<br>2.接着开机，并<strong>立即同时</strong>按住以下四个按键：Option、Command、P 和 R。您可以在大约 20 秒后松开这些按键，或者在听到两次开机声音（就是Mac那种噔！的开机声）后松开这些按键。<br>3.重新连接蓝牙耳机，检查声音是否正常。<br>4.若还是不行，重复上面步骤。</p>
 <blockquote>
-<p><a href="mailto:/Users/**/node_modules/_normalize.css@7.0.0" target="_blank" rel="noopener">/Users/**/node_modules/_normalize.css@7.0.0</a>@normalize.css/normalize.css:12<br>html {<br>     ^</p>
-<p>SyntaxError: Unexpected token {</p>
+<p>参考链接：<a href="https://support.apple.com/zh-cn/HT204063" target="_blank" rel="noopener">https://support.apple.com/zh-cn/HT204063</a></p>
 </blockquote>
-<p>原因分析：在服务端，@zeit/next-css插件不会正确处理node_modules目录下的css文件。</p>
-<p>解决方案：在服务端，针对antd-mobile相关的样式文件，用<code>null-loader</code>进行处理。</p>
-<p>在next.config.js的webpack配置中添加如下代码，记得先手动安装<code>null-loader</code></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">webpack(config, &#123;isServer&#125;) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isServer) &#123;</span><br><span class="line">        <span class="keyword">const</span> antStyles = <span class="regexp">/antd-mobile\/.*?\/style.*?/</span><span class="keyword">const</span> origExternals = [...config.externals] config.externals = [(context, request, callback) = &gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (request.match(antStyles)) <span class="keyword">return</span> callback() <span class="keyword">if</span> (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span>) &#123;</span><br><span class="line">                origExternals[<span class="number">0</span>](context, request, callback)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                callback()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        ... (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span> ? [] : origExternals), ]</span><br><span class="line"></span><br><span class="line">        config.module.rules.unshift(&#123;</span><br><span class="line">            test: antStyles,</span><br><span class="line">            use: <span class="string">'null-loader'</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> config</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>关于定制主题，官方文档为 <a href="https://antd-mobile.gitee.io/docs/react/customize-theme-cn" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/customize-theme-cn</a><br>需要把上面的<code>&quot;style&quot;: &quot;css&quot;</code>改为 <code>&quot;style&quot;: true</code>。<br>此外，官方提供的webpack修改方式不适合next.js，应该在next.config.js中的webpack新增以下配置：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">config.module.rules.push(&#123;</span><br><span class="line">    test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">    use: [</span><br><span class="line">        <span class="string">'postcss-loader'</span>,</span><br><span class="line">        &#123; <span class="attr">loader</span>: <span class="string">'less-loader'</span>, <span class="attr">options</span>: &#123; <span class="attr">modifyVars</span>: theme, <span class="attr">javascriptEnabled</span>: <span class="literal">true</span> &#125; &#125;</span><br><span class="line">    ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>javascript</tag>
-        <tag>next.js</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>next.js如何同时支持导入css和less</title>
-    <url>/2020/11/25/next-js%E5%A6%82%E4%BD%95%E5%85%BC%E5%AE%B9css%E5%92%8Cless/</url>
-    <content><![CDATA[<p>next.js 从9.2版本开始内置支持css，项目中可以直接导入css文件。想要同时支持导入less，需要手动安装<code>@zeit/next-less</code>，在项目根目录新建文件next.config.js，添加如下代码<br><a id="more"></a><br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> withLess = <span class="built_in">require</span>(<span class="string">'@zeit/next-less'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = withLess()</span><br></pre></td></tr></table></figure></p>
-<p>这样做虽然支持导入less文件，但禁用了默认的css支持。重启应用，你就会看到一个警告</p>
-<blockquote>
-<p>Built-in CSS support is being disabled due to custom CSS configuration being detected.</p>
-</blockquote>
-<p>当你再导入css文件时，会收到如下报错</p>
-<blockquote>
-<p>Module parse failed: Unexpected token<br>You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See <a href="https://webpack.js.org/concepts#loaders" target="_blank" rel="noopener">https://webpack.js.org/concepts#loaders</a></p>
-</blockquote>
-<p>错误提示的意思很明确，需要一个处理器对css文件进行处理。<br>解决这个问题并不困难，手动安装<code>@zeit/next-css</code>，然后修改next.config.js为以下内容</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> withLess = <span class="built_in">require</span>(<span class="string">'@zeit/next-less'</span>)</span><br><span class="line"><span class="keyword">const</span> withCss = <span class="built_in">require</span>(<span class="string">'@zeit/next-css'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = withCss(withLess())</span><br></pre></td></tr></table></figure>
-<p>重启应用，这时候就同时支持导入css和less。</p>
-]]></content>
-      <tags>
-        <tag>javascript</tag>
-        <tag>next.js</tag>
+        <tag>互联网</tag>
       </tags>
   </entry>
   <entry>
@@ -273,12 +230,92 @@
       </tags>
   </entry>
   <entry>
+    <title>next.js如何同时支持导入css和less</title>
+    <url>/2020/11/25/next-js%E5%A6%82%E4%BD%95%E5%85%BC%E5%AE%B9css%E5%92%8Cless/</url>
+    <content><![CDATA[<p>next.js 从9.2版本开始内置支持css，项目中可以直接导入css文件。想要同时支持导入less，需要手动安装<code>@zeit/next-less</code>，在项目根目录新建文件next.config.js，添加如下代码<br><a id="more"></a><br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> withLess = <span class="built_in">require</span>(<span class="string">'@zeit/next-less'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = withLess()</span><br></pre></td></tr></table></figure></p>
+<p>这样做虽然支持导入less文件，但禁用了默认的css支持。重启应用，你就会看到一个警告</p>
+<blockquote>
+<p>Built-in CSS support is being disabled due to custom CSS configuration being detected.</p>
+</blockquote>
+<p>当你再导入css文件时，会收到如下报错</p>
+<blockquote>
+<p>Module parse failed: Unexpected token<br>You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See <a href="https://webpack.js.org/concepts#loaders" target="_blank" rel="noopener">https://webpack.js.org/concepts#loaders</a></p>
+</blockquote>
+<p>错误提示的意思很明确，需要一个处理器对css文件进行处理。<br>解决这个问题并不困难，手动安装<code>@zeit/next-css</code>，然后修改next.config.js为以下内容</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> withLess = <span class="built_in">require</span>(<span class="string">'@zeit/next-less'</span>)</span><br><span class="line"><span class="keyword">const</span> withCss = <span class="built_in">require</span>(<span class="string">'@zeit/next-css'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = withCss(withLess())</span><br></pre></td></tr></table></figure>
+<p>重启应用，这时候就同时支持导入css和less。</p>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+        <tag>next.js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>next.js与antd-mobile：定制主题和按需引入的报错和解决</title>
+    <url>/2020/11/25/next-js%E4%B8%8Eantd-mobile%EF%BC%9A%E5%AE%9A%E5%88%B6%E4%B8%BB%E9%A2%98%E5%92%8C%E6%8C%89%E9%9C%80%E5%BC%95%E5%85%A5%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
+    <content><![CDATA[<p>关于定制主题和按需引入，antd-mobile官方文档给出了明确的方案，<br>在实际使用过程中遇到一些报错。这个文章记录了这些报错，以及一些解决方案。<br><a id="more"></a><br>关于按需加载，官方文档是 <a href="https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/introduce-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD</a><br>根据官方的建议新建.babelrc文件，添加如下代码</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"presets"</span>: [</span><br><span class="line">        <span class="string">"next/babel"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"plugins"</span>: [</span><br><span class="line">        [</span><br><span class="line">            <span class="string">"import"</span>,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"libraryName"</span>: <span class="string">"antd-mobile"</span>,</span><br><span class="line">                <span class="string">"style"</span>: <span class="string">"css"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ] <span class="comment">// `style: true` 会加载 less 文件</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重启项目，报错：</p>
+<blockquote>
+<p><a href="mailto:/Users/**/node_modules/_normalize.css@7.0.0" target="_blank" rel="noopener">/Users/**/node_modules/_normalize.css@7.0.0</a>@normalize.css/normalize.css:12<br>html {<br>     ^</p>
+<p>SyntaxError: Unexpected token {</p>
+</blockquote>
+<p>原因分析：在服务端，@zeit/next-css插件不会正确处理node_modules目录下的css文件。</p>
+<p>解决方案：在服务端，针对antd-mobile相关的样式文件，用<code>null-loader</code>进行处理。</p>
+<p>在next.config.js的webpack配置中添加如下代码，记得先手动安装<code>null-loader</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">webpack(config, &#123;isServer&#125;) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isServer) &#123;</span><br><span class="line">        <span class="keyword">const</span> antStyles = <span class="regexp">/antd-mobile\/.*?\/style.*?/</span><span class="keyword">const</span> origExternals = [...config.externals] config.externals = [(context, request, callback) = &gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (request.match(antStyles)) <span class="keyword">return</span> callback() <span class="keyword">if</span> (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span>) &#123;</span><br><span class="line">                origExternals[<span class="number">0</span>](context, request, callback)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                callback()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        ... (<span class="keyword">typeof</span> origExternals[<span class="number">0</span>] === <span class="string">'function'</span> ? [] : origExternals), ]</span><br><span class="line"></span><br><span class="line">        config.module.rules.unshift(&#123;</span><br><span class="line">            test: antStyles,</span><br><span class="line">            use: <span class="string">'null-loader'</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> config</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于定制主题，官方文档为 <a href="https://antd-mobile.gitee.io/docs/react/customize-theme-cn" target="_blank" rel="noopener">https://antd-mobile.gitee.io/docs/react/customize-theme-cn</a><br>需要把上面的<code>&quot;style&quot;: &quot;css&quot;</code>改为 <code>&quot;style&quot;: true</code>。<br>此外，官方提供的webpack修改方式不适合next.js，应该在next.config.js中的webpack新增以下配置：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">config.module.rules.push(&#123;</span><br><span class="line">    test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">    use: [</span><br><span class="line">        <span class="string">'postcss-loader'</span>,</span><br><span class="line">        &#123; <span class="attr">loader</span>: <span class="string">'less-loader'</span>, <span class="attr">options</span>: &#123; <span class="attr">modifyVars</span>: theme, <span class="attr">javascriptEnabled</span>: <span class="literal">true</span> &#125; &#125;</span><br><span class="line">    ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>javascript</tag>
+        <tag>next.js</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>微信小程序如何隐藏canvas</title>
     <url>/2019/05/23/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E9%9A%90%E8%97%8Fcanvas/</url>
     <content><![CDATA[<p>问题：选中图片后，把图片画到<code>canvas</code>上，但是并不想让用户看到这个<code>canvas</code>，请问如何在小程序页面中隐藏<code>canvas</code>呢？<br><a id="more"></a><br>解决方案（已验证有效）：为canvas设置如下样式<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attribute">postion</span>: fixed;</span><br><span class="line">    <span class="attribute">left</span>: -<span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">bottom</span>: -<span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <tags>
         <tag>微信小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微信小程序音频audio API如何结合列表渲染</title>
+    <url>/2019/03/10/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%9F%B3%E9%A2%91audio%20API%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/</url>
+    <content><![CDATA[<p><code>audio</code>组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护<code>audio</code>组件，建议使用能力更强的 <code>wx.createInnerAudioContext</code> 接口。以前列表渲染出来的<code>audio</code>需要技术改造。</p>
+<a id="more"></a>
+<p>比如我们有一段音频数据：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [&#123;</span><br><span class="line">  id:<span class="number">1</span>,</span><br><span class="line">  title:<span class="string">'爱过的人我已不再拥有'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0904/57cb989b04d4c.png'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0904/57cb989b1e3b4.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">2</span>,</span><br><span class="line">  title:<span class="string">'已过了耳濡目染的年'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0517/573b1240af3da.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0517/573b1240d0118.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">3</span>,</span><br><span class="line">  title:<span class="string">'感觉很放松'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/1108/5821463c3fad8.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/1104/581b63392f6cb.mp3'</span></span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure></p>
+<p>现在我们想要达到这种目的：</p>
+<ol>
+<li>音频以列表的形式展现在小程序上。</li>
+<li>每个音频旁边都会有个按钮，初始情况按钮上文字为‘播放’；点击‘播放’，小程序播放该音频，按钮文字变成‘暂停’。</li>
+<li>点击‘暂停’按钮，停止播放音频，按钮文字变成‘播放’。</li>
+<li>不能同时播放多个音频：如果音频A正处于播放状态，点击播放音频B时，音频A停止播放。</li>
+</ol>
+<p>思路：</p>
+<ol>
+<li>使用<code>wx:for</code></li>
+<li>将列表中每一个音频做为组件</li>
+<li>在父组件设置一个<code>id</code>，用于控制应该播放哪个音频</li>
+</ol>
+<p>示例代码<br><a href="https://github.com/zhaohaodang/wechat-app-audio-list" target="_blank" rel="noopener">https://github.com/zhaohaodang/wechat-app-audio-list</a></p>
+]]></content>
+      <tags>
+        <tag>微信小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>苹果移动设备id和机型的对照表</title>
+    <url>/2021/07/13/%E8%8B%B9%E6%9E%9C%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87id%E5%92%8C%E6%9C%BA%E5%9E%8B%E7%9A%84%E5%AF%B9%E7%85%A7%E8%A1%A8/</url>
+    <content><![CDATA[<p>i386 : iPhone Simulator<br>x86_64 : iPhone Simulator<br>arm64 : iPhone Simulator<br>iPhone1,1 : iPhone<br>iPhone1,2 : iPhone 3G<br>iPhone2,1 : iPhone 3GS<br>iPhone3,1 : iPhone 4<a id="more"></a><br>iPhone3,2 : iPhone 4 GSM Rev A<br>iPhone3,3 : iPhone 4 CDMA<br>iPhone4,1 : iPhone 4S<br>iPhone5,1 : iPhone 5 (GSM)<br>iPhone5,2 : iPhone 5 (GSM+CDMA)<br>iPhone5,3 : iPhone 5C (GSM)<br>iPhone5,4 : iPhone 5C (Global)<br>iPhone6,1 : iPhone 5S (GSM)<br>iPhone6,2 : iPhone 5S (Global)<br>iPhone7,1 : iPhone 6 Plus<br>iPhone7,2 : iPhone 6<br>iPhone8,1 : iPhone 6s<br>iPhone8,2 : iPhone 6s Plus<br>iPhone8,4 : iPhone SE (GSM)<br>iPhone9,1 : iPhone 7<br>iPhone9,2 : iPhone 7 Plus<br>iPhone9,3 : iPhone 7<br>iPhone9,4 : iPhone 7 Plus<br>iPhone10,1 : iPhone 8<br>iPhone10,2 : iPhone 8 Plus<br>iPhone10,3 : iPhone X Global<br>iPhone10,4 : iPhone 8<br>iPhone10,5 : iPhone 8 Plus<br>iPhone10,6 : iPhone X GSM<br>iPhone11,2 : iPhone XS<br>iPhone11,4 : iPhone XS Max<br>iPhone11,6 : iPhone XS Max Global<br>iPhone11,8 : iPhone XR<br>iPhone12,1 : iPhone 11<br>iPhone12,3 : iPhone 11 Pro<br>iPhone12,5 : iPhone 11 Pro Max<br>iPhone12,8 : iPhone SE 2nd Gen<br>iPhone13,1 : iPhone 12 Mini<br>iPhone13,2 : iPhone 12<br>iPhone13,3 : iPhone 12 Pro<br>iPhone13,4 : iPhone 12 Pro Max</p>
+<p>iPod1,1 : 1st Gen iPod<br>iPod2,1 : 2nd Gen iPod<br>iPod3,1 : 3rd Gen iPod<br>iPod4,1 : 4th Gen iPod<br>iPod5,1 : 5th Gen iPod<br>iPod7,1 : 6th Gen iPod<br>iPod9,1 : 7th Gen iPod</p>
+<p>iPad1,1 : iPad<br>iPad1,2 : iPad 3G<br>iPad2,1 : 2nd Gen iPad<br>iPad2,2 : 2nd Gen iPad GSM<br>iPad2,3 : 2nd Gen iPad CDMA<br>iPad2,4 : 2nd Gen iPad New Revision<br>iPad3,1 : 3rd Gen iPad<br>iPad3,2 : 3rd Gen iPad CDMA<br>iPad3,3 : 3rd Gen iPad GSM<br>iPad2,5 : iPad mini<br>iPad2,6 : iPad mini GSM+LTE<br>iPad2,7 : iPad mini CDMA+LTE<br>iPad3,4 : 4th Gen iPad<br>iPad3,5 : 4th Gen iPad GSM+LTE<br>iPad3,6 : 4th Gen iPad CDMA+LTE<br>iPad4,1 : iPad Air (WiFi)<br>iPad4,2 : iPad Air (GSM+CDMA)<br>iPad4,3 : 1st Gen iPad Air (China)<br>iPad4,4 : iPad mini Retina (WiFi)<br>iPad4,5 : iPad mini Retina (GSM+CDMA)<br>iPad4,6 : iPad mini Retina (China)<br>iPad4,7 : iPad mini 3 (WiFi)<br>iPad4,8 : iPad mini 3 (GSM+CDMA)<br>iPad4,9 : iPad Mini 3 (China)<br>iPad5,1 : iPad mini 4 (WiFi)<br>iPad5,2 : 4th Gen iPad mini (WiFi+Cellular)<br>iPad5,3 : iPad Air 2 (WiFi)<br>iPad5,4 : iPad Air 2 (Cellular)<br>iPad6,3 : iPad Pro (9.7 inch, WiFi)<br>iPad6,4 : iPad Pro (9.7 inch, WiFi+LTE)<br>iPad6,7 : iPad Pro (12.9 inch, WiFi)<br>iPad6,8 : iPad Pro (12.9 inch, WiFi+LTE)<br>iPad6,11 : iPad (2017)<br>iPad6,12 : iPad (2017)<br>iPad7,1 : iPad Pro 2nd Gen (WiFi)<br>iPad7,2 : iPad Pro 2nd Gen (WiFi+Cellular)<br>iPad7,3 : iPad Pro 10.5-inch<br>iPad7,4 : iPad Pro 10.5-inch<br>iPad7,5 : iPad 6th Gen (WiFi)<br>iPad7,6 : iPad 6th Gen (WiFi+Cellular)<br>iPad7,11 : iPad 7th Gen 10.2-inch (WiFi)<br>iPad7,12 : iPad 7th Gen 10.2-inch (WiFi+Cellular)<br>iPad8,1 : iPad Pro 11 inch 3rd Gen (WiFi)<br>iPad8,2 : iPad Pro 11 inch 3rd Gen (1TB, WiFi)<br>iPad8,3 : iPad Pro 11 inch 3rd Gen (WiFi+Cellular)<br>iPad8,4 : iPad Pro 11 inch 3rd Gen (1TB, WiFi+Cellular)<br>iPad8,5 : iPad Pro 12.9 inch 3rd Gen (WiFi)<br>iPad8,6 : iPad Pro 12.9 inch 3rd Gen (1TB, WiFi)<br>iPad8,7 : iPad Pro 12.9 inch 3rd Gen (WiFi+Cellular)<br>iPad8,8 : iPad Pro 12.9 inch 3rd Gen (1TB, WiFi+Cellular)<br>iPad8,9 : iPad Pro 11 inch 4th Gen (WiFi)<br>iPad8,10 : iPad Pro 11 inch 4th Gen (WiFi+Cellular)<br>iPad8,11 : iPad Pro 12.9 inch 4th Gen (WiFi)<br>iPad8,12 : iPad Pro 12.9 inch 4th Gen (WiFi+Cellular)<br>iPad11,1 : iPad mini 5th Gen (WiFi)<br>iPad11,2 : iPad mini 5th Gen<br>iPad11,3 : iPad Air 3rd Gen (WiFi)<br>iPad11,4 : iPad Air 3rd Gen<br>iPad11,6 : iPad 8th Gen (WiFi)<br>iPad11,7 : iPad 8th Gen (WiFi+Cellular)<br>iPad13,1 : iPad air 4th Gen (WiFi)<br>iPad13,2 : iPad air 4th Gen (WiFi+Cellular)<br>iPad13,4 : iPad Pro 11 inch 3rd Gen<br>iPad13,5 : iPad Pro 11 inch 3rd Gen<br>iPad13,6 : iPad Pro 11 inch 3rd Gen<br>iPad13,7 : iPad Pro 11 inch 3rd Gen<br>iPad13,8 : iPad Pro 12.9 inch 5th Gen<br>iPad13,9 : iPad Pro 12.9 inch 5th Gen<br>iPad13,10 : iPad Pro 12.9 inch 5th Gen<br>iPad13,11 : iPad Pro 12.9 inch 5th Gen</p>
+<p>Watch1,1 : Apple Watch 38mm case<br>Watch1,2 : Apple Watch 42mm case<br>Watch2,6 : Apple Watch Series 1 38mm case<br>Watch2,7 : Apple Watch Series 1 42mm case<br>Watch2,3 : Apple Watch Series 2 38mm case<br>Watch2,4 : Apple Watch Series 2 42mm case<br>Watch3,1 : Apple Watch Series 3 38mm case (GPS+Cellular)<br>Watch3,2 : Apple Watch Series 3 42mm case (GPS+Cellular)<br>Watch3,3 : Apple Watch Series 3 38mm case (GPS)<br>Watch3,4 : Apple Watch Series 3 42mm case (GPS)<br>Watch4,1 : Apple Watch Series 4 40mm case (GPS)<br>Watch4,2 : Apple Watch Series 4 44mm case (GPS)<br>Watch4,3 : Apple Watch Series 4 40mm case (GPS+Cellular)<br>Watch4,4 : Apple Watch Series 4 44mm case (GPS+Cellular)<br>Watch5,1 : Apple Watch Series 5 40mm case (GPS)<br>Watch5,2 : Apple Watch Series 5 44mm case (GPS)<br>Watch5,3 : Apple Watch Series 5 40mm case (GPS+Cellular)<br>Watch5,4 : Apple Watch Series 5 44mm case (GPS+Cellular)<br>Watch5,9 : Apple Watch SE 40mm case (GPS)<br>Watch5,10 : Apple Watch SE 44mm case (GPS)<br>Watch5,11 : Apple Watch SE 40mm case (GPS+Cellular)<br>Watch5,12 : Apple Watch SE 44mm case (GPS+Cellular)<br>Watch6,1 : Apple Watch Series 6 40mm case (GPS)<br>Watch6,2 : Apple Watch Series 6 44mm case (GPS)<br>Watch6,3 : Apple Watch Series 6 40mm case (GPS+Cellular)<br>Watch6,4 : Apple Watch Series 6 44mm case (GPS+Cellular)</p>
+]]></content>
+      <tags>
+        <tag>web</tag>
       </tags>
   </entry>
   <entry>
@@ -322,31 +359,6 @@
 ]]></content>
       <tags>
         <tag>javascript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>微信小程序音频audio API如何结合列表渲染</title>
-    <url>/2019/03/10/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%9F%B3%E9%A2%91audio%20API%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/</url>
-    <content><![CDATA[<p><code>audio</code>组件在某些苹果手机存在致命bug，点击组件无任何反应。从1.6.0 版本开始，官方不再维护<code>audio</code>组件，建议使用能力更强的 <code>wx.createInnerAudioContext</code> 接口。以前列表渲染出来的<code>audio</code>需要技术改造。</p>
-<a id="more"></a>
-<p>比如我们有一段音频数据：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [&#123;</span><br><span class="line">  id:<span class="number">1</span>,</span><br><span class="line">  title:<span class="string">'爱过的人我已不再拥有'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0904/57cb989b04d4c.png'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0904/57cb989b1e3b4.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">2</span>,</span><br><span class="line">  title:<span class="string">'已过了耳濡目染的年'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/0517/573b1240af3da.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/0517/573b1240d0118.mp3'</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  id:<span class="number">3</span>,</span><br><span class="line">  title:<span class="string">'感觉很放松'</span>,</span><br><span class="line">  image:<span class="string">'http://wimg.spriteapp.cn/picture/2016/1108/5821463c3fad8.jpg'</span>,</span><br><span class="line">  src:<span class="string">'http://wvoice.spriteapp.cn/voice/2016/1104/581b63392f6cb.mp3'</span></span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure></p>
-<p>现在我们想要达到这种目的：</p>
-<ol>
-<li>音频以列表的形式展现在小程序上。</li>
-<li>每个音频旁边都会有个按钮，初始情况按钮上文字为‘播放’；点击‘播放’，小程序播放该音频，按钮文字变成‘暂停’。</li>
-<li>点击‘暂停’按钮，停止播放音频，按钮文字变成‘播放’。</li>
-<li>不能同时播放多个音频：如果音频A正处于播放状态，点击播放音频B时，音频A停止播放。</li>
-</ol>
-<p>思路：</p>
-<ol>
-<li>使用<code>wx:for</code></li>
-<li>将列表中每一个音频做为组件</li>
-<li>在父组件设置一个<code>id</code>，用于控制应该播放哪个音频</li>
-</ol>
-<p>示例代码<br><a href="https://github.com/zhaohaodang/wechat-app-audio-list" target="_blank" rel="noopener">https://github.com/zhaohaodang/wechat-app-audio-list</a></p>
-]]></content>
-      <tags>
-        <tag>微信小程序</tag>
       </tags>
   </entry>
   <entry>
