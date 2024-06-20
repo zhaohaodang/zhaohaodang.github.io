@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>《Linux大学教程》命令大全 | 阿荡的博客</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <script defer="true" src="https://analytics.us.umami.is/script.js" data-website-id="400959c1-ad4e-472a-9f58-b0b21f11e801"></script>
+    <script async="true" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8172099008529477"></script>
+    <meta name="description" content="个人博客">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="开发者,程序员,博客园,程序猿,程序媛,极客,码农,编程,代码,软件开发,开源,IT网站,技术社区,Developer,Programmer,Coder,Geek,Coding,Code">
+    
+    <link rel="preload" href="/assets/css/0.styles.110b817b.css" as="style"><link rel="preload" href="/assets/js/app.1608b88f.js" as="script"><link rel="preload" href="/assets/js/2.b5fb262f.js" as="script"><link rel="preload" href="/assets/js/27.7a72b927.js" as="script"><link rel="prefetch" href="/assets/js/1.15d81473.js"><link rel="prefetch" href="/assets/js/10.c48908fc.js"><link rel="prefetch" href="/assets/js/11.9b346f75.js"><link rel="prefetch" href="/assets/js/12.e1e18a06.js"><link rel="prefetch" href="/assets/js/13.e5e578c3.js"><link rel="prefetch" href="/assets/js/14.0c487bb6.js"><link rel="prefetch" href="/assets/js/15.eed708b6.js"><link rel="prefetch" href="/assets/js/16.fcfe7532.js"><link rel="prefetch" href="/assets/js/17.b4fcf391.js"><link rel="prefetch" href="/assets/js/18.8a3fa8da.js"><link rel="prefetch" href="/assets/js/19.bd04b2be.js"><link rel="prefetch" href="/assets/js/20.aeb1c660.js"><link rel="prefetch" href="/assets/js/21.d5c0f8ee.js"><link rel="prefetch" href="/assets/js/22.24a7ae5c.js"><link rel="prefetch" href="/assets/js/23.20c44980.js"><link rel="prefetch" href="/assets/js/24.433a67c0.js"><link rel="prefetch" href="/assets/js/25.83a5eb47.js"><link rel="prefetch" href="/assets/js/26.4f0361d1.js"><link rel="prefetch" href="/assets/js/28.67184a83.js"><link rel="prefetch" href="/assets/js/29.7a9b2a29.js"><link rel="prefetch" href="/assets/js/3.dc0090f8.js"><link rel="prefetch" href="/assets/js/30.f2d2afcf.js"><link rel="prefetch" href="/assets/js/31.d95c67f5.js"><link rel="prefetch" href="/assets/js/32.0d100b41.js"><link rel="prefetch" href="/assets/js/33.2d7a306b.js"><link rel="prefetch" href="/assets/js/4.52313a48.js"><link rel="prefetch" href="/assets/js/7.a1821482.js"><link rel="prefetch" href="/assets/js/8.20a4398e.js"><link rel="prefetch" href="/assets/js/9.b02281f7.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.4966333e.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.110b817b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-default-content"><header><div><a href="/" class="router-link-active tab">首页</a> <a href="/tag/" class="tab">分类</a></div> <div class="brand"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <a href="/" class="accent-link my-avatar router-link-active"><img alt="阿荡的博客" src="https://images.wosaimg.com/7e/38676a4113f2e7e7e543e8df2dc603c4770b47.jpg"></a></div></header> <div><h2 class="post-title">《Linux大学教程》命令大全</h2> <div class="time-info"><p>
+      创建时间：<span>2019-12-03</span></p> <p>
+      更新时间：<span>1 分钟前</span></p></div> <div class="post-content"><div class="content__default"><p></p><div class="table-of-contents"><ul></ul></div><p></p> <p><code>date</code> 
+ 显示当前日期和时间</p> <p><code>who</code> 
+ 显示当前登录系统的所有用户标识（同时显示终端名称、登陆时间等）</p> <p><code>passwd</code> 
+ 改变口令</p> <p><code>last</code> 
+ 查看所有用户登录记录</p> <p><code>last [用户标识]</code> 
+ 查看某个用户的登录记录</p> <p><code>exit</code> 
+ 退出当前登录的身份，返回上一个登录身份</p> <p><code>su [用户标识]</code> 
+ 临时以另一个用户身份（用户标识默认为 root）登录（不改变环境）</p> <p><code>su - [用户标识]</code> 
+ 临时以另一个用户身份登录（同时改变环境）</p> <p><code>sudo</code> 
+ 临时以超级用户身份登录</p> <p><code>less</code> 
+ 每次一屏地显示内容</p> <p><code>sudo init</code> 
+ 修改运行级别</p> <p><code>sudo reboot</code> 
+ 重启</p> <p><code>sudo shutdown now</code> 
+ 立即关机</p> <p><code>dmesg</code> 
+ 显示系统启动信息</p> <p><code>infocmp</code> 
+ 显示当前正在使用的终端信息</p> <p><code>echo $TERM</code> 
+ 显示当前正在使用的终端类型</p> <p><code>printenv</code> 
+ 显示当前 shell 所有环境变量</p> <p><code>stty -a</code> 
+ 显示系统键盘的映射</p> <p><code>stty</code> 
+ 只显示默认值已经被改变的键盘映射</p> <p><code>stty kill ^U</code> 
+ 将 kill 信号映射到 &lt;ctrl+u&gt; 键盘组合键</p> <p><code>which</code> 
+ 查看某个命令是否可用</p> <p><code>date -u</code> 
+ 显示 UTC 时间</p> <p><code>cal</code> 
+ 显示当前月份日历</p> <p><code>cal 2019</code> 
+ 显示 2019 年全部月份日历</p> <p><code>cal 1 2019</code> 
+ 显示 2019 年 1 月份的日历</p> <p><code>cal -j 12 2019</code> 
+ 显示 2019 年 12 月份的日历（不显示日期，而是显示这一天是这一年的第几天。技巧：如果 12 月的最后一天为改年该第 366 天，则可判断该年为闰年，否则为平年）</p> <p><code>calendar foo.txt</code> 
+ 根据文件 foo.txt 创建提醒任务</p> <p><code>uptime</code> 
+ 显示系统连续运行多长时间的相关信息</p> <p><code>hostname</code> 
+ 查看计算机名称</p> <p><code>uname</code> 
+ 查看操作系统的名称</p> <p><code>uname -a</code> 
+ 查看操作系统的详细信息</p> <p><code>whoami</code> 
+ 显示当前用户的标识</p> <p><code>users</code> 
+ 仅仅显示当前登陆系统的所有用户标识</p> <p><code>w</code> 
+ 查看系统上用户更多信息</p> <p><code>w [用户标识]</code> 
+ 查看该用户正在做什么</p> <p><code>lock</code> 
+ 临时锁住终端（默认 15 分钟）</p> <p><code>lock -5</code> 
+ 临时锁住终端 5 分钟</p> <p><code>leave 1015</code> 
+ 在 10 点 15 分提醒我离开</p> <p><code>leave +15</code> 
+15 分钟后提醒我离开</p> <p><code>bc</code> 
+ 启动计算器</p> <p><code>man [命令名称]</code> 
+ 查看命令的文档资料</p> <p><code>whatis [命令名称]</code> 
+ 查看命令简介</p> <p><code>apropos manual</code> 
+ 查找某些命令，它们的文档资料包括关键词 manual（不区分大小写）</p> <p><code>info [命令名称]</code> 
+ 显示命令的 info 文件</p> <p><code>date;cal</code> 
+ 同时执行 date 和 cal 两个命令</p> <p><code>env或printenv</code> 
+ 显示所有环境变量</p> <p><code>set</code> 
+ 显示所有 shell 变量（局部变量）</p> <p><code>set -o [shell变量]</code> 
+ 关闭 shell 变量</p> <p><code>set +o [shell变量]</code> 
+ 打开 shell 变量</p> <p><code>export DEMO=value</code> 
+ 将变量 DEMO 导出到环境变量</p> <p><code>type [命令名称]</code> 
+ 查看命令是不是 shell 内置命令</p> <p><code>export PATH=&quot;$PATH:$HOME/bin&quot;</code> 
+ 将搜索路径的值修改为旧值加上 $HOME/bin</p> <p><code>echo &quot;my name is ${USER}&quot;</code> 
+ 在字符串中使用变量</p> <p>echo &quot;The time and date are `date`.
+ 在字符串中嵌入 date 命令</p> <p><code>export PS1=&quot;\A:\$&quot;</code> 
+ 修改 shell 提示，$ 符号前面新增时间</p> <p><code>fc -l</code> 
+ 查看使用过的命令列表</p> <p><code>fc -s 20</code> 
+ 重新执行编号为 20 的命令（如果不指定编号，默认为上一个命令）</p> <p><code>fc -s stringA=stringB 20</code> 
+ 重新执行编号为 20 的命令，并且把之前的字符串 stringA 改为字符串 stringB</p> <p><code>export HISTORY=50</code> 
+ 指定历史列表最多存放 50 条命令</p> <p><code>alias</code> 
+ 显示所有的别名</p> <p><code>alias dt=date</code> 
+ 将 date 命令映射到到别名 dt</p> <p><code>alias dt</code> 
+ 显示别名 dt 代表的含义</p> <p><code>unalias dt</code> 
+ 删除别名 dt</p> <p><code>unalias -a</code> 
+ 删除所有别名</p> <p><code>\ls</code> 
+ 运行实际命令 ls 本身，而不是别名</p> <p><code>more data.txt</code> 
+ 每次 8 一屏地显示 data.txt 中的数据，按空格键会显示下一屏数据。</p> <p><code>&gt; out.txt</code> 
+ 将数据写入到文件 out.txt 中，如果文件不存在则创建，如果文件中有内容则覆盖内容。</p> <p><code>&gt;&gt; out.txt</code> 
+ 将数据追加到文件 out.txt 的尾部。</p> <p><code>set -o noclobber</code> 
+ 防止文件内容被意外地覆盖。执行此命令后，如果标准输出所指定的文件已存在，屏幕会提示错误。如果你确实希望覆盖，用 <code>&gt;|</code>  代替 <code>&gt;</code></p> <p><code>sort 1&gt; output.txt 2&gt; error.txt</code> 
+ 将标准输出写入 output.txt 文件，标准错误写入 error.txt 文件。</p> <p><code>sort &amp;&gt; output.txt</code>  或  <code>sort &gt;&amp; output.txt</code> 
+ 将标准输出和标准错误都写入 output.txt 文件</p> <p><code>sort &gt; /dev/null</code> 
+ 不想看标准输出，将标准输出抛弃</p> <p><code>sort 2&gt; /dev/null</code> 
+ 不想看标准错误，将标准错误抛弃</p> <p><code>sort 2&gt; /dev/null</code> 
+ 不想看标准错误，将标准错误抛弃</p> <p><img src="https://s1.ax1x.com/2020/05/21/Ybz061.png" alt="Ybz061.png"></p> <p><code>cat name1 name2 | tee backup | sort</code> 
+ 将 cat 的输出保存在 backup 文件，同事 cat 的输出经过管道线传送给 sort 命令。如果 backup 文件不存在则创建。如果 backup 内已经有内容，内容会被覆盖，使用 tee -a 可以避免覆盖，而是追加。</p> <p><code>command1 &amp;&amp; command2</code> 
+ 命令 1 成功执行才去执行命令 2</p> <p><code>command1 || command2</code> 
+ 命令 1 执行失败才去执行命令 2</p> <p><code>cat &gt; file</code> 
+ 快速地创建一个小文件，然后从键盘写入内容。</p> <p>cat 常用命令选项
+ - n (number，数字) 在每行前面加一个行号
+ - b (blank，空白) 和 - n 选项一起使用，不要对空白行编号
+ - s (squeeze，挤压) 将连续多个空白行替换为一个空白行</p> <p><code>split file</code> 
+ 将文件 file 分割成 xaa、xab、xac 等文件，每个文件的最大行数为 1000。</p> <p><code>rev file</code> 
+ 将文件 file 中各行中字符的顺序反转</p> <p><code>head -n 15 file</code> 
+ 显示文件 file 前 15 行（如果没有 - n 15 参数，默认显示 10 行）</p> <p><code>tail -n 15 file</code> 
+ 显示文件 file 最后 15 行（如果没有 - n 15 参数，默认显示 10 行）</p> <p><code>colrm 1 5 file</code> 
+ 删除 file 中指定的数据列（1 到 5 列）</p> <p><code>colrm 5 file</code> 
+ 删除 file 中第 5 列（包括）到最后一列的所有数据列</p> <p>假设文件 a 内容为
+ 1
+a
+ 文件 b 内容为
+ 1
+b
+ <code>comm a b</code>  输出为
+ 1
+a b</p> <p>第一列表示 a 为第一个文件独有的数据，第二列表示 b 为第二个文件独有的数据，第三列表示两个文件共有的数据。
+comm 命令比较的文本必须是有序文本。参数 - n（n 为 1、2、3）表示屏蔽第 n 列的输出。</p> <p><code>cut -c 1,5 file</code> 
+ 截取文件第 1 列和第 5 列数据</p> <p><code>cut -c 1-5 file</code> 
+ 截取文件第 1 到 5 列数据</p> <p><code>cut -f 1 -d ',' file</code> 
+ 使用指定的分隔字符 ','，将文件 file 的每一行切割成字符串数组，取数组中的第一项。</p> <p><code>paste -d ',' a b</code> 
+ 使用指定的分隔字符 ','，将文件 a 和 b 的每一行连接起来。</p> <p><code>nl -v 5 -i 10 file</code> 
+ 为文件 file 临时插入（不改变源文件 file）行号，起始号码为 5，增量为 10。</p> <p><code>wc file</code> 
+ 对 file 进行单词统计，通常输出三个数字。从第一个数开始分别代表行数 line、单词数 word 以及字符数 char。</p> <p><code>wc -l file</code> 
+ 只统计行数</p> <blockquote><p>未完待续</p></blockquote></div></div> <div class="adswrapper"><!----> <div style="display:none;"></div> <ins data-ad-client="ca-pub-8172099008529477" data-ad-slot="8733069748" data-ad-test="" data-ad-format="fluid" data-ad-region="" class="adsbygoogle" style="display:block;"></ins> <!----> <div style="display:none;"> (adsbygoogle = window.adsbygoogle || []).push({}); </div></div></div> <footer class="footer"><div class="footer-inner"><div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">苏 ICP 备 16009967 号 - 2
+      </a></div> <div class="copyright">2019 – 2024 © z-hodor</div></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.1608b88f.js" defer></script><script src="/assets/js/2.b5fb262f.js" defer></script><script src="/assets/js/27.7a72b927.js" defer></script>
+  </body>
+</html>
