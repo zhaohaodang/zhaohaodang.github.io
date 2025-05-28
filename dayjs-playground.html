@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day.js Playground</title>
+    <script src="/js/dayjs.min.js"></script>
+    <style>
+      :root {
+        --primary-color: #00f2fe;
+        --primary-hover: #4facfe;
+        --bg-color: #0a192f;
+        --card-bg: #112240;
+        --text-color: #e6f1ff;
+        --border-color: #233554;
+        --success-color: #00ff9d;
+        --error-color: #ff2d55;
+        --neon-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+          'Open Sans', 'Helvetica Neue', sans-serif;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+        line-height: 1.6;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        min-height: 100vh;
+        background-image: 
+          radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.05) 0%, transparent 20%),
+          radial-gradient(circle at 90% 80%, rgba(79, 172, 254, 0.05) 0%, transparent 20%);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .header::after {
+        content: '';
+        position: absolute;
+        bottom: -1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+        text-shadow: var(--neon-shadow);
+        letter-spacing: 2px;
+      }
+
+      .header p {
+        color: #8892b0;
+        font-size: 1.1rem;
+      }
+
+      .container {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border-color);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+      }
+
+      .code-input {
+        width: 100%;
+        height: 150px;
+        margin: 0;
+        padding: 1rem;
+        font-family: 'Fira Code', monospace;
+        font-size: 1rem;
+        border: 1px solid rgba(0, 242, 254, 0.3);
+        border-radius: 8px;
+        resize: vertical;
+        transition: all 0.3s ease;
+        background: rgba(17, 34, 64, 0.9);
+        color: var(--text-color);
+        box-shadow: 0 0 5px rgba(0, 242, 254, 0.2);
+      }
+
+      .code-input:focus {
+        outline: none;
+        border-color: rgba(0, 242, 254, 0.5);
+        box-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
+      }
+
+      button {
+        background: transparent;
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        padding: 0.8rem 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 242, 254, 0.2),
+          transparent
+        );
+        transition: 0.5s;
+      }
+
+      /* button:hover::before {
+        left: 100%;
+      }
+
+      button:hover {
+        background: rgba(0, 242, 254, 0.1);
+        box-shadow: var(--neon-shadow);
+      } */
+
+      .result {
+        background: rgba(17, 34, 64, 0.7);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        border: 1px solid var(--border-color);
+        font-family: 'Fira Code', monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        overflow-x: auto;
+      }
+
+      .error {
+        color: var(--error-color);
+        background: rgba(255, 45, 85, 0.1);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        border: 1px solid var(--error-color);
+        font-family: 'Fira Code', monospace;
+      }
+
+      .examples {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin: 1rem 0;
+      }
+
+      @media (max-width: 768px) {
+        .examples {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .example-btn {
+        background: rgba(17, 34, 64, 0.7);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        padding: 0.8rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        text-align: left;
+        transition: all 0.3s ease;
+        font-family: 'Fira Code', monospace;
+      }
+
+      .example-btn:hover {
+        background: rgba(0, 242, 254, 0.1);
+        border-color: var(--primary-color);
+        box-shadow: var(--neon-shadow);
+      }
+
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+      }
+
+      .result-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .result-title::before {
+        content: '>';
+        color: var(--success-color);
+      }
+
+      @keyframes glow {
+        0% {
+          box-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(0, 242, 254, 0.8);
+        }
+        100% {
+          box-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
+        }
+      }
+
+      /* .container:focus-within {
+        animation: glow 2s infinite;
+      } */
+
+      .playground-layout {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 2rem;
+        margin-top: 1rem;
+      }
+
+      .left-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .examples-section {
+        background: rgba(17, 34, 64, 0.7);
+        padding: 0.8rem;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+      }
+
+      .examples-section h3 {
+        margin-bottom: 0.6rem;
+        color: var(--primary-color);
+        font-size: 0.9rem;
+      }
+
+      .code-section {
+        flex: 1;
+        background: rgba(17, 34, 64, 0.7);
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+      }
+
+      .code-section h3 {
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+      }
+
+      .right-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .execute-btn {
+        width: 100%;
+        justify-content: center;
+        background: rgba(0, 242, 254, 0.1);
+      }
+
+      .execute-btn:hover {
+        background: rgba(0, 242, 254, 0.2);
+        box-shadow: var(--neon-shadow);
+      }
+
+      @media (max-width: 768px) {
+        .playground-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .right-section {
+          order: 1;
+          margin-top: 1rem;
+        }
+
+        .execute-btn {
+          margin-bottom: 1rem;
+        }
+
+        .code-section {
+          margin-bottom: 0;
+        }
+
+        .examples-section {
+          margin-bottom: 0;
+        }
+
+        .left-section {
+          gap: 1rem;
+        }
+      }
+
+      .custom-select {
+        position: relative;
+        width: 100%;
+        font-family: 'Fira Code', monospace;
+      }
+
+      .select-header {
+        padding: 0.5rem 0.7rem;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        background: rgba(17, 34, 64, 0.7);
+        color: var(--text-color);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+
+      .select-header:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 1px var(--primary-color);
+      }
+
+      .select-arrow {
+        font-size: 0.65rem;
+        color: var(--primary-color);
+        transition: transform 0.3s ease;
+      }
+
+      .custom-select.active .select-arrow {
+        transform: rotate(180deg);
+      }
+
+      .select-options {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin-top: 0.3rem;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+
+      .custom-select.active .select-options {
+        max-height: 250px;
+        opacity: 1;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        overflow-y: auto;
+      }
+
+      /* 自定义滚动条样式 */
+      .select-options::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .select-options::-webkit-scrollbar-track {
+        background: var(--card-bg);
+        border-radius: 3px;
+      }
+
+      .select-options::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 3px;
+      }
+
+      .select-options::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-hover);
+      }
+
+      /* Firefox 滚动条样式 */
+      .select-options {
+        scrollbar-width: thin;
+        scrollbar-color: var(--primary-color) var(--card-bg);
+      }
+
+      .select-option {
+        padding: 0.6rem 0.7rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .select-option:last-child {
+        border-bottom: none;
+      }
+
+      .select-option:hover {
+        background: rgba(0, 242, 254, 0.1);
+      }
+
+      .option-title {
+        display: block;
+        color: var(--primary-color);
+        font-size: 0.8rem;
+        margin-bottom: 0.15rem;
+      }
+
+      .option-code {
+        display: block;
+        color: var(--text-color);
+        font-size: 0.7rem;
+        opacity: 0.8;
+      }
+
+      .select-placeholder {
+        color: #8892b0;
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Day.js Playground</h1>
+      <p>一个用于测试和实验 Day.js 功能的交互式环境</p>
+    </div>
+
+    <div class="container">
+      <h2>代码执行</h2>
+      <p>在下方输入框中输入 dayjs 代码，点击执行按钮查看结果</p>
+      
+      <div class="playground-layout">
+        <div class="left-section">
+          <div class="examples-section">
+            <h3>示例代码</h3>
+            <div class="custom-select">
+              <div class="select-header" onclick="toggleSelect()">
+                <span class="select-placeholder">选择示例代码...</span>
+                <span class="select-arrow">▼</span>
+              </div>
+              <div class="select-options" id="selectOptions">
+                <div class="select-option" data-value="dayjs().format('YYYY-MM-DD')">
+                  <span class="option-title">获取当前日期</span>
+                  <span class="option-code">dayjs().format('YYYY-MM-DD')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().format('YYYY-MM-DD HH:mm:ss')">
+                  <span class="option-title">获取当前日期时间</span>
+                  <span class="option-code">dayjs().format('YYYY-MM-DD HH:mm:ss')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().add(1, 'day').format('YYYY-MM-DD')">
+                  <span class="option-title">明天</span>
+                  <span class="option-code">dayjs().add(1, 'day')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().subtract(1, 'day').format('YYYY-MM-DD')">
+                  <span class="option-title">昨天</span>
+                  <span class="option-code">dayjs().subtract(1, 'day')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().add(1, 'month').format('YYYY-MM-DD')">
+                  <span class="option-title">下个月</span>
+                  <span class="option-code">dayjs().add(1, 'month')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().subtract(1, 'month').format('YYYY-MM-DD')">
+                  <span class="option-title">上个月</span>
+                  <span class="option-code">dayjs().subtract(1, 'month')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().add(1, 'year').format('YYYY-MM-DD')">
+                  <span class="option-title">明年</span>
+                  <span class="option-code">dayjs().add(1, 'year')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().subtract(1, 'year').format('YYYY-MM-DD')">
+                  <span class="option-title">去年</span>
+                  <span class="option-code">dayjs().subtract(1, 'year')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().startOf('month').format('YYYY-MM-DD')">
+                  <span class="option-title">本月第一天</span>
+                  <span class="option-code">dayjs().startOf('month')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().endOf('month').format('YYYY-MM-DD')">
+                  <span class="option-title">本月最后一天</span>
+                  <span class="option-code">dayjs().endOf('month')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().startOf('week').format('YYYY-MM-DD')">
+                  <span class="option-title">本周第一天</span>
+                  <span class="option-code">dayjs().startOf('week')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().endOf('week').format('YYYY-MM-DD')">
+                  <span class="option-title">本周最后一天</span>
+                  <span class="option-code">dayjs().endOf('week')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().diff(dayjs('2024-01-01'), 'day')">
+                  <span class="option-title">距离2024年元旦的天数</span>
+                  <span class="option-code">dayjs().diff(dayjs('2024-01-01'), 'day')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().diff(dayjs('2024-01-01'), 'month')">
+                  <span class="option-title">距离2024年元旦的月数</span>
+                  <span class="option-code">dayjs().diff(dayjs('2024-01-01'), 'month')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().isBefore(dayjs('2024-01-01'))">
+                  <span class="option-title">是否在2024年元旦之前</span>
+                  <span class="option-code">dayjs().isBefore(dayjs('2024-01-01'))</span>
+                </div>
+                <div class="select-option" data-value="dayjs().isAfter(dayjs('2024-01-01'))">
+                  <span class="option-title">是否在2024年元旦之后</span>
+                  <span class="option-code">dayjs().isAfter(dayjs('2024-01-01'))</span>
+                </div>
+                <div class="select-option" data-value="dayjs().isSame(dayjs(), 'day')">
+                  <span class="option-title">是否是今天</span>
+                  <span class="option-code">dayjs().isSame(dayjs(), 'day')</span>
+                </div>
+                <div class="select-option" data-value="dayjs().day()">
+                  <span class="option-title">获取星期几</span>
+                  <span class="option-code">dayjs().day()</span>
+                </div>
+                <div class="select-option" data-value="dayjs().unix()">
+                  <span class="option-title">获取Unix时间戳</span>
+                  <span class="option-code">dayjs().unix()</span>
+                </div>
+                <div class="select-option" data-value="dayjs.unix(1704067200).format('YYYY-MM-DD HH:mm:ss')">
+                  <span class="option-title">Unix时间戳转日期</span>
+                  <span class="option-code">dayjs.unix(1704067200)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="code-section">
+            <h3>代码编辑</h3>
+            <textarea
+              id="codeInput"
+              class="code-input"
+              placeholder="输入 dayjs 代码，例如：dayjs().format('YYYY-MM-DD')"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="right-section">
+          <button class="execute-btn" onclick="executeCode()">
+            <span>执行代码</span>
+          </button>
+          <div id="codeResult" class="result"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 防抖函数
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      // 页面加载完成后自动聚焦代码输入框
+      window.addEventListener('load', function() {
+        const codeInput = document.getElementById('codeInput');
+        codeInput.focus();
+
+        // 添加输入监听，自动执行代码
+        codeInput.addEventListener('input', debounce(function() {
+          if (codeInput.value.trim()) {
+            executeCode();
+          }
+        }, 1000));
+      });
+
+      function toggleSelect() {
+        const select = document.querySelector('.custom-select');
+        select.classList.toggle('active');
+      }
+
+      function handleExampleSelect(value) {
+        const codeInput = document.getElementById('codeInput');
+        codeInput.value = value;
+        document.querySelector('.custom-select').classList.remove('active');
+        // 自动执行代码
+        executeCode();
+      }
+
+      // 初始化选项点击事件
+      document.querySelectorAll('.select-option').forEach(option => {
+        option.addEventListener('click', () => {
+          handleExampleSelect(option.dataset.value);
+        });
+      });
+
+      // 点击外部关闭下拉框
+      document.addEventListener('click', (e) => {
+        const select = document.querySelector('.custom-select');
+        if (!select.contains(e.target)) {
+          select.classList.remove('active');
+        }
+      });
+
+      function executeCode() {
+        const codeInput = document.getElementById('codeInput').value
+        const resultDiv = document.getElementById('codeResult')
+
+        try {
+          const result = new Function('dayjs', `return ${codeInput}`)(dayjs)
+
+          let displayResult
+          if (result instanceof dayjs) {
+            displayResult = result.format('YYYY-MM-DD HH:mm:ss')
+          } else if (typeof result === 'object') {
+            displayResult = JSON.stringify(result, null, 2)
+          } else {
+            displayResult = String(result)
+          }
+
+          resultDiv.innerHTML = `
+            <div class="result-title">执行结果</div>
+            <pre>${displayResult}</pre>
+          `
+        } catch (error) {
+          resultDiv.innerHTML = `
+            <div class="error">
+              <div class="result-title">执行错误</div>
+              <pre>${error.message}</pre>
+            </div>
+          `
+        }
+      }
+    </script>
+  </body>
+</html>
